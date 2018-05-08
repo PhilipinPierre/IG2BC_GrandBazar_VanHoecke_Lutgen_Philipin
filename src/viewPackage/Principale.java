@@ -6,5 +6,4 @@ public class Principale
     {
         FenetrePrincipale fenetrePrincipale = new FenetrePrincipale();
     }
-    //BONJOOURSSSS
 }

@@ -2,12 +2,11 @@ package viewPackage;
 
 import javax.swing.*;
 
-public class ModificationOrdrePrepa extends JPanel {
+public class ModificationOrdrePrepa extends Formulaire {
+    private Formulaire formulaire;
 
-
-    public ModificationOrdrePrepa() {
-
-
-
+    public ModificationOrdrePrepa()
+    {
+        formulaire = new Formulaire();
     }
 }

@@ -1,11 +1,10 @@
 package viewPackage;
 
-public class InsertionOrdrePrepa extends Formulaire {
+public class SuppressionOrdrePrepa extends Formulaire {
     private Formulaire formulaire;
 
-    public InsertionOrdrePrepa()
+    public SuppressionOrdrePrepa()
     {
-        //INSERTION
         formulaire = new Formulaire();
     }
 }

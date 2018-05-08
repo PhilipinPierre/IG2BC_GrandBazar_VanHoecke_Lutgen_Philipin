@@ -13,6 +13,8 @@ public class FenetrePrincipale extends JFrame {
     private JMenuItem rechercheArticlePerime, rechercheArticleInfos, rechercheArticleLocalite;
     private InsertionOrdrePrepa insertionOrdrePrepa;
     private ModificationOrdrePrepa modificationOrdrePrepa;
+    private SuppressionOrdrePrepa suppressionOrdrePrepa;
+    private RechercheArticlePerime rechercheArtPerim;
 
     public FenetrePrincipale()
     {
@@ -90,6 +92,15 @@ public class FenetrePrincipale extends JFrame {
         suppression = new JMenuItem("Suppression");
         suppression.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         fonctMenu.add(suppression);
+        suppression.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            container.removeAll();
+            suppressionOrdrePrepa = new SuppressionOrdrePrepa();
+            container.add(suppressionOrdrePrepa);
+            setVisible(true);
+        }
+    });
 
         //AJOUT D'UN LISING DANS LE MENU DANS FONCTIONNALITES
         listing = new JMenuItem("Listing");
@@ -100,6 +111,15 @@ public class FenetrePrincipale extends JFrame {
         rechercheArticlePerime = new JMenuItem("Recherche Périmé");
         rechercheArticlePerime.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
         fonctMenu.add(rechercheArticlePerime);
+        rechercheArticlePerime.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.removeAll();
+                rechercheArtPerim = new RechercheArticlePerime();
+                container.add(rechercheArtPerim);
+                setVisible(true);
+            }
+        });
 
         //RECHERCHE INFOS SUR UN ARTICLE DONNE
         rechercheArticleInfos = new JMenuItem("Recherche Infos");
