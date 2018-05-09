@@ -2,12 +2,17 @@ package viewPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RechercheArticlePerime extends JPanel {
     private JPanel panneauRecherche;
+    private JPanel panneauBouton;
 
     private JLabel dateDebutLabel, dateFinLabel;
     private JSpinner dateDebut, dateFin;
+
+    private JButton validation;
 
     public RechercheArticlePerime()
     {
@@ -34,8 +39,25 @@ public class RechercheArticlePerime extends JPanel {
         //BULLES D'AIDE
         panneauRecherche.add(dateFin);
 
+        //BOUTONS
+        panneauBouton = new JPanel();
+
+        validation = new JButton("Validation");
+        panneauBouton.add(validation);
+        ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
+        validation.addActionListener(listenerValidation);
+
+
         add(panneauRecherche, BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    private class ButtonListenerValidation implements ActionListener
+    {
+        public void actionPerformed(ActionEvent event)
+        {
+            /**/
+        }
     }
 }
