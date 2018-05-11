@@ -3,13 +3,13 @@ package modelPackage;
 import java.util.GregorianCalendar;
 
 public class Client {
-    private int numClient, codePostal;
+    private Integer numClient, codePostal;
     private String nom, prenom, localite, rue;
     private GregorianCalendar dateNaissance, dateCreationCompte;
 
 //GETTORS
-    public int getNumClient(){ return numClient; }
-    public int getCodePostal(){ return codePostal;}
+    public Integer getNumClient(){ return numClient; }
+    public Integer getCodePostal(){ return codePostal;}
     public String getNom(){return nom;}
     public String getPrenom() { return prenom;}
     public String getLocalite() { return localite;}
@@ -17,8 +17,8 @@ public class Client {
     public GregorianCalendar getDateNaissance() { return dateNaissance;}
     public GregorianCalendar getDateCreationCompte() { return dateCreationCompte;}
 //SETTOR
-    public void setNumClient(int numClient) { this.numClient = numClient;}
-    public void setCodePostal(int codePostal) { this.codePostal = codePostal; }
+    public void setNumClient(Integer numClient) { this.numClient = numClient;}
+    public void setCodePostal(Integer codePostal) { this.codePostal = codePostal; }
     public void setNom(String nom) { this.nom = nom;}
     public void setPrenom(String prenom) { this.prenom = prenom;}
     public void setLocalite(String localite) { this.localite = localite;}

@@ -1,6 +1,7 @@
 package viewPackage;
 
 import javax.swing.*;
+import javax.swing.JComboBox;
 import java.awt.*;
 import java.awt.event.*;
 
