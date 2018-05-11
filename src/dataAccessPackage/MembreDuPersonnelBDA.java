@@ -3,25 +3,19 @@ package dataAccessPackage;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.MembreDuPersonnel;
 
+import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MembreDuPersonnelBDA /*implements MembreDuPersonnelDA*/{
-    /*ArrayList<MembreDuPersonnel> getAllCuisiniers() throws ExceptionsBD;
-    ArrayList<MembreDuPersonnel> getAllResponsableDesVentes() throws  ExceptionsBD;
-    ArrayList<MembreDuPersonnel> getAllEmployees() throws ExceptionsBD;
-    ArrayList<MembreDuPersonnel> getAllMDP() throws ExceptionsBD;
-    MembreDuPersonnel getUser(int matricule, String mdp) throws ExceptionsBD;*/
-
-    private ArrayList<MembreDuPersonnel> getAllMdpParType(String typeEmploye) throws Exception{
+public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
+    public ArrayList<MembreDuPersonnel> getAllMdp() throws ExceptionsBD, SQLException, NamingException{
         ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
         Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from MembreDuPersonnel where categorie = ?";
+        String requeteSQL = "select * from MembreDuPersonnel";
         PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        preparedStatement.setString(1,typeEmploye);
         ResultSet donnees = preparedStatement.executeQuery();
         while(donnees.next()){
             MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
