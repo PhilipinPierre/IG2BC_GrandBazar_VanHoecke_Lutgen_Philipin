@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class TicketBDA {
-    ArrayList<Ticket> getAllTicket()throws ExceptionsBD, SQLException, NamingException{
+    ArrayList<Ticket> getAllTicket()throws SQLException, NamingException{
         ArrayList<Ticket> liste = new ArrayList<>();
         Connection connection = SingletonConnexion.getInstance();
         String requeteSQL = "select * from Ticket";
@@ -33,5 +33,7 @@ public class TicketBDA {
         date.setTime(donnees.getDate("date"));
         ticket.setDate(date);
         ticket.setHeure(donnees.getInt("heure"));
+
+        //A COMPLETER
     }
 }

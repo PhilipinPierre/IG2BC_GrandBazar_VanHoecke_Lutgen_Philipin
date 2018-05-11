@@ -1,12 +1,12 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.TypeArticle;
+import modelPackage.Lot;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface TypeArticleDA {
-    ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD, SQLException, NamingException;
+public interface LotDA {
+    ArrayList<Lot> getAllLot() throws ExceptionsBD, SQLException, NamingException;
 }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LigneTicketBDA implements LigneTicketDA {
-    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD, SQLException, NamingException{
+    public ArrayList<LigneTicket> getAllLigneTicket() throws SQLException, NamingException{
         ArrayList<LigneTicket> liste = new ArrayList<>();
         Connection connection = SingletonConnexion.getInstance();
         String requeteSQL = "select * from ligneticket";
@@ -27,6 +27,6 @@ public class LigneTicketBDA implements LigneTicketDA {
     }
 
     private void completerLigneTicket(ResultSet donnees, LigneTicket ligneTicket){
-        ;
+        //A COMPLETER
     }
 }
