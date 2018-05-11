@@ -10,13 +10,11 @@ public class ClientBDA {
     {
         try
         {
-            ArrayList<Client> clientList = new ArrayList<>();
-
-            return clientList;
+            ;
         }
         catch (Exception e)
         {
-            throw  new ExceptionsBD("Problème BD !", "Client");
+            throw new ExceptionsBD("Problème BD Client !");
         }
     }
 }
