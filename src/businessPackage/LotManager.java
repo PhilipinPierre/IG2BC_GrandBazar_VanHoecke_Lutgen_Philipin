@@ -1,4 +1,4 @@
 package businessPackage;
 
-public class LotBusiness {
+public class LotManager {
 }

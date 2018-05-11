@@ -19,6 +19,8 @@ public class RechercheArticlePerime extends JPanel {
         //ARTICLE PERIME ENTRE DEUX DATES
         panneauRecherche = new JPanel();
 
+        panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
+
         //DEBUT
         dateDebutLabel = new JLabel("Date début : ");
         //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
@@ -58,7 +60,7 @@ public class RechercheArticlePerime extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            /**/
+
         }
     }
 }
