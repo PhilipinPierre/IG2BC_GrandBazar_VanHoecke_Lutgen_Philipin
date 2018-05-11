@@ -1,4 +1,4 @@
 package dataAccessPackage;
 
-public class TypeArticleDA {
+public interface TypeArticleDA {
 }
