@@ -48,7 +48,8 @@ public class RechercheArticlePerime extends JPanel {
         validation.addActionListener(listenerValidation);
 
 
-        add(panneauRecherche, BorderLayout.SOUTH);
+        add(panneauRecherche, BorderLayout.CENTER);
+        add(panneauBouton, BorderLayout.NORTH);
 
         setVisible(true);
     }
