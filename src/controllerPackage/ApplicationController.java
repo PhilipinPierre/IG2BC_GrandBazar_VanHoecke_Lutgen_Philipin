@@ -1,6 +1,7 @@
 package controllerPackage;
 
 import businessPackage.*;
+import dataAccessPackage.FournisseurBDA;
 import exceptionsPackage.*;
 import modelPackage.*;
 import java.util.*;
@@ -36,9 +37,9 @@ public class ApplicationController {
         return client.getAllClient();
     }
 
-    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD
+    public ArrayList<Fournisseur> getAllFournisseur() throws Exception
     {
-        return fournisseur.getAllFournisseur();
+        return FournisseurBDA.getAllFournisseur();
     }
 
     public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD
