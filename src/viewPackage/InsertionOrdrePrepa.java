@@ -9,9 +9,9 @@ public class InsertionOrdrePrepa extends JPanel {
     private JPanel panneauInsertion;
     private JPanel panneauBoutons;
     //POUR LE FORMULAIRE
-    private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel;
-    private JLabel dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel;
-    private JLabel codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
+    private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
+            dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
+            codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
     private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
     private JRadioButton urgentTrue, urgentFalse;
@@ -172,7 +172,8 @@ public class InsertionOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-
+            /*insertionBD(dateCreation.getValue(), numeroSequentiel.getText(), quantitePrevu.getText(),
+                    quantiteProduite.getText(), dateVente.getValue(), datePrepa.getValue(), remarque.getText());*/
         }
     }
 
