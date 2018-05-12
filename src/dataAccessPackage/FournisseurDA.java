@@ -1,12 +1,10 @@
 package dataAccessPackage;
 
-import exceptionsPackage.ExceptionsBD;
-import modelPackage.Fournisseur;
-
-import javax.naming.NamingException;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import exceptionsPackage.*;
+import modelPackage.*;
+import java.util.*;
 
 public interface FournisseurDA {
-    ArrayList<Fournisseur> getAllFOurnisseur() throws ExceptionsBD, SQLException, NamingException;
+    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD;
 }
+

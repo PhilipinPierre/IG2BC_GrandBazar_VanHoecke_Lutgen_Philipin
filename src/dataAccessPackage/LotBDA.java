@@ -1,32 +1,33 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.Lot;
-
-import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import modelPackage.*;
+import java.sql.*;
+import java.util.*;
 
 public class LotBDA implements LotDA {
-    public ArrayList<Lot> getAllLot() throws SQLException, NamingException{
-        ArrayList<Lot> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from lot";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-            Lot lot = new Lot();
-            CompleterLot(donnees, lot);
-            liste.add(lot);
+    public ArrayList<Lot> getAllLot() throws ExceptionsBD {
+        try
+        {
+            ArrayList<Lot> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from lot";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while(donnees.next()){
+                Lot lot = new Lot();
+                CompleterLot(donnees, lot);
+                liste.add(lot);
+            }
+            return liste;
         }
-        return liste;
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("");
+        }
     }
 
-    private void CompleterLot(ResultSet donnees, Lot lot) throws SQLException{
+    private void CompleterLot(ResultSet donnees, Lot lot) throws SQLException {
         lot.setId(donnees.getString("id"));
         if(donnees.getDate("dateperemption")!=null){
             GregorianCalendar date = new GregorianCalendar();
@@ -46,7 +47,12 @@ public class LotBDA implements LotDA {
         dateCommande.setTime(donnees.getDate("datecommande"));
         lot.setDateCommande(dateCommande);
 
-        //A COMPLETER
+        TypeArticle t = new TypeArticle();
+        lot.setCodeBarre(t);
+        MembreDuPersonnel mb = new MembreDuPersonnel();
+        lot.setMatricule(mb);
+        Fournisseur f = new Fournisseur();
+        lot.setNumeroTVA(f);
 
     }
 }

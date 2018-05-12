@@ -1,7 +1,6 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-
 import java.sql.Connection;
 
 public class ConnectionBDA implements ConnectionDA{

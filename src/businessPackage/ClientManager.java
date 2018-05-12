@@ -16,7 +16,6 @@ public class ClientManager {
     public ArrayList<Client> getAllClient() throws ExceptionsBD
     {
         ArrayList<Client> clientList = clientBDA.getAllClient();
-
         return clientList;
     }
 

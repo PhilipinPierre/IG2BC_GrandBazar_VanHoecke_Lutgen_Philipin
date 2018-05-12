@@ -3,5 +3,5 @@ package dataAccessPackage;
 import exceptionsPackage.ExceptionsBD;
 
 public interface ConnectionDA {
-    void fermetureConnection() throws ExceptionsBD;
+    public void fermetureConnection() throws ExceptionsBD;
 }

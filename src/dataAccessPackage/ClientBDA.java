@@ -2,13 +2,8 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Client;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.sql.*;
+import java.util.*;
 
 public class ClientBDA implements ClientDA {
 
