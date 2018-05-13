@@ -1,9 +1,16 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionsPackage.ExceptionsBD;
+import modelPackage.MembreDuPersonnel;
+import modelPackage.OrdrePreparation;
+import modelPackage.Recette;
+import modelPackage.TypeArticle;
 import javax.swing.*;
-import javax.swing.JComboBox;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class InsertionOrdrePrepa extends JPanel {
     private JPanel panneauInsertion;
@@ -12,144 +19,172 @@ public class InsertionOrdrePrepa extends JPanel {
     private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
             dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
             codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
-    private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
+    private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque, matriculeResponsable;
     private JSpinner dateCreation, dateVente, datePrepa;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
-    private JComboBox nomRecette, codeBarre, matriculeCuisinier, matriculeResponsable;
+    private JComboBox nomRecette, codeBarre, matriculeCuisinier;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
+    private ApplicationController applicationController;
+    private ArrayList<Recette> listeRecette;
+    private ArrayList<TypeArticle> listeTypeArticle;
+    private ArrayList<MembreDuPersonnel> listeCuisinier;
 
 
-    public InsertionOrdrePrepa()
+    public InsertionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
     {
-        //FORMULAIRE
-        panneauInsertion = new JPanel();
+        try
+        {
+            this.applicationController = applicationController;
+            //FORMULAIRE
+            panneauInsertion = new JPanel();
 
-        panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
+            panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
 
-        //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
-        dateCreationLabel = new JLabel("Date : ");
-        //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-        dateCreationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(dateCreationLabel);
-        dateCreation = new JSpinner();
-        dateCreation.setModel(new SpinnerDateModel());
-        //BULLES D'AIDE
-        dateCreation.setToolTipText("Date de la création de l'ordre de préparation");
-        panneauInsertion.add(dateCreation);
+            //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
+            dateCreationLabel = new JLabel("Date : ");
+            //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
+            dateCreationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateCreationLabel);
+            dateCreation = new JSpinner();
+            dateCreation.setModel(new SpinnerDateModel());
+            //BULLES D'AIDE
+            dateCreation.setToolTipText("Date de la création de l'ordre de préparation");
+            panneauInsertion.add(dateCreation);
 
-        //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
-        numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
-        numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(numeroSequentielLabel);
-        numeroSequentiel = new JTextField();
-        panneauInsertion.add(numeroSequentiel);
+            //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
+            numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
+            numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(numeroSequentielLabel);
+            numeroSequentiel = new JTextField();
+            panneauInsertion.add(numeroSequentiel);
 
-        //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
-        quantitePrevueLabel = new JLabel("Quantité prévue : ");
-        quantitePrevueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(quantitePrevueLabel);
-        quantitePrevu = new JTextField();
-        panneauInsertion.add(quantitePrevu);
+            //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
+            quantitePrevueLabel = new JLabel("Quantité prévue : ");
+            quantitePrevueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(quantitePrevueLabel);
+            quantitePrevu = new JTextField();
+            panneauInsertion.add(quantitePrevu);
 
-        //QUANTITE PRODUITE
-        quantiteProduiteLabel = new JLabel("Quantité produite : ");
-        quantiteProduiteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(quantiteProduiteLabel);
-        quantiteProduite = new JTextField();
-        panneauInsertion.add(quantiteProduite);
+            //QUANTITE PRODUITE
+            quantiteProduiteLabel = new JLabel("Quantité produite : ");
+            quantiteProduiteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(quantiteProduiteLabel);
+            quantiteProduite = new JTextField();
+            panneauInsertion.add(quantiteProduite);
 
-        //DATE DE VENTE
-        dateVenteLabel = new JLabel("Date de vente : ");
-        dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(dateVenteLabel);
-        dateVente = new JSpinner();
-        dateVente.setModel(new SpinnerDateModel());
-        panneauInsertion.add(dateVente);
+            //DATE DE VENTE
+            dateVenteLabel = new JLabel("Date de vente : ");
+            dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateVenteLabel);
+            dateVente = new JSpinner();
+            dateVente.setModel(new SpinnerDateModel());
+            panneauInsertion.add(dateVente);
 
-        //DATE DE PREPARATION
-        datePrepaLabel = new JLabel("Date de préparation : ");
-        datePrepaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(datePrepaLabel);
-        datePrepa = new JSpinner();
-        datePrepa.setModel(new SpinnerDateModel());
-        panneauInsertion.add(datePrepa);
+            //DATE DE PREPARATION
+            datePrepaLabel = new JLabel("Date de préparation : ");
+            datePrepaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(datePrepaLabel);
+            datePrepa = new JSpinner();
+            datePrepa.setModel(new SpinnerDateModel());
+            panneauInsertion.add(datePrepa);
 
-        //REMARQUE
-        remarqueLabel = new JLabel("Remarque : ");
-        remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(remarqueLabel);
-        remarque = new JTextField();
-        panneauInsertion.add(remarque);
+            //REMARQUE
+            remarqueLabel = new JLabel("Remarque : ");
+            remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(remarqueLabel);
+            remarque = new JTextField();
+            panneauInsertion.add(remarque);
 
-        //URGENT ? OBLIGATOIRE
-        urgentTrue = new JRadioButton("Urgent", false);
-        panneauInsertion.add(urgentTrue);
-        urgentFalse = new JRadioButton("Pas urgent", false);
-        panneauInsertion.add(urgentFalse);
-        urgentButton = new ButtonGroup();
-        urgentButton.add(urgentTrue);
-        urgentButton.add(urgentFalse);
+            //URGENT ? OBLIGATOIRE
+            urgentTrue = new JRadioButton("Urgent", false);
+            panneauInsertion.add(urgentTrue);
+            urgentFalse = new JRadioButton("Pas urgent", false);
+            panneauInsertion.add(urgentFalse);
+            urgentButton = new ButtonGroup();
+            urgentButton.add(urgentTrue);
+            urgentButton.add(urgentFalse);
 
-        //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
-        nomRecetteLabel = new JLabel("Nom de la recette : ");
-        nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(nomRecetteLabel);
-        String [] valuesRecette = {"FK RECETTE"};
-        nomRecette = new JComboBox(valuesRecette);
-        nomRecette.setEnabled(false);
-        panneauInsertion.add(nomRecette);
+            //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
+            nomRecetteLabel = new JLabel("Nom de la recette : ");
+            nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(nomRecetteLabel);
+            listeRecette = applicationController.getAllRecette();
+            ArrayList<String> valuesRecette = new ArrayList<>();
+            for(Recette r : listeRecette)
+            {
+                valuesRecette.add(r.getNom());
+            }
+            nomRecette = new JComboBox(valuesRecette.toArray(new String[0]));
+            nomRecette.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauInsertion.add(nomRecette);
 
-        //CODE BARRE (FK TYPEARTICLE)
-        codeBarreLabel = new JLabel("Code Barre : ");
-        codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(codeBarreLabel);
-        String [] valuesTypeArticle = {"FK TYPEARTICLE"};
-        codeBarre = new JComboBox(valuesTypeArticle);
-        codeBarre.setEnabled(false);
-        panneauInsertion.add(codeBarre);
+            //CODE BARRE (FK TYPEARTICLE)
+            codeBarreLabel = new JLabel("Code Barre : ");
+            codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(codeBarreLabel);
+            listeTypeArticle = applicationController.getAllTypeArticle();
+            ArrayList<Integer> valuesTypeArticle = new ArrayList<>();
+            for(TypeArticle t : listeTypeArticle)
+            {
+                valuesTypeArticle.add(t.getCodeBarre());
+            }
+            codeBarre = new JComboBox(valuesTypeArticle.toArray(new String[0]));
+            codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauInsertion.add(codeBarre);
 
-        //MATRICULE CUISINE (FK CUISINIER)
-        matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
-        matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(matriculeCuisinierLabel);
-        String[] valuesCuisinier = {"FK CUISINIER"};
-        matriculeCuisinier = new JComboBox(valuesCuisinier);
-        matriculeCuisinier.setEnabled(false);
-        panneauInsertion.add(matriculeCuisinier);
+            //MATRICULE CUISINE (FK CUISINIER)
+            matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
+            matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(matriculeCuisinierLabel);
+            listeCuisinier = applicationController.getAllMembreDuPersonnel();
+            ArrayList<Integer> valuesCuisinier = new ArrayList<>();
+            for(MembreDuPersonnel mb : listeCuisinier)
+            {
+                valuesCuisinier.add(mb.getMatricule());
+            }
+            matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new String[0]));
+            matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauInsertion.add(matriculeCuisinier);
 
-        //MATRICULE RESPONSABLE OBLIGATOIRE (FK RESPONSABLE VENTE)
-        matriculeResponsableLabel = new JLabel("Matricule responsable vente : ");
-        matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauInsertion.add(matriculeResponsableLabel);
-        String[] valuesVente = {"FK VENTE"};
-        matriculeResponsable = new JComboBox(valuesVente);
-        matriculeResponsable.setEnabled(false);
-        panneauInsertion.add(matriculeResponsable);
+            //MATRICULE RESPONSABLE OBLIGATOIRE (FK RESPONSABLE VENTE)
+            matriculeResponsableLabel = new JLabel("Matricule responsable vente : ");
+            matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(matriculeResponsableLabel);
+            matriculeResponsable = new JTextField();
+            matriculeResponsable.setEnabled(false);
+            matriculeResponsable.setText(ordrePreparation.getMatriculeRes().getMatricule() + " " + ordrePreparation.getMatriculeRes().getNom());
+            panneauInsertion.add(matriculeResponsable);
 
-        //BOUTONS
-        panneauBoutons = new JPanel();
+            //BOUTONS
+            panneauBoutons = new JPanel();
 
-        panneauBoutons.setLayout(new FlowLayout());
+            panneauBoutons.setLayout(new FlowLayout());
 
-        retour = new JButton("Retour");
-        panneauBoutons.add(retour);
-        ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
-        retour.addActionListener(listenerRetour);
-        validation = new JButton("Validation");
-        panneauBoutons.add(validation);
-        ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
-        validation.addActionListener(listenerValidation);
-        reinitialiser = new JButton("Réinitialiser");
-        panneauBoutons.add(reinitialiser);
-        ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
-        reinitialiser.addActionListener(listenerReinitialiser);
+            retour = new JButton("Retour");
+            panneauBoutons.add(retour);
+            ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
+            retour.addActionListener(listenerRetour);
+            validation = new JButton("Validation");
+            panneauBoutons.add(validation);
+            ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
+            validation.addActionListener(listenerValidation);
+            reinitialiser = new JButton("Réinitialiser");
+            panneauBoutons.add(reinitialiser);
+            ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
+            reinitialiser.addActionListener(listenerReinitialiser);
 
-        add(panneauInsertion, BorderLayout.CENTER);
-        add(panneauBoutons, BorderLayout.SOUTH);
+            add(panneauInsertion, BorderLayout.CENTER);
+            add(panneauBoutons, BorderLayout.SOUTH);
 
-        setVisible(true);
+            setVisible(true);
+        }
+        catch (ExceptionsBD ebd)
+        {
+            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     //CLASSES PRIVEES POUR LES BOUTONS

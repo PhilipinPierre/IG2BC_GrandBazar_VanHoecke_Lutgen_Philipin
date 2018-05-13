@@ -17,6 +17,7 @@ public class ApplicationController {
     private OrdrePreparationManager ordrePreparation;
     private RecetteManager recette;
     private TypeArticleManager typeArticle;
+    ResponsableDesVentes responsableDesVentes;
 
     public ApplicationController()
     {
@@ -69,6 +70,16 @@ public class ApplicationController {
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
         return recette.getAllRecette();
+    }
+
+    /*public MembreDuPersonnel getUtilisateur(String utilisateur, String motDePasse) throws ExceptionsBD
+    {
+        return membreDuPersonnel.getUtilisateur(utilisateur, motDePasse);
+    }*/
+
+    public void fermetureConnection() throws ExceptionsBD
+    {
+        connection.fermetureConnection();
     }
 
 }

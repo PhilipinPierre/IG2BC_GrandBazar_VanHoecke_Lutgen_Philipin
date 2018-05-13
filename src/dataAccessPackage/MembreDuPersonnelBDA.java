@@ -52,4 +52,5 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         dateSortie.setTime(donnees.getDate("dateSortie"));
         membreDuPersonnel.setDateNaissance(dateSortie);
     }
+
 }

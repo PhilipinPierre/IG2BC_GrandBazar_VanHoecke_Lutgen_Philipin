@@ -1,5 +1,9 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionsPackage.ExceptionsBD;
+import modelPackage.OrdrePreparation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,17 +19,28 @@ public class FenetrePrincipale extends JFrame {
     private ModificationOrdrePrepa modificationOrdrePrepa;
     private SuppressionOrdrePrepa suppressionOrdrePrepa;
     private RechercheArticlePerime rechercheArtPerim;
+    private ApplicationController applicationController;
+    private OrdrePreparation ordrePreparation;
 
-    public FenetrePrincipale()
+    public FenetrePrincipale(ApplicationController applicationController)
     {
         super("Welcome !");
+        this.applicationController = applicationController;
         setBounds(500, 100, 600, 600);
 
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing (WindowEvent e)
             {
-                System.exit(0);
+                try
+                {
+                    applicationController.fermetureConnection();
+                    System.exit(0);
+                }
+                catch (ExceptionsBD ebd)
+                {
+                    JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -68,7 +83,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                insertionOrdrePrepa = new InsertionOrdrePrepa();
+                insertionOrdrePrepa = new InsertionOrdrePrepa(applicationController, ordrePreparation);
                 container.add(insertionOrdrePrepa);
                 setVisible(true);
             }
@@ -140,7 +155,15 @@ public class FenetrePrincipale extends JFrame {
     {
         public void actionPerformed(ActionEvent event)
         {
-            System.exit(0);
+            try
+            {
+                applicationController.fermetureConnection();
+                System.exit(0);
+            }
+            catch (ExceptionsBD ebd)
+            {
+                JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

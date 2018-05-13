@@ -16,4 +16,15 @@ public class MembreDuPersonnelManager {
         return membreDuPersonnelList;
     }
 
+    /*public MembreDuPersonnel getUtilisateur(String matricule, String motDePasse) throws ExceptionsBD
+    {
+        try
+        {
+            return membreDuPersonnelBDA.getUtilisateur(Integer.parseInt(matricule), motDePasse);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }*/
 }
