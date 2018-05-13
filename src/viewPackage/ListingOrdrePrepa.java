@@ -32,6 +32,4 @@ public class ListingOrdrePrepa extends JPanel {
         }
     }
 
-
-
 }
