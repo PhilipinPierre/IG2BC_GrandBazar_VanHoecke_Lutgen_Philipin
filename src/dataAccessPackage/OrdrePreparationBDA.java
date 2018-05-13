@@ -1,28 +1,32 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.*;
-import java.sql.*;
-import java.util.*;
+import modelPackage.OrdrePreparation;
+
+import javax.naming.NamingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD {
-        try
-        {
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
+        try {
             ArrayList<OrdrePreparation> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from ordrepreparation";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
-            while(donnees.next()){
+            while (donnees.next()) {
                 OrdrePreparation ordrePreparation = new OrdrePreparation();
                 completerOrdrePreparation(donnees, ordrePreparation);
                 liste.add(ordrePreparation);
             }
             return liste;
-        }
-        catch (Exception e){
-            throw new ExceptionsBD("la recherche des clients dans la base de donnée");
+        } catch (Exception e){
+            throw  new ExceptionsBD("recherche de tout les ordres de préparations");
         }
     }
 
@@ -51,14 +55,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             ordrePreparation.setRemarque(donnees.getString("remarque"));
         ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
-        TypeArticle t = new TypeArticle();
-        ordrePreparation.setCodeBarre(t);
-        Cuisinier c = new Cuisinier();
-        ordrePreparation.setMatriculeCui(c);
-        ResponsableDesVentes rv = new ResponsableDesVentes();
-        ordrePreparation.setMatriculeRes(rv);
-        Recette r = new Recette();
-        ordrePreparation.setNom(r);
+        //A COMPLETER
 
     }
 }

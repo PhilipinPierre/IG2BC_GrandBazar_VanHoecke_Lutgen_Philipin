@@ -2,8 +2,11 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Lot;
+
+import javax.naming.NamingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface LotDA {
-    public ArrayList<Lot> getAllLot() throws ExceptionsBD;
+    ArrayList<Lot> getAllLot() throws ExceptionsBD;
 }

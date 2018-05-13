@@ -1,37 +1,40 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
+import modelPackage.Cuisinier;
 import modelPackage.MembreDuPersonnel;
-import java.sql.*;
-import java.util.*;
+
+import javax.naming.NamingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
-    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD {
-        try
-        {
+    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD{
+        try {
             ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from MembreDuPersonnel";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
-            while(donnees.next()){
+            while (donnees.next()) {
                 MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
                 CompleterMDP(donnees, membreDuPersonnel);
-                if(membreDuPersonnel.getDateSortie() == null)
+                if (membreDuPersonnel.getDateSortie() == null)
                     liste.add(membreDuPersonnel);
             }
             return liste;
-        }
-        catch (Exception e)
-        {
-            throw new ExceptionsBD("Problème BD MembrePerso");
+        } catch (Exception e){
+            throw  new ExceptionsBD("recherche de tout les membres du personnel");
         }
     }
 
-    /*protected void CompleterMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
+    protected void CompleterMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"));
             CompleterMDP(donnees, membreDuPersonnel);
-    }*/
+    }
 
     private void CompleterMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
@@ -40,17 +43,6 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         membreDuPersonnel.setCodePostal(donnees.getInt("codepostal"));
         membreDuPersonnel.setLocalite(donnees.getString("localite"));
 
-        GregorianCalendar dateNaiss = new GregorianCalendar();
-        dateNaiss.setTime(donnees.getDate("dateNaissance"));
-        membreDuPersonnel.setDateNaissance(dateNaiss);
-
-        GregorianCalendar dateEntree = new GregorianCalendar();
-        dateEntree.setTime(donnees.getDate("dateEntree"));
-        membreDuPersonnel.setDateEntree(dateEntree);
-
-        GregorianCalendar dateSortie = new GregorianCalendar();
-        dateSortie.setTime(donnees.getDate("dateSortie"));
-        membreDuPersonnel.setDateNaissance(dateSortie);
     }
 
 }

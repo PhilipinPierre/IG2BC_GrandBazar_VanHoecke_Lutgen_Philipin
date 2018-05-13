@@ -2,29 +2,32 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
-import java.sql.*;
-import java.util.*;
+
+import javax.naming.NamingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
-    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD {
-        try
-        {
+    public ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD{
+        try {
             ArrayList<TypeArticle> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from typearticle";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
 
-            while(donnees.next()){
+            while (donnees.next()) {
                 TypeArticle typeArticle = new TypeArticle();
                 completerTypeArticle(donnees, typeArticle);
                 liste.add(typeArticle);
             }
             return liste;
-        }
-        catch (Exception e)
-        {
-            throw new ExceptionsBD("Probleme BD TYPEarticle");
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche de tout les type d'articles");
         }
     }
 
@@ -45,5 +48,7 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
         typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
         typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));
+
+        //A COMPLETER
     }
 }
