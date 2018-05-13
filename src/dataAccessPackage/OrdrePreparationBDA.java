@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 
 import javax.naming.NamingException;
@@ -52,5 +53,16 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
         //A COMPLETER
 
+    }
+
+    public void NewOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert into OrdrePreparation values ?,?,?,?,?,?,?,?,?,?,?,?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+
+        } catch (Exception e){
+            throw new ExceptionsBD(" insertion d'un ordre de préparation ");
+        }
     }
 }
