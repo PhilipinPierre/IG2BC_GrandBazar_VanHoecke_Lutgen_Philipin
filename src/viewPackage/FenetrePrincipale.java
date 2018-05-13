@@ -19,13 +19,15 @@ public class FenetrePrincipale extends JFrame {
     private ModificationOrdrePrepa modificationOrdrePrepa;
     private SuppressionOrdrePrepa suppressionOrdrePrepa;
     private RechercheArticlePerime rechercheArtPerim;
-    private ApplicationController applicationController;
-    private OrdrePreparation ordrePreparation;
+    private ListingOrdrePrepa listingOrdrePrepa;
+    private ApplicationController applicationController; //DANS FENETRE LOG IN PLUS TARD !!!!
+    private OrdrePreparation ordrePreparation; //PAREIL
 
-    public FenetrePrincipale(ApplicationController applicationController)
+    public FenetrePrincipale()
     {
         super("Welcome !");
-        this.applicationController = applicationController;
+        applicationController = new ApplicationController();
+        ordrePreparation = new OrdrePreparation();
         setBounds(500, 100, 600, 600);
 
         this.addWindowListener(new WindowAdapter()
@@ -115,12 +117,21 @@ public class FenetrePrincipale extends JFrame {
             container.add(suppressionOrdrePrepa);
             setVisible(true);
         }
-    });
+        });
 
         //AJOUT D'UN LISING DANS LE MENU DANS FONCTIONNALITES
         listing = new JMenuItem("Listing");
         listing.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         fonctMenu.add(listing);
+        listing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.removeAll();
+                listingOrdrePrepa = new ListingOrdrePrepa(applicationController, ordrePreparation);
+                container.add(listingOrdrePrepa);
+                setVisible(true);
+            }
+        });
 
         //RECHERCHE ARTICLE PERIME ENTRE 2 DATES
         rechercheArticlePerime = new JMenuItem("Recherche Périmé");

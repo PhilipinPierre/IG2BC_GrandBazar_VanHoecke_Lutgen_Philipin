@@ -17,7 +17,6 @@ public class ApplicationController {
     private OrdrePreparationManager ordrePreparation;
     private RecetteManager recette;
     private TypeArticleManager typeArticle;
-    ResponsableDesVentes responsableDesVentes;
 
     public ApplicationController()
     {

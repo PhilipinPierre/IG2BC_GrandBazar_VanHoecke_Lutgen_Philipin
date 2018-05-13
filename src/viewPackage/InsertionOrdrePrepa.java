@@ -27,6 +27,7 @@ public class InsertionOrdrePrepa extends JPanel {
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
+    private OrdrePreparation ordrePreparation;
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<MembreDuPersonnel> listeCuisinier;
@@ -37,6 +38,7 @@ public class InsertionOrdrePrepa extends JPanel {
         try
         {
             this.applicationController = applicationController;
+            this.ordrePreparation = ordrePreparation;
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
