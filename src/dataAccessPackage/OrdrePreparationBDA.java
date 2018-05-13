@@ -1,6 +1,5 @@
 package dataAccessPackage;
 
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 
 import javax.naming.NamingException;
@@ -12,26 +11,21 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
-        try {
-            ArrayList<OrdrePreparation> liste = new ArrayList<>();
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()) {
-                OrdrePreparation ordrePreparation = new OrdrePreparation();
-                CompleterOrdrePreparation(donnees, ordrePreparation);
-                liste.add(ordrePreparation);
-            }
-            return liste;
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws SQLException, NamingException{
+        ArrayList<OrdrePreparation> liste = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requeteSQL = "select * from ordrepreparation";
+        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+        ResultSet donnees = preparedStatement.executeQuery();
+        while(donnees.next()){
+            OrdrePreparation ordrePreparation = new OrdrePreparation();
+            completerOrdrePreparation(donnees, ordrePreparation);
+            liste.add(ordrePreparation);
         }
-        catch(Exception e){
-            throw new ExceptionsBD(" recherche des ordres de préparation");
-        }
+        return liste;
     }
 
-    private void CompleterOrdrePreparation(ResultSet donnees, OrdrePreparation ordrePreparation)throws SQLException{
+    private void completerOrdrePreparation(ResultSet donnees, OrdrePreparation ordrePreparation)throws SQLException{
         GregorianCalendar date = new GregorianCalendar();
         date.setTime(donnees.getDate("date"));
         ordrePreparation.setDate(date);
@@ -58,16 +52,5 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
         //A COMPLETER
 
-    }
-
-    public void NewOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
-        try{
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "insert into OrdrePreparation values ?,?,?,?,?,?,?,?,?,?,?,?";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-
-        } catch (Exception e){
-            throw new ExceptionsBD(" insertion d'un ordre de préparation ");
-        }
     }
 }

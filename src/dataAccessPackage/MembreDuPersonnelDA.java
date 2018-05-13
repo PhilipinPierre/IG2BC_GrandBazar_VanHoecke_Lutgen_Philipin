@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface MembreDuPersonnelDA {
-    ArrayList<MembreDuPersonnel> getAllMdp() throws ExceptionsBD;
+    ArrayList<MembreDuPersonnel> getAllMdp() throws ExceptionsBD, SQLException, NamingException;
 }

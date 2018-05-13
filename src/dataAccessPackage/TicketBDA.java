@@ -13,22 +13,18 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class TicketBDA {
-    ArrayList<Ticket> getAllTicket()throws ExceptionsBD{
-        try {
-            ArrayList<Ticket> liste = new ArrayList<>();
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from Ticket";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()) {
-                Ticket ticket = new Ticket();
-                completerTicket(donnees, ticket);
-                liste.add(ticket);
-            }
-            return liste;
-        } catch (Exception e){
-            throw new ExceptionsBD("recherche de tout les ticket");
+    ArrayList<Ticket> getAllTicket()throws SQLException, NamingException{
+        ArrayList<Ticket> liste = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requeteSQL = "select * from Ticket";
+        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+        ResultSet donnees = preparedStatement.executeQuery();
+        while (donnees.next()){
+            Ticket ticket = new Ticket();
+            completerTicket(donnees, ticket);
+            liste.add(ticket);
         }
+        return liste;
     }
 
     private void completerTicket(ResultSet donnees, Ticket ticket)throws SQLException{

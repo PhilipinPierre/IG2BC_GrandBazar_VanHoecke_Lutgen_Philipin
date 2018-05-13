@@ -1,6 +1,5 @@
 package dataAccessPackage;
 
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.ArticlePerime;
 import modelPackage.Lot;
 
@@ -13,23 +12,18 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class ArticlePerimeBDA implements ArticlePerimeDA {
-    public ArrayList<ArticlePerime> getAllArticlePerime() throws ExceptionsBD{
-        try {
-            ArrayList<ArticlePerime> liste = new ArrayList<>();
-
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from articleperime";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()) {
-                ArticlePerime articlePerime = new ArticlePerime();
-                CompleterArticlePerime(donnees, articlePerime);
-                liste.add(articlePerime);
-            }
-            return liste;
-        } catch (Exception e){
-            throw new ExceptionsBD("recherche de tout les articles périmé");
+    public ArrayList<ArticlePerime> getAllArticlePerime() throws SQLException, NamingException{
+        ArrayList<ArticlePerime> liste = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requeteSQL = "select * from articleperime";
+        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+        ResultSet donnees = preparedStatement.executeQuery();
+        while(donnees.next()){
+           ArticlePerime articlePerime = new ArticlePerime();
+            CompleterArticlePerime(donnees, articlePerime);
+            liste.add(articlePerime);
         }
+        return liste;
     }
 
     private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException{

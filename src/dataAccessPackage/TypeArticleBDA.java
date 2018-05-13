@@ -12,23 +12,19 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
-    public ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD{
-        try {
-            ArrayList<TypeArticle> liste = new ArrayList<>();
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
+    public ArrayList<TypeArticle> getAllTypeArticle()throws SQLException, NamingException{
+        ArrayList<TypeArticle> liste = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requeteSQL = "select * from typearticle";
+        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+        ResultSet donnees = preparedStatement.executeQuery();
 
-            while (donnees.next()) {
-                TypeArticle typeArticle = new TypeArticle();
-                completerTypeArticle(donnees, typeArticle);
-                liste.add(typeArticle);
-            }
-            return liste;
-        } catch (Exception e){
-            throw new ExceptionsBD("recherche de tout les types d'articles");
+        while(donnees.next()){
+            TypeArticle typeArticle = new TypeArticle();
+            completerTypeArticle(donnees, typeArticle);
+            liste.add(typeArticle);
         }
+        return liste;
     }
 
     private void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{

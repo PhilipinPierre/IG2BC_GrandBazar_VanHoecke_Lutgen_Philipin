@@ -16,5 +16,4 @@ public class ConnectionManager {
     {
         cda.fermetureConnection();
     }
-
 }

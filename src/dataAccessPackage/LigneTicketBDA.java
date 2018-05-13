@@ -11,23 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LigneTicketBDA implements LigneTicketDA {
-    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD{
-        try {
-            ArrayList<LigneTicket> liste = new ArrayList<>();
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ligneticket";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
+    public ArrayList<LigneTicket> getAllLigneTicket() throws SQLException, NamingException{
+        ArrayList<LigneTicket> liste = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requeteSQL = "select * from ligneticket";
+        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+        ResultSet donnees = preparedStatement.executeQuery();
 
-            while (donnees.next()) {
-                LigneTicket ligneTicket = new LigneTicket();
-                completerLigneTicket(donnees, ligneTicket);
-                liste.add(ligneTicket);
-            }
-            return liste;
-        } catch (Exception e){
-            throw  new ExceptionsBD("recherche de toute les lignes de ticket");
+        while(donnees.next()){
+            LigneTicket ligneTicket = new LigneTicket();
+            completerLigneTicket(donnees, ligneTicket);
+            liste.add(ligneTicket);
         }
+        return liste;
     }
 
     private void completerLigneTicket(ResultSet donnees, LigneTicket ligneTicket){
