@@ -11,19 +11,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FournisseurBDA /*implements FournisseurDA*/ {
-    public static ArrayList<Fournisseur> getAllFournisseur() throws Exception{
-        ArrayList<Fournisseur> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from fournisseur";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnes = preparedStatement.executeQuery();
-        while (donnes.next()){
-            Fournisseur fournisseur = new Fournisseur();
-            CompleterFournisseur(donnes, fournisseur);
-            liste.add(fournisseur);
+    public static ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD{
+        try {
+            ArrayList<Fournisseur> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from fournisseur";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnes = preparedStatement.executeQuery();
+            while (donnes.next()) {
+                Fournisseur fournisseur = new Fournisseur();
+                CompleterFournisseur(donnes, fournisseur);
+                liste.add(fournisseur);
+            }
+            return liste;
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche de tout les fournisseurs");
         }
-
-        return liste;
     }
 
     private static void CompleterFournisseur(ResultSet donnees, Fournisseur fournisseur)throws Exception{

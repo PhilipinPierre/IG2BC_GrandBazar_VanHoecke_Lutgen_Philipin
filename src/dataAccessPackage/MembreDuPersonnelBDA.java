@@ -12,23 +12,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
-    public ArrayList<MembreDuPersonnel> getAllMdp() throws SQLException, NamingException{
-        ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from MembreDuPersonnel";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-            MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
-            CompleterMDP(donnees, membreDuPersonnel);
-            if(membreDuPersonnel.getDateSortie() == null)
-                liste.add(membreDuPersonnel);
+    public ArrayList<MembreDuPersonnel> getAllMdp() throws ExceptionsBD{
+        try {
+            ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from MembreDuPersonnel";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()) {
+                MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
+                CompleterMDP(donnees, membreDuPersonnel);
+                if (membreDuPersonnel.getDateSortie() == null)
+                    liste.add(membreDuPersonnel);
+            }
+            return liste;
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche de tout les memebres du personnel");
         }
-        return liste;
     }
 
     protected void CompleterMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
-        if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"));
+        if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"))
             CompleterMDP(donnees, membreDuPersonnel);
     }
 

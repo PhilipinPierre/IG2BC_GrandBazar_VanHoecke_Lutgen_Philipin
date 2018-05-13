@@ -12,18 +12,22 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class LotBDA implements LotDA {
-    public ArrayList<Lot> getAllLot() throws SQLException, NamingException{
-        ArrayList<Lot> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from lot";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-            Lot lot = new Lot();
-            CompleterLot(donnees, lot);
-            liste.add(lot);
+    public ArrayList<Lot> getAllLot() throws ExceptionsBD{
+        try {
+            ArrayList<Lot> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from lot";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()) {
+                Lot lot = new Lot();
+                CompleterLot(donnees, lot);
+                liste.add(lot);
+            }
+            return liste;
+        } catch (Exception e){
+            throw  new ExceptionsBD("recherche de tout les lots");
         }
-        return liste;
     }
 
     private void CompleterLot(ResultSet donnees, Lot lot) throws SQLException{
