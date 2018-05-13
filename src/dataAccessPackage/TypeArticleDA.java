@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface TypeArticleDA {
-    ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD, SQLException, NamingException;
+    ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD;
 }

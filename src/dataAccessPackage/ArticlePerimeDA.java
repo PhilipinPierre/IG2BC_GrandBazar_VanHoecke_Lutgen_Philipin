@@ -1,9 +1,11 @@
 package dataAccessPackage;
 
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.ArticlePerime;
+
+import javax.naming.NamingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ArticlePerimeDA {
-    public ArrayList<ArticlePerime> getAllArticlePerime() throws ExceptionsBD;
+    ArrayList<ArticlePerime> getAllArticlePerime() throws SQLException, NamingException;
 }

@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 
 import javax.naming.NamingException;
@@ -11,18 +12,22 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws SQLException, NamingException{
-        ArrayList<OrdrePreparation> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from ordrepreparation";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-            OrdrePreparation ordrePreparation = new OrdrePreparation();
-            completerOrdrePreparation(donnees, ordrePreparation);
-            liste.add(ordrePreparation);
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
+        try {
+            ArrayList<OrdrePreparation> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from ordrepreparation";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()) {
+                OrdrePreparation ordrePreparation = new OrdrePreparation();
+                completerOrdrePreparation(donnees, ordrePreparation);
+                liste.add(ordrePreparation);
+            }
+            return liste;
+        } catch (Exception e){
+            throw  new ExceptionsBD("recherche de tout les ordres de préparations");
         }
-        return liste;
     }
 
     private void completerOrdrePreparation(ResultSet donnees, OrdrePreparation ordrePreparation)throws SQLException{
