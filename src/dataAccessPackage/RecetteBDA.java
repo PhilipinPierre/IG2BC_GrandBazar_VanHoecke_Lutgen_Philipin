@@ -20,7 +20,7 @@ public class RecetteBDA implements RecetteDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 Recette recette = new Recette();
-                completerRecette(donnees, recette);
+                CompleterRecette(donnees, recette);
                 liste.add(recette);
             }
             return liste;
@@ -29,10 +29,24 @@ public class RecetteBDA implements RecetteDA {
         }
     }
 
-    private void completerRecette(ResultSet donnees, Recette recette) throws SQLException{
+    protected static Recette getRecette(String nom) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from recette where nom = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            Recette recette = new Recette();
+            CompleterRecette(donnees, recette);
+            return recette;
+        }catch (Exception e){
+            throw  new ExceptionsBD("recherche de la recette " + nom);
+        }
+    }
+
+    private static void CompleterRecette(ResultSet donnees, Recette recette) throws SQLException{
         recette.setNom(donnees.getString("nom"));
         recette.setDescriptif(donnees.getString("descriptif"));
-        Integer DLC = new Integer(donnees.getInt("dlc"));
+        Integer DLC = donnees.getInt("dlc");
         recette.setDLC(DLC);
     }
 

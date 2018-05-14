@@ -36,23 +36,26 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         ordrePreparation.setDate(date);
         Integer numeroSequentiel = new Integer(donnees.getInt("numerosequential"));
         ordrePreparation.setNumeroSequentiel(numeroSequentiel);
-        Integer quantiteprevue = new Integer(donnees.getInt("quantiteprevue"));
+        Integer quantiteprevue = donnees.getInt("quantiteprevue");
         ordrePreparation.setQuantitePrevue(quantiteprevue);
-        Integer quantiteProduite = new Integer(donnees.getInt("quantiteproduite"));
-        if(quantiteProduite != null)
-            ordrePreparation.setQuantitePrevue(quantiteProduite);
-        if(donnees.getDate("datevente")!=null){
+        Integer quantitéProduite = donnees.getInt("quantiteproduite");
+        if(!donnees.wasNull())
+            ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteproduite"));
+        java.sql.Date dateTest = donnees.getDate("datevente");
+        if(!donnees.wasNull()){
             GregorianCalendar dateVente = new GregorianCalendar();
-            dateVente.setTime(donnees.getDate("datevente"));
+            dateVente.setTime(dateTest);
             ordrePreparation.setDateVente(dateVente);
         }
-        if(donnees.getDate("datePreparation")!=null){
+        dateTest = donnees.getDate("datepreparation");
+        if(!donnees.wasNull()){
             GregorianCalendar datePreparation = new GregorianCalendar();
-            datePreparation.setTime(donnees.getDate("datePreparation"));
+            datePreparation.setTime(dateTest);
             ordrePreparation.setDatePreparation(datePreparation);
         }
-        if(donnees.getString("remarque")!=null)
-            ordrePreparation.setRemarque(donnees.getString("remarque"));
+        String remarque = donnees.getString("remarque");
+        if(!donnees.wasNull())
+            ordrePreparation.setRemarque(remarque);
         ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
         //A COMPLETER

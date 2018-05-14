@@ -31,7 +31,13 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
     }
 
-    private void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{
+    protected static TypeArticle getTypeArticle(int codeBarre){
+
+        TypeArticle typeArticle = new TypeArticle();
+        return typeArticle;
+    }
+
+    private static void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
         typeArticle.setLibelle(donnees.getString("libelle"));
         typeArticle.setPrix(donnees.getDouble("prix"));
