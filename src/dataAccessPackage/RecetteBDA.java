@@ -23,7 +23,6 @@ public class RecetteBDA implements RecetteDA {
                 recette.setNom(donnees.getString("titre"));
                 liste.add(recette);
             }
-            return liste;
         } catch (Exception e){
             throw new ExceptionsBD("recherche de toute les recettes");
         }
