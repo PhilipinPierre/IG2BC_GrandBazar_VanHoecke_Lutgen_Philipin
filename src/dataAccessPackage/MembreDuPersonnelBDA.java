@@ -32,11 +32,11 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
     }
 
     protected void CompleterMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
-        if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"));
+        if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"))
             CompleterMDP(donnees, membreDuPersonnel);
     }
 
-    private void CompleterMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
+    private static void CompleterMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
         membreDuPersonnel.setNom(donnees.getString("nom"));
         membreDuPersonnel.setPrenom(donnees.getString("prenom"));
@@ -45,4 +45,17 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
 
     }
 
+    protected static MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from memebredupersonnel where matricule = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
+            CompleterMDP(donnees, membreDuPersonnel);
+            return membreDuPersonnel;
+        } catch (Exception e){
+            throw  new ExceptionsBD("recherche d'un memebre du personnel");
+        }
+    }
 }
