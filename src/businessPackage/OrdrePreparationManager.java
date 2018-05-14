@@ -1,12 +1,13 @@
 package businessPackage;
 
 import dataAccessPackage.OrdrePreparationBDA;
+import dataAccessPackage.OrdrePreparationDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 import java.util.ArrayList;
 
 public class OrdrePreparationManager {
-    private OrdrePreparationBDA ordrePreparationBDA;
+    private OrdrePreparationDA ordrePreparationBDA;
 
     public OrdrePreparationManager() {ordrePreparationBDA = new OrdrePreparationBDA();}
 

@@ -1,12 +1,13 @@
 package businessPackage;
 
 import dataAccessPackage.ClientBDA;
+import dataAccessPackage.ClientDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Client;
 import java.util.ArrayList;
 
 public class ClientManager {
-    private ClientBDA clientBDA;
+    private ClientDA clientBDA;
 
     public ClientManager()
     {

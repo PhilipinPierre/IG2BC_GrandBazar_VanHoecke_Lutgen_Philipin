@@ -2,8 +2,11 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.LigneTicket;
+import modelPackage.Ticket;
+import modelPackage.TypeArticle;
 
 import javax.naming.NamingException;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +33,14 @@ public class LigneTicketBDA implements LigneTicketDA {
         }
     }
 
-    private void completerLigneTicket(ResultSet donnees, LigneTicket ligneTicket){
-        //A COMPLETER
+    private void completerLigneTicket(ResultSet donnees, LigneTicket ligneTicket) throws SQLException {
+        TypeArticle t = new TypeArticle();
+        ligneTicket.setTypeArticle(t);
+        Ticket tk = new Ticket();
+        ligneTicket.setTicket(tk);
+        Integer quantite = new Integer(donnees.getInt("quantite"));
+        ligneTicket.setQuantite(quantite);
+        Double prixReel = new Double(donnees.getDouble("prixReel"));
+        ligneTicket.setPrixReel(prixReel);
     }
 }

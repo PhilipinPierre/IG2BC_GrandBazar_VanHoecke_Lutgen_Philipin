@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FournisseurBDA /*implements FournisseurDA*/ {
-    public static ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD{
+public class FournisseurBDA implements FournisseurDA {
+    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD{
         try {
             ArrayList<Fournisseur> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();

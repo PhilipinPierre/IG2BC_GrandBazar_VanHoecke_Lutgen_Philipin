@@ -1,12 +1,13 @@
 package businessPackage;
 
 import dataAccessPackage.MembreDuPersonnelBDA;
+import dataAccessPackage.MembreDuPersonnelDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.MembreDuPersonnel;
 import java.util.ArrayList;
 
 public class MembreDuPersonnelManager {
-    private MembreDuPersonnelBDA membreDuPersonnelBDA;
+    private MembreDuPersonnelDA membreDuPersonnelBDA;
 
     public MembreDuPersonnelManager() {membreDuPersonnelBDA = new MembreDuPersonnelBDA();}
 

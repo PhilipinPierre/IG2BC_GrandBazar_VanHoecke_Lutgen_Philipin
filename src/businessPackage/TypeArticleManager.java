@@ -1,13 +1,14 @@
 package businessPackage;
 
 import dataAccessPackage.TypeArticleBDA;
+import dataAccessPackage.TypeArticleDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
 
 import java.util.ArrayList;
 
 public class TypeArticleManager {
-    private TypeArticleBDA typeArticleBDA;
+    private TypeArticleDA typeArticleBDA;
 
     public TypeArticleManager() {typeArticleBDA = new TypeArticleBDA();}
 

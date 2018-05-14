@@ -10,7 +10,7 @@ public class SingletonConnexion {
     public static Connection getInstance() throws SQLException, NamingException{
         if(instance == null){
             Context context = new InitialContext();
-            DataSource source = (DataSource)context.lookup("jdbc/dbmagasin");
+            DataSource source = (DataSource)context.lookup("jdbc:mysql://localhost:3306/dbmagasin");
             instance = source.getConnection();
         }
         return instance;

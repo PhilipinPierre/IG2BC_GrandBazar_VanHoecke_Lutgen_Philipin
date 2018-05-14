@@ -1,7 +1,10 @@
 package dataAccessPackage;
 
+import exceptionsPackage.ExceptionsBD;
 import modelPackage.ArticlePerime;
 import modelPackage.Lot;
+import modelPackage.MembreDuPersonnel;
+import modelPackage.TypeArticle;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -12,18 +15,25 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class ArticlePerimeBDA implements ArticlePerimeDA {
-    public ArrayList<ArticlePerime> getAllArticlePerime() throws SQLException, NamingException{
-        ArrayList<ArticlePerime> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from articleperime";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-           ArticlePerime articlePerime = new ArticlePerime();
-            CompleterArticlePerime(donnees, articlePerime);
-            liste.add(articlePerime);
+    public ArrayList<ArticlePerime> getAllArticlePerime() throws ExceptionsBD {
+        try
+        {
+            ArrayList<ArticlePerime> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from articleperime";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while(donnees.next()){
+                ArticlePerime articlePerime = new ArticlePerime();
+                CompleterArticlePerime(donnees, articlePerime);
+                liste.add(articlePerime);
+            }
+            return liste;
         }
-        return liste;
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("la recherche de article périmé dans la base de donnée");
+        }
     }
 
     private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException{
@@ -34,6 +44,9 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         date.setTime(donnees.getDate("date"));
         articlePerime.setDate(date);
 
-        //A COMPLETER
+        MembreDuPersonnel mb = new MembreDuPersonnel();
+        articlePerime.setMatricule(mb);
+        TypeArticle t = new TypeArticle();
+        articlePerime.setCodeBarre(t);
     }
 }

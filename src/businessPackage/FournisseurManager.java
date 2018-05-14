@@ -1,13 +1,14 @@
 package businessPackage;
 
 import dataAccessPackage.FournisseurBDA;
+import dataAccessPackage.FournisseurDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Fournisseur;
 import java.util.ArrayList;
 
 public class FournisseurManager {
 
-    private FournisseurBDA fournisseurBDA;
+    private FournisseurDA fournisseurBDA;
 
     public FournisseurManager() {fournisseurBDA = new FournisseurBDA();}
 

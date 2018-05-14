@@ -11,18 +11,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CategorieArcticleBDA implements CategorieArticleDA {
-    public ArrayList<CategorieArticle> getAllCategorieArticle()throws SQLException, NamingException{
-        ArrayList<CategorieArticle> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from categoriearticle";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while(donnees.next()){
-            CategorieArticle categorieArticle = new CategorieArticle();
-            CompleterCategorieArticle(donnees, categorieArticle);
-            liste.add(categorieArticle);
+    public ArrayList<CategorieArticle> getAllCategorieArticle()throws ExceptionsBD {
+        try
+        {
+            ArrayList<CategorieArticle> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from categoriearticle";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while(donnees.next()){
+                CategorieArticle categorieArticle = new CategorieArticle();
+                CompleterCategorieArticle(donnees, categorieArticle);
+                liste.add(categorieArticle);
+            }
+            return liste;
         }
-        return liste;
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("Problème recherche catégorie article");
+        }
+
     }
 
     private void CompleterCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException{

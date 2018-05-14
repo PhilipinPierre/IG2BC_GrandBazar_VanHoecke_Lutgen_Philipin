@@ -1,9 +1,9 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.OrdrePreparation;
+import modelPackage.*;
 
-import javax.naming.NamingException;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,7 +55,13 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             ordrePreparation.setRemarque(donnees.getString("remarque"));
         ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
-        //A COMPLETER
-
+        Cuisinier c = new Cuisinier();
+        ordrePreparation.setMatriculeCui(c);
+        Recette r = new Recette();
+        ordrePreparation.setNom(r);
+        ResponsableDesVentes rv = new ResponsableDesVentes();
+        ordrePreparation.setMatriculeRes(rv);
+        TypeArticle t = new TypeArticle();
+        ordrePreparation.setCodeBarre(t);
     }
 }

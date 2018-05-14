@@ -1,7 +1,9 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
+import modelPackage.Fournisseur;
 import modelPackage.Lot;
+import modelPackage.MembreDuPersonnel;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -50,7 +52,10 @@ public class LotBDA implements LotDA {
         dateCommande.setTime(donnees.getDate("datecommande"));
         lot.setDateCommande(dateCommande);
 
-        //A COMPLETER
+        Fournisseur f = new Fournisseur();
+        lot.setNumeroTVA(f);
+        MembreDuPersonnel mb = new MembreDuPersonnel();
+        lot.setMatricule(mb);
 
     }
 }
