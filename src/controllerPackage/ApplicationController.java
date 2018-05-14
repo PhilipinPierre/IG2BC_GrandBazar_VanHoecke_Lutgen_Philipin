@@ -71,4 +71,14 @@ public class ApplicationController {
         return recette.getAllRecette();
     }
 
+    /*public MembreDuPersonnel getUtilisateur(String utilisateur, String motDePasse) throws ExceptionsBD
+    {
+        return membreDuPersonnel.getUtilisateur(utilisateur, motDePasse);
+    }*/
+
+    public void fermetureConnection() throws ExceptionsBD
+    {
+        connection.fermetureConnection();
+    }
+
 }

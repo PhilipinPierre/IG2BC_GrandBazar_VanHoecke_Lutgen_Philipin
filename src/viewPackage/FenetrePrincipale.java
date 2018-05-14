@@ -1,5 +1,9 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionsPackage.ExceptionsBD;
+import modelPackage.OrdrePreparation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,17 +19,30 @@ public class FenetrePrincipale extends JFrame {
     private ModificationOrdrePrepa modificationOrdrePrepa;
     private SuppressionOrdrePrepa suppressionOrdrePrepa;
     private RechercheArticlePerime rechercheArtPerim;
+    private ListingOrdrePrepa listingOrdrePrepa;
+    private ApplicationController applicationController; //DANS FENETRE LOG IN PLUS TARD !!!!
+    private OrdrePreparation ordrePreparation; //PAREIL
 
     public FenetrePrincipale()
     {
         super("Welcome !");
+        applicationController = new ApplicationController();
+        ordrePreparation = new OrdrePreparation();
         setBounds(500, 100, 600, 600);
 
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing (WindowEvent e)
             {
-                System.exit(0);
+                try
+                {
+                    applicationController.fermetureConnection();
+                    System.exit(0);
+                }
+                catch (ExceptionsBD ebd)
+                {
+                    JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -68,7 +85,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                insertionOrdrePrepa = new InsertionOrdrePrepa();
+                insertionOrdrePrepa = new InsertionOrdrePrepa(applicationController, ordrePreparation);
                 container.add(insertionOrdrePrepa);
                 setVisible(true);
             }
@@ -100,12 +117,21 @@ public class FenetrePrincipale extends JFrame {
             container.add(suppressionOrdrePrepa);
             setVisible(true);
         }
-    });
+        });
 
         //AJOUT D'UN LISING DANS LE MENU DANS FONCTIONNALITES
         listing = new JMenuItem("Listing");
         listing.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         fonctMenu.add(listing);
+        listing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.removeAll();
+                listingOrdrePrepa = new ListingOrdrePrepa(applicationController, ordrePreparation);
+                container.add(listingOrdrePrepa);
+                setVisible(true);
+            }
+        });
 
         //RECHERCHE ARTICLE PERIME ENTRE 2 DATES
         rechercheArticlePerime = new JMenuItem("Recherche Périmé");
@@ -140,7 +166,15 @@ public class FenetrePrincipale extends JFrame {
     {
         public void actionPerformed(ActionEvent event)
         {
-            System.exit(0);
+            try
+            {
+                applicationController.fermetureConnection();
+                System.exit(0);
+            }
+            catch (ExceptionsBD ebd)
+            {
+                JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
