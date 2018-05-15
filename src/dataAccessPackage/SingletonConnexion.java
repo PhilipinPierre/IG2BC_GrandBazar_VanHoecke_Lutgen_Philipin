@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 public class SingletonConnexion {
     private static Connection instance;
 
-    private SingletonConnexion(){};
+    private SingletonConnexion(){}
 
     public static Connection getInstance() throws SQLException, NamingException{
         if(instance == null){
