@@ -30,7 +30,7 @@ public class FournisseurBDA implements FournisseurDA {
         }
     }
 
-    private static void CompleterFournisseur(ResultSet donnees, Fournisseur fournisseur)throws Exception{
+    protected static void CompleterFournisseur(ResultSet donnees, Fournisseur fournisseur)throws Exception{
         Integer numeroTva = new Integer(donnees.getInt("numerotva"));
         fournisseur.setNumeroTVA(numeroTva);
         fournisseur.setNom(donnees.getString("nom"));

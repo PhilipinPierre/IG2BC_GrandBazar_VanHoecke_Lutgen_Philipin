@@ -17,4 +17,8 @@ public class LotManager {
         return lotList;
     }
 
+    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+        return lotBDA.RechercheLotViaLocaliteFournisseur(localite);
+    }
+
 }

@@ -5,7 +5,6 @@ import modelPackage.Fournisseur;
 import modelPackage.Lot;
 import modelPackage.MembreDuPersonnel;
 
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +29,25 @@ public class LotBDA implements LotDA {
         } catch (Exception e){
             throw  new ExceptionsBD("recherche de tout les lots");
         }
+    }
+
+    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+        ArrayList<Lot> liste = new ArrayList<>();
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from lot where NumeroTVA = (select numeroTVA from fournisseur where localite = ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setString(1, localite);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while(donnees.next()){
+                Lot lot = new Lot();
+                CompleterLot(donnees, lot);
+                liste.add(lot);
+            }
+        } catch (Exception e){
+            throw new ExceptionsBD("Recherche de tout les lots via la localité du fournisseur");
+        }
+        return liste;
     }
 
     public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
