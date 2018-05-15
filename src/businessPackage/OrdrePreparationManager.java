@@ -13,12 +13,19 @@ public class OrdrePreparationManager {
 
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
     {
-        ArrayList<OrdrePreparation> ordrePreparationList = ordrePreparationBDA.getAllOrdrePreparation();
-        return ordrePreparationList;
+        return ordrePreparationBDA.getAllOrdrePreparation();
     }
 
     public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparationBDA.getNumSeqOrdrePreparation();
+    }
+
+    public OrdrePreparation rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
+        return ordrePreparationBDA.rechercheOrdrePreparationViaNumSeq(numeroSequentiel);
+    }
+
+    public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        ordrePreparationBDA.SupprimerOrdrePreparation(numeroSequentiel);
     }
 
 }
