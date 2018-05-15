@@ -30,7 +30,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         ArrayList<OrdrePreparation> liste = new ArrayList<>();
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation";
+            String requeteSQL = "select numerosequentiel from ordrepreparation";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()){
@@ -46,6 +46,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
     public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         try{
+            System.out.println(numeroSequentiel);
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "delete * from ordrepreparation where numerosequentiel = " + numeroSequentiel;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
