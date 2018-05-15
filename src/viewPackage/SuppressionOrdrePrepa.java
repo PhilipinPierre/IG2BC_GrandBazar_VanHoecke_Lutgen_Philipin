@@ -90,6 +90,13 @@ public class SuppressionOrdrePrepa extends JPanel {
             try
             {
                 applicationController.SupprimerOrdrePreparation(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
+                removeAll();
+                validate();
+
+                add(new SuppressionOrdrePrepa(applicationController, ordrePreparation), BorderLayout.CENTER);
+
+                revalidate();
+                repaint();
             }
             catch (Exception e)
             {
