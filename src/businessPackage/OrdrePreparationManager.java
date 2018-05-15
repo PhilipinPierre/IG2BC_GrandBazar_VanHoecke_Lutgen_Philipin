@@ -28,4 +28,8 @@ public class OrdrePreparationManager {
         ordrePreparationBDA.SupprimerOrdrePreparation(numeroSequentiel);
     }
 
+    public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        ordrePreparationBDA.SetOrdrePreparation(ordrePreparation);
+    }
+
 }

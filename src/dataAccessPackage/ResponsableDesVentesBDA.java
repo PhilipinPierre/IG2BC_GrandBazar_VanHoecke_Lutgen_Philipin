@@ -15,7 +15,7 @@ public class ResponsableDesVentesBDA extends MembreDuPersonnelBDA implements Res
         try {
             ArrayList<ResponsableDesVentes> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from membredupersonnel m, responsabledesventes r where m.matricule = r.matricule_res";
+            String requeteSQL = "select * from membredupersonnel m, responsablevente r where m.matricule = r.matricule_res";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {

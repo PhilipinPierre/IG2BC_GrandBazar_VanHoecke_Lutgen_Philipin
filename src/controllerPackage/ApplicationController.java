@@ -94,4 +94,8 @@ public class ApplicationController {
         connection.fermetureConnection();
     }
 
+    public void SetOrdrePreparation(OrdrePreparation ordrePrep) throws ExceptionsBD{
+        ordrePreparation.SetOrdrePreparation(ordrePrep);
+    }
+
 }
