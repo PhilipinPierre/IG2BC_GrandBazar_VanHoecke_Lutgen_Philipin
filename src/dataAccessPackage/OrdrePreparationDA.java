@@ -11,4 +11,5 @@ import java.util.ArrayList;
 public interface OrdrePreparationDA {
     ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD;
     ArrayList<Integer> getNumSeqOrdrePreparation()throws ExceptionsBD;
+    ArrayList<OrdrePreparation> rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD;
 }
