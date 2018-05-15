@@ -5,5 +5,5 @@ import modelPackage.Client;
 import java.util.ArrayList;
 
 public interface ClientDA {
-    public ArrayList<Client> getAllClient() throws ExceptionsBD;
+    ArrayList<Client> getAllClient() throws ExceptionsBD;
 }
