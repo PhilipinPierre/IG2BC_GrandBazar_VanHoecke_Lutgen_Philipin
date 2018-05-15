@@ -227,23 +227,16 @@ public class InsertionOrdrePrepa extends JPanel {
                 ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
                 ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
                 ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
-
                 GregorianCalendar dateC = new GregorianCalendar();
                 dateC.setTime(dateCreationModel.getDate());
                 ordrePreparation.setDate(dateC);
-
                 GregorianCalendar dateP = new GregorianCalendar();
                 dateP.setTime(datePrepaModel.getDate());
-                ordrePreparation.setDate(dateP);
-
+                ordrePreparation.setDatePreparation(dateP);
                 GregorianCalendar dateV = new GregorianCalendar();
                 dateV.setTime(dateVenteModel.getDate());
-                ordrePreparation.setDate(dateV);
-
-                //ordrePreparation.setDatePreparation((GregorianCalendar) datePrepa.getValue());
-                //ordrePreparation.setDateVente((GregorianCalendar)dateVente.getValue());
+                ordrePreparation.setDateVente(dateV);
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
-
                 applicationController.SetOrdrePreparation(ordrePreparation);
 
             }
