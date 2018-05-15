@@ -29,8 +29,8 @@ public class InsertionOrdrePrepa extends JPanel {
     private OrdrePreparation ordrePreparation;
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
-    private ArrayList<MembreDuPersonnel> listeCuisinier;
-    private ArrayList<MembreDuPersonnel> listeResponsableVente;
+    private ArrayList<Cuisinier> listeCuisinier;
+    private ArrayList<ResponsableDesVentes> listeResponsableVente;
 
 
     public InsertionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
@@ -140,11 +140,11 @@ public class InsertionOrdrePrepa extends JPanel {
             matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
             matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeCuisinierLabel);
-            listeCuisinier = applicationController.getAllMembreDuPersonnel();
+            listeCuisinier = applicationController.getAllCuisinier();
             ArrayList<Integer> valuesCuisinier = new ArrayList<>();
-            for(MembreDuPersonnel mb : listeCuisinier)
+            for(Cuisinier c : listeCuisinier)
             {
-                valuesCuisinier.add(mb.getMatricule());
+                valuesCuisinier.add(c.getMatricule());
             }
             matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new Integer[0]));
             matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
@@ -154,11 +154,11 @@ public class InsertionOrdrePrepa extends JPanel {
             matriculeResponsableLabel = new JLabel("Matricule responsable vente : ");
             matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeResponsableLabel);
-            listeResponsableVente = applicationController.getAllMembreDuPersonnel();
+            listeResponsableVente = applicationController.getAllResponsableDesVentes();
             ArrayList<Integer> valuesResponsableVente = new ArrayList<>();
-            for(MembreDuPersonnel mbV : listeResponsableVente)
+            for(ResponsableDesVentes rv : listeResponsableVente)
             {
-                valuesResponsableVente.add(mbV.getMatricule());
+                valuesResponsableVente.add(rv.getMatricule());
             }
             matriculeResponsable = new JComboBox(valuesResponsableVente.toArray(new Integer[0]));
             matriculeResponsable.setEnabled(true);
@@ -230,10 +230,6 @@ public class InsertionOrdrePrepa extends JPanel {
             dateVente.setModel(new SpinnerDateModel());
             datePrepa.setModel(new SpinnerDateModel());
             remarque.setText(null);
-            nomRecette.setEnabled(false);
-            codeBarre.setEnabled(false);
-            matriculeCuisinier.setEnabled(false);
-            matriculeResponsable.setEnabled(false);
             urgentButton.clearSelection();
 
         }
