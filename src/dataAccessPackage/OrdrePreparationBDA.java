@@ -26,6 +26,23 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
+    public ArrayList<Integer> getNumSeqOrdrePreparation()throws ExceptionsBD{
+        try{
+            ArrayList<Integer> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select numerosequentiel from ordrepreparation";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()){
+                Integer integer = new Integer(donnees.getInt("numerosequentiel"));
+                liste.add(integer);
+            }
+            return liste;
+        }catch (Exception e){
+            throw new ExceptionsBD("Recherche des Numéro Séquentiels des ordres de préparations inaccessible");
+        }
+    }
+
     public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
