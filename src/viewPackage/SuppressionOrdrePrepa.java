@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Calendar;
 
 public class SuppressionOrdrePrepa extends JPanel {
     private JPanel panneau;
@@ -17,7 +15,7 @@ public class SuppressionOrdrePrepa extends JPanel {
     private JLabel numeroSequentielLabel;
     private JComboBox numeroSequentiel;
     //POUR LES BOUTONS
-    private JButton retour, validation, reinitialiser;
+    private JButton retour, validation;
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
     private ArrayList<OrdrePreparation> listeOrdrePreparation;

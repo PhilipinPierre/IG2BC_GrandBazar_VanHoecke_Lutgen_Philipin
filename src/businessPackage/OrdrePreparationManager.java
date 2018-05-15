@@ -20,10 +20,6 @@ public class OrdrePreparationManager {
         return ordrePreparationBDA.getNumSeqOrdrePreparation();
     }
 
-    public OrdrePreparation rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
-        return ordrePreparationBDA.rechercheOrdrePreparationViaNumSeq(numeroSequentiel);
-    }
-
     public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         ordrePreparationBDA.SupprimerOrdrePreparation(numeroSequentiel);
     }

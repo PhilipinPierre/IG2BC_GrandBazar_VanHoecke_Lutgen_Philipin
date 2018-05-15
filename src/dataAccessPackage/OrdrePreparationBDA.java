@@ -30,7 +30,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         ArrayList<OrdrePreparation> liste = new ArrayList<>();
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select numerosequentiel from ordrepreparation";
+            String requeteSQL = "select * from ordrepreparation";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()){
@@ -46,35 +46,13 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
     public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         try{
-            OrdrePreparation ordrePreparation = rechercheOrdrePreparationViaNumSeq(numeroSequentiel);
-            if(ordrePreparation != null){
-                Connection connection = SingletonConnexion.getInstance();
-                String requeteSQL = "delete * from ordrepreparation where numerosequentiel = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-                preparedStatement.setInt(1, numeroSequentiel);
-                preparedStatement.executeQuery();
-            }
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "delete * from ordrepreparation where numerosequentiel = " + numeroSequentiel;
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            //preparedStatement.setInt(1, numeroSequentiel);
+            preparedStatement.executeQuery();
         } catch (Exception e){
             throw new ExceptionsBD("Impossible de supprimer cet ordre de préparation " + numeroSequentiel);
-        }
-    }
-
-    public OrdrePreparation rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
-        try{
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation where numerosequeltion = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()){
-                if(donnees.getInt("numerosequentiel") == numeroSequentiel){
-                OrdrePreparation ordrePreparation = new OrdrePreparation();
-                completerOrdrePreparation(donnees, ordrePreparation);
-                return ordrePreparation;
-                }
-            }
-            return null;
-        } catch (Exception e){
-            throw  new ExceptionsBD(" recherche d'un ordre de préparation impossible");
         }
     }
 

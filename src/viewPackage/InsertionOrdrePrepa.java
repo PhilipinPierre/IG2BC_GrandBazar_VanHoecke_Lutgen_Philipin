@@ -234,18 +234,24 @@ public class InsertionOrdrePrepa extends JPanel {
 
                 GregorianCalendar dateP = new GregorianCalendar();
                 dateP.setTime(datePrepaModel.getDate());
-                ordrePreparation.setDate(dateP);
+                ordrePreparation.setDatePreparation(dateP);
 
                 GregorianCalendar dateV = new GregorianCalendar();
                 dateV.setTime(dateVenteModel.getDate());
-                ordrePreparation.setDate(dateV);
+                ordrePreparation.setDateVente(dateV);
 
-                //ordrePreparation.setDatePreparation((GregorianCalendar) datePrepa.getValue());
-                //ordrePreparation.setDateVente((GregorianCalendar)dateVente.getValue());
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
                 applicationController.SetOrdrePreparation(ordrePreparation);
 
+                dateCreation = new JSpinner(dateCreationModel);
+                numeroSequentiel.setText(null);
+                quantitePrevu.setText(null);
+                quantiteProduite.setText(null);
+                dateVente = new JSpinner(dateVenteModel);
+                datePrepa = new JSpinner(datePrepaModel);
+                remarque.setText(null);
+                urgentButton.clearSelection();
             }
             catch (Exception e)
             {
@@ -258,12 +264,12 @@ public class InsertionOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            dateCreation.setModel(new SpinnerDateModel());
+            dateCreation = new JSpinner(dateCreationModel);
             numeroSequentiel.setText(null);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
-            dateVente.setModel(new SpinnerDateModel());
-            datePrepa.setModel(new SpinnerDateModel());
+            dateVente = new JSpinner(dateVenteModel);
+            datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();
 
