@@ -42,19 +42,21 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
-    public ArrayList<OrdrePreparation> rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
+
+    public OrdrePreparation rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
         try{
-            ArrayList<OrdrePreparation> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from ordrepreparation where numerosequeltion = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()){
+                if(donnees.getInt("numerosequentiel") == numeroSequentiel){
                 OrdrePreparation ordrePreparation = new OrdrePreparation();
                 completerOrdrePreparation(donnees, ordrePreparation);
-                liste.add(ordrePreparation);
+                return ordrePreparation;
+                }
             }
-            return liste;
+            return null;
         } catch (Exception e){
             throw  new ExceptionsBD(" recherche d'un ordre de préparation impossible");
         }
