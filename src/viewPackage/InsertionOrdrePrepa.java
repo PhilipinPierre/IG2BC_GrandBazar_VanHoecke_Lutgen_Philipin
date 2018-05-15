@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Calendar;
 
 public class InsertionOrdrePrepa extends JPanel {
     private JPanel panneauInsertion;
@@ -131,12 +130,12 @@ public class InsertionOrdrePrepa extends JPanel {
             codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(codeBarreLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
-            ArrayList<String> valuesTypeArticle = new ArrayList<>();
+            ArrayList<Integer> valuesTypeArticle = new ArrayList<>();
             for(TypeArticle t : listeTypeArticle)
             {
-                valuesTypeArticle.add(t.getLibelle());
+                valuesTypeArticle.add(t.getCodeBarre());
             }
-            codeBarre = new JComboBox(valuesTypeArticle.toArray(new String[0]));
+            codeBarre = new JComboBox(valuesTypeArticle.toArray(new Integer[0]));
             codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
             panneauInsertion.add(codeBarre);
 
@@ -232,9 +231,11 @@ public class InsertionOrdrePrepa extends JPanel {
                 GregorianCalendar dateC = new GregorianCalendar();
                 dateC.setTime(dateCreationModel.getDate());
                 ordrePreparation.setDate(dateC);
+
                 GregorianCalendar dateP = new GregorianCalendar();
                 dateP.setTime(datePrepaModel.getDate());
                 ordrePreparation.setDate(dateP);
+
                 GregorianCalendar dateV = new GregorianCalendar();
                 dateV.setTime(dateVenteModel.getDate());
                 ordrePreparation.setDate(dateV);

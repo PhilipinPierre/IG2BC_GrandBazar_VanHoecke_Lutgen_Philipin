@@ -87,14 +87,10 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 preparedStatement.setNull(4, Types.INTEGER);
             else
                 preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
-            if(ordrePreparation.getDateVente() == null)
-                preparedStatement.setNull(5, Types.TIMESTAMP);
-            else
-                preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
-            if(ordrePreparation.getDatePreparation() == null)
-                preparedStatement.setNull(6, Types.TIMESTAMP);
-            else
-                preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+
+            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+
             if(ordrePreparation.getRemarque() == null)
                 preparedStatement.setNull(7, Types.VARCHAR);
             else
@@ -104,9 +100,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             if(ordrePreparation.getCodeBarre().getCodeBarre() == null)
                 preparedStatement.setNull(10, Types.INTEGER);
             else {
-                TypeArticleBDA typeArticleBDA = new TypeArticleBDA();
-                Integer rech = typeArticleBDA.rechercheTypeArticleViaLibelle(ordrePreparation.getCodeBarre().getLibelle());
-                preparedStatement.setInt(10, rech);
+                preparedStatement.setInt(10, ordrePreparation.getCodeBarre().getCodeBarre());
             }
             if(ordrePreparation.getMatriculeCui().getMatricule() == null)
                 preparedStatement.setNull(11, Types.INTEGER);
@@ -114,9 +108,10 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 preparedStatement.setInt(11, ordrePreparation.getMatriculeCui().getMatricule());
             preparedStatement.setInt(12, ordrePreparation.getMatriculeRes().getMatricule());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (Exception e){
+            System.out.println(e);
             throw  new ExceptionsBD(" accès à la base de données");
         }
     }

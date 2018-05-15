@@ -22,7 +22,7 @@ public class TypeArticleBDA implements TypeArticleDA{
 
             while (donnees.next()) {
                 TypeArticle typeArticle = new TypeArticle();
-                typeArticle.setLibelle(donnees.getString("Libelle"));
+                typeArticle.setCodeBarre(donnees.getInt("codebarre"));
                 liste.add(typeArticle);
             }
         } catch (Exception e){
