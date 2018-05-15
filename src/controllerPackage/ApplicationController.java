@@ -84,6 +84,14 @@ public class ApplicationController {
         return recette.getAllRecette();
     }
 
+    public ArrayList<OrdrePreparation> getNumSeqOrdrePreparation() throws  ExceptionsBD{
+        return ordrePreparation.getNumSeqOrdrePreparation();
+    }
+
+    public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        ordrePreparation.SupprimerOrdrePreparation(numeroSequentiel);
+    }
+
     /*public MembreDuPersonnel getUtilisateur(String utilisateur, String motDePasse) throws ExceptionsBD
     {
         return membreDuPersonnel.getUtilisateur(utilisateur, motDePasse);
