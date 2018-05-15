@@ -113,7 +113,7 @@ public class FenetrePrincipale extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             container.removeAll();
-            suppressionOrdrePrepa = new SuppressionOrdrePrepa();
+            suppressionOrdrePrepa = new SuppressionOrdrePrepa(applicationController, ordrePreparation);
             container.add(suppressionOrdrePrepa);
             setVisible(true);
         }

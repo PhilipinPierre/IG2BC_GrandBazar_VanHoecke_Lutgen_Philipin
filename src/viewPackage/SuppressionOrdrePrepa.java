@@ -12,12 +12,9 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 
 public class SuppressionOrdrePrepa extends JPanel {
-    private JPanel panneauInsertion;
-    private JPanel panneauBoutons;
+    private JPanel panneau;
     //POUR LE FORMULAIRE
-    private JLabel dateCreationLabel, numeroSequentielLabel;
-    private JSpinner dateCreation;
-    private SpinnerDateModel dateCreationModel;
+    private JLabel numeroSequentielLabel;
     private JComboBox numeroSequentiel;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
@@ -33,24 +30,15 @@ public class SuppressionOrdrePrepa extends JPanel {
             this.applicationController = applicationController;
             this.ordrePreparation = ordrePreparation;
             //FORMULAIRE
-            panneauInsertion = new JPanel();
+            panneau = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
-
-            //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
-            dateCreationLabel = new JLabel("Date du jour : ");
-            //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-            dateCreationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            panneauInsertion.add(dateCreationLabel);
-            dateCreationModel = new SpinnerDateModel();
-            dateCreation = new JSpinner(dateCreationModel);
-            panneauInsertion.add(dateCreation);
+            panneau.setLayout(new GridLayout(2, 2, 5, 5));
 
             //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
             numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            panneauInsertion.add(numeroSequentielLabel);
-            listeOrdrePreparation = applicationController.getAllOrdrePreparation();
+            panneau.add(numeroSequentielLabel);
+            listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
             ArrayList<Integer> valuesNumeroSequentiel = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePreparation)
             {
@@ -58,28 +46,19 @@ public class SuppressionOrdrePrepa extends JPanel {
             }
             numeroSequentiel = new JComboBox(valuesNumeroSequentiel.toArray(new Integer[0]));
             numeroSequentiel.setEnabled(true);
-            panneauInsertion.add(numeroSequentiel);
+            panneau.add(numeroSequentiel);
 
             //BOUTONS
-            panneauBoutons = new JPanel();
-
-            panneauBoutons.setLayout(new FlowLayout());
-
             retour = new JButton("Retour");
-            panneauBoutons.add(retour);
+            panneau.add(retour);
             ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
-            validation = new JButton("Validation");
-            panneauBoutons.add(validation);
+            validation = new JButton("Suppression");
+            panneau.add(validation);
             ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
-            reinitialiser = new JButton("Réinitialiser");
-            panneauBoutons.add(reinitialiser);
-            ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
-            reinitialiser.addActionListener(listenerReinitialiser);
 
-            add(panneauInsertion, BorderLayout.CENTER);
-            add(panneauBoutons, BorderLayout.SOUTH);
+            add(panneau, BorderLayout.CENTER);
 
             setVisible(true);
         }
@@ -112,24 +91,13 @@ public class SuppressionOrdrePrepa extends JPanel {
         {
             try
             {
-
-                ordrePreparation.setNumeroSequentiel(listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex()));
-
-                applicationController.SupprimerOrdrePreparation(ordrePreparation);
-
+                applicationController.SupprimerOrdrePreparation(numeroSequentiel.getSelectedIndex());
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données 3", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneau, e.getMessage(), "Erreur d'accès aux données 3", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private class ButtonListenerReinitialiser implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
-            dateCreation.setModel(new SpinnerDateModel());
-        }
-    }
 }

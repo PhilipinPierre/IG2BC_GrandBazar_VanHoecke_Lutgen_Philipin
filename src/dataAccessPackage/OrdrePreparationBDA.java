@@ -49,8 +49,9 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             OrdrePreparation ordrePreparation = rechercheOrdrePreparationViaNumSeq(numeroSequentiel);
             if(ordrePreparation != null){
                 Connection connection = SingletonConnexion.getInstance();
-                String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
+                String requeteSQL = "delete from ordrepreparation where numerosequentiel = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+                preparedStatement.setInt(1, numeroSequentiel);
                 preparedStatement.executeQuery();
             }
         } catch (Exception e){
