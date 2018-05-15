@@ -19,7 +19,7 @@ public class SuppressionOrdrePrepa extends JPanel {
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
     private ArrayList<OrdrePreparation> listeOrdrePreparation;
-
+    private ArrayList<Integer> valuesNumeroSequentiel;
 
     public SuppressionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
     {
@@ -37,7 +37,7 @@ public class SuppressionOrdrePrepa extends JPanel {
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneau.add(numeroSequentielLabel);
             listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
-            ArrayList<Integer> valuesNumeroSequentiel = new ArrayList<>();
+            valuesNumeroSequentiel = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePreparation)
             {
                 valuesNumeroSequentiel.add(op.getNumeroSequentiel());
@@ -89,7 +89,7 @@ public class SuppressionOrdrePrepa extends JPanel {
         {
             try
             {
-                applicationController.SupprimerOrdrePreparation(numeroSequentiel.getSelectedIndex() +1);
+                applicationController.SupprimerOrdrePreparation(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
             }
             catch (Exception e)
             {
