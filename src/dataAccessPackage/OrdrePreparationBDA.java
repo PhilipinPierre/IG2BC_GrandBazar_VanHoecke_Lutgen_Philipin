@@ -103,8 +103,11 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             preparedStatement.setString(9, ordrePreparation.getNom().getNom());
             if(ordrePreparation.getCodeBarre().getCodeBarre() == null)
                 preparedStatement.setNull(10, Types.INTEGER);
-            else
-                preparedStatement.setInt(10, ordrePreparation.getCodeBarre().getCodeBarre());
+            else {
+                TypeArticleBDA typeArticleBDA = new TypeArticleBDA();
+                Integer rech = typeArticleBDA.rechercheTypeArticleViaLibelle(ordrePreparation.getCodeBarre().getLibelle());
+                preparedStatement.setInt(10, rech);
+            }
             if(ordrePreparation.getMatriculeCui().getMatricule() == null)
                 preparedStatement.setNull(11, Types.INTEGER);
             else
