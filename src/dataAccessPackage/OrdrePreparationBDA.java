@@ -26,6 +26,40 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
+    public ArrayList<Integer> getNumSeqOrdrePreparation()throws ExceptionsBD{
+        try{
+            ArrayList<Integer> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select numerosequentiel from ordrepreparation";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()){
+                liste.add(donnees.getInt("numerosequentiel"));
+            }
+            return liste;
+        }catch (Exception e){
+            throw new ExceptionsBD("Recherche des Numéro Séquentiels des ordres de préparations inaccessible");
+        }
+    }
+
+    public ArrayList<OrdrePreparation> rechercheOrdrePreparationViaNumSeq(Integer numeroSequentiel) throws ExceptionsBD{
+        try{
+            ArrayList<OrdrePreparation> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from ordrepreparation where numerosequeltion = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()){
+                OrdrePreparation ordrePreparation = new OrdrePreparation();
+                completerOrdrePreparation(donnees, ordrePreparation);
+                liste.add(ordrePreparation);
+            }
+            return liste;
+        } catch (Exception e){
+            throw  new ExceptionsBD(" recherche d'un ordre de préparation impossible");
+        }
+    }
+
     public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
@@ -72,11 +106,11 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         GregorianCalendar date = new GregorianCalendar();
         date.setTime(donnees.getDate("date"));
         ordrePreparation.setDate(date);
-        Integer numeroSequentiel = new Integer(donnees.getInt("numerosequential"));
+        Integer numeroSequentiel = donnees.getInt("numerosequential");
         ordrePreparation.setNumeroSequentiel(numeroSequentiel);
         Integer quantiteprevue = donnees.getInt("quantiteprevue");
         ordrePreparation.setQuantitePrevue(quantiteprevue);
-        Integer quantitéProduite = donnees.getInt("quantiteproduite");
+        Integer quantiteProduite = donnees.getInt("quantiteproduite");
         if(!donnees.wasNull())
             ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteproduite"));
         java.sql.Date dateTest = donnees.getDate("datevente");

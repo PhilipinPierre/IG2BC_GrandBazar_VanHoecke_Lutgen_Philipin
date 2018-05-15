@@ -17,4 +17,8 @@ public class OrdrePreparationManager {
         return ordrePreparationList;
     }
 
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
+        return ordrePreparationBDA.getNumSeqOrdrePreparation();
+    }
+
 }
