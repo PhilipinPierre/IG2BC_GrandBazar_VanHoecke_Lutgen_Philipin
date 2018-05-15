@@ -2,10 +2,8 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.MembreDuPersonnel;
-import modelPackage.OrdrePreparation;
-import modelPackage.Recette;
-import modelPackage.TypeArticle;
+import modelPackage.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,11 +18,11 @@ public class InsertionOrdrePrepa extends JPanel {
     private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
             dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
             codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
-    private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque, matriculeResponsable;
+    private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
-    private JComboBox nomRecette, codeBarre, matriculeCuisinier;
+    private JComboBox nomRecette, codeBarre, matriculeCuisinier, matriculeResponsable;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
@@ -32,6 +30,7 @@ public class InsertionOrdrePrepa extends JPanel {
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<MembreDuPersonnel> listeCuisinier;
+    private ArrayList<MembreDuPersonnel> listeResponsableVente;
 
 
     public InsertionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
@@ -128,10 +127,10 @@ public class InsertionOrdrePrepa extends JPanel {
             codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(codeBarreLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
-            ArrayList<Integer> valuesTypeArticle = new ArrayList<>();
+            ArrayList<String> valuesTypeArticle = new ArrayList<>();
             for(TypeArticle t : listeTypeArticle)
             {
-                valuesTypeArticle.add(t.getCodeBarre());
+                valuesTypeArticle.add(t.getLibelle());
             }
             codeBarre = new JComboBox(valuesTypeArticle.toArray(new String[0]));
             codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
@@ -147,7 +146,7 @@ public class InsertionOrdrePrepa extends JPanel {
             {
                 valuesCuisinier.add(mb.getMatricule());
             }
-            matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new String[0]));
+            matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new Integer[0]));
             matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
             panneauInsertion.add(matriculeCuisinier);
 
@@ -155,9 +154,14 @@ public class InsertionOrdrePrepa extends JPanel {
             matriculeResponsableLabel = new JLabel("Matricule responsable vente : ");
             matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeResponsableLabel);
-            matriculeResponsable = new JTextField();
-            matriculeResponsable.setEnabled(false);
-            matriculeResponsable.setText(ordrePreparation.getMatriculeRes().getMatricule() + " " + ordrePreparation.getMatriculeRes().getNom());
+            listeResponsableVente = applicationController.getAllMembreDuPersonnel();
+            ArrayList<Integer> valuesResponsableVente = new ArrayList<>();
+            for(MembreDuPersonnel mbV : listeResponsableVente)
+            {
+                valuesResponsableVente.add(mbV.getMatricule());
+            }
+            matriculeResponsable = new JComboBox(valuesResponsableVente.toArray(new Integer[0]));
+            matriculeResponsable.setEnabled(true);
             panneauInsertion.add(matriculeResponsable);
 
             //BOUTONS

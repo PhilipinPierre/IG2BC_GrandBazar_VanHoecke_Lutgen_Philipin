@@ -9,21 +9,21 @@ import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
+        ArrayList<OrdrePreparation> liste = new ArrayList<>();
         try {
-            ArrayList<OrdrePreparation> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from ordrepreparation";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 OrdrePreparation ordrePreparation = new OrdrePreparation();
-                completerOrdrePreparation(donnees, ordrePreparation);
+                ordrePreparation.getMatriculeRes().setNom(donnees.getString("Matricule_res"));
                 liste.add(ordrePreparation);
             }
-            return liste;
         } catch (Exception e){
             throw  new ExceptionsBD("recherche de tout les ordres de préparations");
         }
+        return liste;
     }
 
     public ArrayList<Integer> getNumSeqOrdrePreparation()throws ExceptionsBD{
