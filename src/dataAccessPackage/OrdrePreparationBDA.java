@@ -47,10 +47,9 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
     public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "delete * from ordrepreparation where numerosequentiel = " + numeroSequentiel;
+            String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            //preparedStatement.setInt(1, numeroSequentiel);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (Exception e){
             throw new ExceptionsBD("Impossible de supprimer cet ordre de préparation " + numeroSequentiel);
         }
