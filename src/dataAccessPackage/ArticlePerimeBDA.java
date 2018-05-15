@@ -32,13 +32,38 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }
         catch (Exception e)
         {
-            throw new ExceptionsBD("la recherche de article périmé dans la base de donnée");
+            throw new ExceptionsBD("la recherche de tout les articles périmé dans la base de donnée");
+        }
+    }
+
+    public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
+        try{
+            if(date1.getTimeInMillis() > date2.getTimeInMillis()){
+                GregorianCalendar date = date1;
+                date1 = date2;
+                date2 = date;
+            }
+            ArrayList<ArticlePerime> liste = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from articleperime where date > ? and date < ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setDate(1, new java.sql.Date(date1.getTimeInMillis()));
+            preparedStatement.setDate(2, new java.sql.Date(date2.getTimeInMillis()));
+            ResultSet donnees = preparedStatement.executeQuery();
+            while(donnees.next()){
+                ArticlePerime articlePerime = new ArticlePerime();
+                CompleterArticlePerime(donnees, articlePerime);
+                liste.add(articlePerime);
+            }
+            return liste;
+        }catch (Exception e){
+            throw new ExceptionsBD("la recherche des articles périmé entre "+ date1.toString() + " et "+ date2.toString());
         }
     }
 
     private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException{
         articlePerime.setId(donnees.getString("id"));
-        Integer quantiteJete = new Integer(donnees.getInt("quantitejete"));
+        Integer quantiteJete = donnees.getInt("quantitejete");
         articlePerime.setQuantiteJetee(quantiteJete);
         GregorianCalendar date = new GregorianCalendar();
         date.setTime(donnees.getDate("date"));

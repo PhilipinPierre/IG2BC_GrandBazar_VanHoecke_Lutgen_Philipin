@@ -111,6 +111,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 preparedStatement.setInt(11, ordrePreparation.getMatriculeCui().getMatricule());
             preparedStatement.setInt(12, ordrePreparation.getMatriculeRes().getMatricule());
 
+            preparedStatement.executeQuery();
 
         } catch (Exception e){
             throw  new ExceptionsBD(" accès à la base de données");
