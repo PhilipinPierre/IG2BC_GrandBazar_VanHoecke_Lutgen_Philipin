@@ -46,7 +46,6 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
     public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         try{
-            System.out.println(numeroSequentiel);
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
