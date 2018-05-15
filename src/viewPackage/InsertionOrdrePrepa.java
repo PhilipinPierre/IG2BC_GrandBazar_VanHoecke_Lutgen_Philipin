@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 public class InsertionOrdrePrepa extends JPanel {
     private JPanel panneauInsertion;
@@ -19,6 +20,7 @@ public class InsertionOrdrePrepa extends JPanel {
             codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
     private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
+    private SpinnerDateModel dateCreationModel, datePrepaModel, dateVenteModel;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
     private JComboBox nomRecette, codeBarre, matriculeCuisinier, matriculeResponsable;
@@ -48,8 +50,9 @@ public class InsertionOrdrePrepa extends JPanel {
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             dateCreationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateCreationLabel);
-            dateCreation = new JSpinner();
-            dateCreation.setModel(new SpinnerDateModel());
+            dateCreationModel = new SpinnerDateModel();
+            dateCreation = new JSpinner(dateCreationModel);
+            //dateCreation.setModel(new SpinnerDateModel());
             //BULLES D'AIDE
             dateCreation.setToolTipText("Date de la création de l'ordre de préparation");
             panneauInsertion.add(dateCreation);
@@ -79,16 +82,18 @@ public class InsertionOrdrePrepa extends JPanel {
             dateVenteLabel = new JLabel("Date de vente : ");
             dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateVenteLabel);
-            dateVente = new JSpinner();
-            dateVente.setModel(new SpinnerDateModel());
+            dateVenteModel = new SpinnerDateModel();
+            dateVente = new JSpinner(dateVenteModel);
+            //dateVente.setModel(new SpinnerDateModel());
             panneauInsertion.add(dateVente);
 
             //DATE DE PREPARATION
             datePrepaLabel = new JLabel("Date de préparation : ");
             datePrepaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(datePrepaLabel);
-            datePrepa = new JSpinner();
-            datePrepa.setModel(new SpinnerDateModel());
+            datePrepaModel = new SpinnerDateModel();
+            datePrepa = new JSpinner(datePrepaModel);
+            //datePrepa.setModel(new SpinnerDateModel());
             panneauInsertion.add(datePrepa);
 
             //REMARQUE
@@ -219,13 +224,23 @@ public class InsertionOrdrePrepa extends JPanel {
                 ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
                 ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
                 ordrePreparation.setRemarque(remarque.getText());
-                ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex() - 1));
-                ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex() - 1));
-                ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex() - 1));
-                ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex() - 1));
-                ordrePreparation.setDate((GregorianCalendar)dateCreation.getValue());
-                ordrePreparation.setDatePreparation((GregorianCalendar) datePrepa.getValue());
-                ordrePreparation.setDateVente((GregorianCalendar)dateVente.getValue());
+                ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
+                ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
+                ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
+                ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
+
+                GregorianCalendar dateC = new GregorianCalendar();
+                dateC.setTime(dateCreationModel.getDate());
+                ordrePreparation.setDate(dateC);
+                GregorianCalendar dateP = new GregorianCalendar();
+                dateP.setTime(datePrepaModel.getDate());
+                ordrePreparation.setDate(dateP);
+                GregorianCalendar dateV = new GregorianCalendar();
+                dateV.setTime(dateVenteModel.getDate());
+                ordrePreparation.setDate(dateV);
+
+                //ordrePreparation.setDatePreparation((GregorianCalendar) datePrepa.getValue());
+                //ordrePreparation.setDateVente((GregorianCalendar)dateVente.getValue());
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
                 applicationController.SetOrdrePreparation(ordrePreparation);
