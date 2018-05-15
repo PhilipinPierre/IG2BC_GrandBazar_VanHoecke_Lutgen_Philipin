@@ -4,7 +4,6 @@ import businessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.*;
 
-import java.sql.SQLException;
 import java.util.*;
 
 
@@ -16,6 +15,8 @@ public class ApplicationController {
     private LigneTicketManager ligneTicket;
     private LotManager lot;
     private MembreDuPersonnelManager membreDuPersonnel;
+    private ResponsableDesVentesManager responsableDesVentes;
+    private CuisinierManager cuisinier;
     private OrdrePreparationManager ordrePreparation;
     private RecetteManager recette;
     private TypeArticleManager typeArticle;
@@ -28,6 +29,8 @@ public class ApplicationController {
         ligneTicket = new LigneTicketManager();
         lot = new LotManager();
         membreDuPersonnel = new MembreDuPersonnelManager();
+        responsableDesVentes = new ResponsableDesVentesManager();
+        cuisinier = new CuisinierManager();
         ordrePreparation = new OrdrePreparationManager();
         recette = new RecetteManager();
         typeArticle = new TypeArticleManager();
@@ -56,6 +59,14 @@ public class ApplicationController {
     public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD
     {
         return membreDuPersonnel.getAllMembreDuPersonnel();
+    }
+
+    public ArrayList<ResponsableDesVentes> getAllResponsableDesVentes() throws ExceptionsBD{
+        return responsableDesVentes.getAllResponsableDesVentes();
+    }
+
+    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD{
+        return cuisinier.getAllCuisinier();
     }
 
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
