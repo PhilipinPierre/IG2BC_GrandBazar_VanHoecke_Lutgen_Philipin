@@ -15,7 +15,7 @@ public class RecetteBDA implements RecetteDA {
         ArrayList<Recette> liste = new ArrayList<>();
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from recette";
+            String requeteSQL = "select Nom from recette";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
