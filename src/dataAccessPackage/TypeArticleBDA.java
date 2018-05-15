@@ -13,8 +13,8 @@ import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
     public ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD{
+        ArrayList<TypeArticle> liste = new ArrayList<>();
         try {
-            ArrayList<TypeArticle> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from typearticle";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
@@ -22,13 +22,13 @@ public class TypeArticleBDA implements TypeArticleDA{
 
             while (donnees.next()) {
                 TypeArticle typeArticle = new TypeArticle();
-                completerTypeArticle(donnees, typeArticle);
+                typeArticle.setLibelle(donnees.getString("Libelle"));
                 liste.add(typeArticle);
             }
-            return liste;
         } catch (Exception e){
             throw new ExceptionsBD("recherche de tout les type d'articles");
         }
+        return liste;
     }
 
     protected static TypeArticle getTypeArticle(int codeBarre){

@@ -16,7 +16,7 @@
       <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="5" parent="1" name="mysql">
-      <Collation>utf8_general_ci</Collation>
+      <Collation>latin1_swedish_ci</Collation>
     </schema>
     <schema id="6" parent="1" name="performance_schema">
       <Collation>utf8_general_ci</Collation>
@@ -1099,7 +1099,7 @@
     </foreign-key>
     <column id="270" parent="234" name="NumeroTVA">
       <Position>1</Position>
-      <DataType>int(10)|0</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1615,7 +1615,7 @@ NumeroSequentiel</RefColNames>
     </column>
     <column id="364" parent="244" name="Prix">
       <Position>3</Position>
-      <DataType>double|0</DataType>
+      <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>

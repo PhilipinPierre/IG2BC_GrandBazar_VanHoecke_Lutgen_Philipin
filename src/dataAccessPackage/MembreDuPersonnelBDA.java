@@ -13,22 +13,21 @@ import java.util.ArrayList;
 
 public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
     public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD{
+        ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
         try {
-            ArrayList<MembreDuPersonnel> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from MembreDuPersonnel";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
-                CompleterMDP(donnees, membreDuPersonnel);
-                if (membreDuPersonnel.getDateSortie() == null)
-                    liste.add(membreDuPersonnel);
+                membreDuPersonnel.setMatricule(donnees.getInt("Matricule"));
+                liste.add(membreDuPersonnel);
             }
-            return liste;
         } catch (Exception e){
             throw  new ExceptionsBD("recherche de tout les membres du personnel");
         }
+        return liste;
     }
 
     protected void CompleterMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
