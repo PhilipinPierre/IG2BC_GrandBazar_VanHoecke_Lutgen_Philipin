@@ -45,7 +45,7 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             }
             ArrayList<ArticlePerime> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from articleperime where date > ? and date < ?";
+            String requeteSQL = "select * from articleperiem where date > ? and date < ?";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setDate(1, new java.sql.Date(date1.getTimeInMillis()));
             preparedStatement.setDate(2, new java.sql.Date(date2.getTimeInMillis()));

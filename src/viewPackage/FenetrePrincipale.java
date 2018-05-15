@@ -141,7 +141,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                rechercheArtPerim = new RechercheArticlePerime();
+                rechercheArtPerim = new RechercheArticlePerime(applicationController, ordrePreparation);
                 container.add(rechercheArtPerim);
                 setVisible(true);
             }

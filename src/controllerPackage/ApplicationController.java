@@ -20,6 +20,7 @@ public class ApplicationController {
     private OrdrePreparationManager ordrePreparation;
     private RecetteManager recette;
     private TypeArticleManager typeArticle;
+    private ArticlePerimeManager articlePerime;
 
     public ApplicationController()
     {
@@ -34,6 +35,7 @@ public class ApplicationController {
         ordrePreparation = new OrdrePreparationManager();
         recette = new RecetteManager();
         typeArticle = new TypeArticleManager();
+        articlePerime = new ArticlePerimeManager();
     }
 
     public ArrayList<Client> getAllClient() throws ExceptionsBD
@@ -106,4 +108,8 @@ public class ApplicationController {
         ordrePreparation.SetOrdrePreparation(ordrePrep);
     }
 
+    public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
+    {
+        return articlePerime.RechercheArticlePerimeEntre2Date(date1, date2);
+    }
 }

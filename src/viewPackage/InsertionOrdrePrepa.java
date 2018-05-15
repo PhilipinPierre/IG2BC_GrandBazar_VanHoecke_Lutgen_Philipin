@@ -51,7 +51,6 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(dateCreationLabel);
             dateCreationModel = new SpinnerDateModel();
             dateCreation = new JSpinner(dateCreationModel);
-            //dateCreation.setModel(new SpinnerDateModel());
             //BULLES D'AIDE
             dateCreation.setToolTipText("Date de la création de l'ordre de préparation");
             panneauInsertion.add(dateCreation);
@@ -83,7 +82,6 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(dateVenteLabel);
             dateVenteModel = new SpinnerDateModel();
             dateVente = new JSpinner(dateVenteModel);
-            //dateVente.setModel(new SpinnerDateModel());
             panneauInsertion.add(dateVente);
 
             //DATE DE PREPARATION
@@ -92,7 +90,6 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(datePrepaLabel);
             datePrepaModel = new SpinnerDateModel();
             datePrepa = new JSpinner(datePrepaModel);
-            //datePrepa.setModel(new SpinnerDateModel());
             panneauInsertion.add(datePrepa);
 
             //REMARQUE
