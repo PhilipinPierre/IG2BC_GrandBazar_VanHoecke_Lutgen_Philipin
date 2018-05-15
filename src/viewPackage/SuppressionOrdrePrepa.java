@@ -93,8 +93,7 @@ public class SuppressionOrdrePrepa extends JPanel {
                 removeAll();
                 validate();
 
-                SuppressionOrdrePrepa suppressionOrdrePrepa = new SuppressionOrdrePrepa(applicationController, ordrePreparation);
-                add(suppressionOrdrePrepa, BorderLayout.CENTER);
+                add(new SuppressionOrdrePrepa(applicationController, ordrePreparation), BorderLayout.CENTER);
 
                 revalidate();
                 repaint();
