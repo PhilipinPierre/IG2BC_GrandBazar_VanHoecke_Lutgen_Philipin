@@ -3,13 +3,12 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class InsertionOrdrePrepa extends JPanel {
     private JPanel panneauInsertion;
@@ -214,8 +213,28 @@ public class InsertionOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            /*insertionBD(dateCreation.getValue(), numeroSequentiel.getText(), quantitePrevu.getText(),
-                    quantiteProduite.getText(), dateVente.getValue(), datePrepa.getValue(), remarque.getText());*/
+            try
+            {
+                ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
+                ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
+                ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
+                ordrePreparation.setRemarque(remarque.getText());
+                ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex() - 1));
+                ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex() - 1));
+                ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex() - 1));
+                ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex() - 1));
+                ordrePreparation.setDate((GregorianCalendar)dateCreation.getValue());
+                ordrePreparation.setDatePreparation((GregorianCalendar) datePrepa.getValue());
+                ordrePreparation.setDateVente((GregorianCalendar)dateVente.getValue());
+                ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+
+                applicationController.SetOrdrePreparation(ordrePreparation);
+
+            }
+            catch (Exception e)
+            {
+                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données 3", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
