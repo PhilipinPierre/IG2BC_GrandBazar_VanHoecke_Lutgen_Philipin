@@ -15,17 +15,20 @@ public class RecetteBDA implements RecetteDA {
         ArrayList<Recette> liste = new ArrayList<>();
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select Nom from recette";
+            String requeteSQL = "select * from recette";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 Recette recette = new Recette();
-                recette.setNom(donnees.getString("titre"));
+                CompleterRecette(donnees,recette);
                 liste.add(recette);
             }
+            System.out.println(donnees.getString("nom"));
         } catch (Exception e){
             throw new ExceptionsBD("recherche de toute les recettes");
         }
+
+
         return liste;
     }
 
@@ -48,6 +51,8 @@ public class RecetteBDA implements RecetteDA {
         recette.setDescriptif(donnees.getString("descriptif"));
         Integer DLC = donnees.getInt("dlc");
         recette.setDLC(DLC);
+
+        System.out.println(recette.getNom() + recette.getDLC() + recette.getDescriptif());
     }
 
 }

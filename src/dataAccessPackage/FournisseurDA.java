@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface FournisseurDA {
-    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD;
+    ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD;
 }

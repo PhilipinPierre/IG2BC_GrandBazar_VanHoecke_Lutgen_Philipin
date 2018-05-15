@@ -5,5 +5,5 @@ import modelPackage.Ticket;
 import java.util.ArrayList;
 
 public interface TicketDA {
-    public ArrayList<Ticket> getAllTicket() throws ExceptionsBD;
+    ArrayList<Ticket> getAllTicket() throws ExceptionsBD;
 }
