@@ -115,6 +115,10 @@ public class ApplicationController {
         ordrePreparation.SetOrdrePreparation(ordrePrep);
     }
 
+    public void ModifierOrdrePreparation(OrdrePreparation ordrePreparat) throws ExceptionsBD{
+        ordrePreparation.ModifierOrdrePreparation(ordrePreparat);
+    }
+
     public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
     {
         return articlePerime.RechercheArticlePerimeEntre2Date(date1, date2);

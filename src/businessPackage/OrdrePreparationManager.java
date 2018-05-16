@@ -28,4 +28,8 @@ public class OrdrePreparationManager {
         ordrePreparationBDA.SetOrdrePreparation(ordrePreparation);
     }
 
+    public void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        ordrePreparationBDA.ModifierOrdrePreparation(ordrePreparation);
+    }
+
 }
