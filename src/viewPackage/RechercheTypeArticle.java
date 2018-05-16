@@ -27,6 +27,7 @@ public class RechercheTypeArticle extends JPanel{
             this.applicationController = applicationController;
             this.ordrePreparation = ordrePreparation;
 
+
             panneauRecherche = new JPanel();
 
             panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
