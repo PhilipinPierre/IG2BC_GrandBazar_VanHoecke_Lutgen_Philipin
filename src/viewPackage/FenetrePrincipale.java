@@ -170,7 +170,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                rechercheArticleLocal = new RechercheArticleLocalite(applicationController, ordrePreparation);
+                rechercheArticleLocal = new RechercheArticleLocalite(applicationController);
                 container.add(rechercheArticleLocal);
                 setVisible(true);
             }
