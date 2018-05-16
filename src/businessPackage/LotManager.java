@@ -13,12 +13,15 @@ public class LotManager {
 
     public ArrayList<Lot> getAllLot() throws ExceptionsBD
     {
-        ArrayList<Lot> lotList = lotBDA.getAllLot();
-        return lotList;
+        return lotBDA.getAllLot();
     }
 
     public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
         return lotBDA.RechercheLotViaLocaliteFournisseur(localite);
+    }
+
+    public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
+        return lotBDA.RechercheLotViaTypeArticle(codeBarre);
     }
 
 }
