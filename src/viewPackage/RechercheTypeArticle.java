@@ -18,6 +18,7 @@ public class RechercheTypeArticle extends JPanel{
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
     private ArrayList<TypeArticle> listeTypeArticle;
+    private ArrayList<Integer> valuesTypeArticle;
 
     public RechercheTypeArticle(ApplicationController applicationController, OrdrePreparation ordrePreparation)
     {
@@ -35,10 +36,8 @@ public class RechercheTypeArticle extends JPanel{
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauRecherche.add(typeArticleLabel);
-
-
             listeTypeArticle = applicationController.getAllTypeArticle();
-            ArrayList<Integer> valuesTypeArticle = new ArrayList<>();
+            valuesTypeArticle = new ArrayList<>();
             for(TypeArticle t : listeTypeArticle)
             {
                 valuesTypeArticle.add(t.getCodeBarre());
@@ -74,11 +73,11 @@ public class RechercheTypeArticle extends JPanel{
         {
             try
             {
-                ;
+                applicationController.RechercheLotViaTypeArticle(valuesTypeArticle.get(codeBarre.getSelectedIndex()));
             }
             catch (Exception e)
             {
-
+                JOptionPane.showMessageDialog(panneauBouton, e.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
             }
 
         }
