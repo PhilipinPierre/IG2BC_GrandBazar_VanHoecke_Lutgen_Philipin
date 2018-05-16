@@ -63,7 +63,7 @@ public class RechercheArticlePerime extends JPanel {
 
 
             add(panneauRecherche, BorderLayout.CENTER);
-            add(panneauBouton, BorderLayout.NORTH);
+            add(panneauBouton, BorderLayout.SOUTH);
 
             setVisible(true);
         }
