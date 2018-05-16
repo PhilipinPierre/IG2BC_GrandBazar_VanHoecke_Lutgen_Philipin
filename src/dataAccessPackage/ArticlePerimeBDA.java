@@ -70,14 +70,13 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             GregorianCalendar date = new GregorianCalendar();
             date.setTime(donnees.getDate("date"));
             articlePerime.setDate(date);
-            System.out.println(articlePerime.getDate().toString());
-            System.out.println(donnees.getInt("matricule"));
             MembreDuPersonnelBDA membreDuPersonnelBDA = new MembreDuPersonnelBDA();
-            articlePerime.setMatricule(membreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("matricule")));
-            System.out.println(articlePerime.getMatricule().getNom());
-            System.out.println(articlePerime.getMatricule().getPrenom());
-            articlePerime.setCodeBarre(new TypeArticleBDA().getTypeArticle(articlePerime.getCodeBarre().getCodeBarre()));
-            System.out.println(articlePerime.getCodeBarre().getLibelle());
+            MembreDuPersonnel matricule = new MembreDuPersonnel();
+            matricule.setMatricule(donnees.getInt("matricule"));
+            articlePerime.setMatricule(matricule);
+            TypeArticle typeArticle = new TypeArticle();
+            typeArticle.setCodeBarre(donnees.getInt("codebarre"));
+            articlePerime.setCodeBarre(typeArticle);
         } catch (Exception e){
             throw new ExceptionsBD("recherche article périmé");
         }

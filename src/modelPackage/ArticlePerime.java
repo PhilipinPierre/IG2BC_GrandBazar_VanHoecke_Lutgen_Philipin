@@ -20,4 +20,9 @@ public class ArticlePerime {
     public void setMatricule(MembreDuPersonnel matricule) { this.matricule = matricule; }
     public void setDate(GregorianCalendar date) { this.date = date; }
     public void setCodeBarre(TypeArticle codeBarre) { this.codeBarre = codeBarre; }
+
+    @Override
+    public String toString() {
+        return "l'article périmé " + this.codeBarre.getLibelle() + " à été jeté par le membre du personnel "+ matricule.getMatricule() + " à la date du " + date.toString();
+    }
 }

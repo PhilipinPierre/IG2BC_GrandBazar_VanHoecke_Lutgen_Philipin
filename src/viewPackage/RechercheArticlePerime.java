@@ -98,15 +98,18 @@ public class RechercheArticlePerime extends JPanel {
                 {
                     System.out.println(ap.getQuantiteJetee());
                     valuesArticlePerime.add(ap.getCodeBarre().getLibelle());
-                    valuesArticlePerime.add(ap.getMatricule().getNom());
-                    valuesArticlePerime.add(ap.getMatricule().getPrenom());
+                    valuesArticlePerime.add(ap.getMatricule().getMatricule().toString());
                     valuesArticlePerime.add(ap.getQuantiteJetee().toString());
 
-                    articlePerimeTable = new JLabel(valuesArticlePerime.get(0));
+
+
+
+                }
+                for (ArticlePerime articlePerime: articlePerimes){
+                    articlePerimeTable = new JLabel(articlePerime.toString());
                     articlePerimeTable.setEnabled(true);
                     panneauBouton.add(articlePerimeTable);
                 }
-
             }
             catch (Exception e)
             {

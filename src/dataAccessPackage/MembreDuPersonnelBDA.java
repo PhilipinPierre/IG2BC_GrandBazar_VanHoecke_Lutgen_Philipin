@@ -41,7 +41,6 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
         membreDuPersonnel.setNom(donnees.getString("nom"));
         membreDuPersonnel.setPrenom(donnees.getString("prenom"));
-        System.out.println(membreDuPersonnel.getPrenom());
         GregorianCalendar dateNaissance = new GregorianCalendar();
         dateNaissance.setTime(donnees.getDate("datenaissance"));
         membreDuPersonnel.setDateNaissance(dateNaissance);
@@ -56,18 +55,18 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
             dateSortie.setTime(donnees.getDate("datesortie"));
             membreDuPersonnel.setDateSortie(dateSortie);
         }
-        System.out.println(membreDuPersonnel.getPrenom());
     }
 
     public MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
         MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from memebredupersonnel where matricule = " + matricule;
+            String requeteSQL = "select * from membredupersonnel where matricule = " + matricule;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             System.out.println(donnees.getString("nom"));
             CompleterMDP(donnees, membreDuPersonnel);
+            System.out.println(membreDuPersonnel.getMatricule());
         } catch (Exception e){
             throw  new ExceptionsBD("recherche d'un memebre du personnel");
         }
