@@ -27,7 +27,6 @@ public class ListingOrdrePrepa extends JPanel {
             for(OrdrePreparation op : listeOrdrePrepa)
             {
                 valuesOrdrePrepa.add(op.getNumeroSequentiel());
-                System.out.println(op.getNumeroSequentiel());
             }
             numeroSequentiel = new JComboBox(valuesOrdrePrepa.toArray(new Integer[0]));
             numeroSequentiel.setEnabled(true);
