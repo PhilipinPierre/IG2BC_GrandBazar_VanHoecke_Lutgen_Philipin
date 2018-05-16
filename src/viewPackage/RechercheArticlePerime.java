@@ -44,7 +44,7 @@ public class RechercheArticlePerime extends JPanel {
             panneauRecherche.add(dateDebut);
 
             //FIN
-            dateFinLabel = new JLabel("Date début : ");
+            dateFinLabel = new JLabel("Date fin : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             dateFinLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauRecherche.add(dateFinLabel);
@@ -96,14 +96,17 @@ public class RechercheArticlePerime extends JPanel {
                 ArrayList<String> valuesArticlePerime = new ArrayList<>();
                 for(ArticlePerime ap : articlePerimes)
                 {
+                    System.out.println(ap.getQuantiteJetee());
                     valuesArticlePerime.add(ap.getCodeBarre().getLibelle());
                     valuesArticlePerime.add(ap.getMatricule().getNom());
                     valuesArticlePerime.add(ap.getMatricule().getPrenom());
                     valuesArticlePerime.add(ap.getQuantiteJetee().toString());
+
+                    articlePerimeTable = new JLabel(valuesArticlePerime.get(0));
+                    articlePerimeTable.setEnabled(true);
+                    panneauBouton.add(articlePerimeTable);
                 }
-                articlePerimeTable = new JLabel(valuesArticlePerime.get(0));
-                articlePerimeTable.setEnabled(true);
-                panneauBouton.add(articlePerimeTable);
+
             }
             catch (Exception e)
             {

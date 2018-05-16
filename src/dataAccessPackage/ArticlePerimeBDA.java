@@ -53,6 +53,7 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             while(donnees.next()){
                 ArticlePerime articlePerime = new ArticlePerime();
                 CompleterArticlePerime(donnees, articlePerime);
+                System.out.println(articlePerime.getMatricule().getNom());
                 liste.add(articlePerime);
             }
             return liste;
@@ -61,17 +62,19 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }
     }
 
-    private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException{
-        articlePerime.setId(donnees.getString("id"));
-        Integer quantiteJete = donnees.getInt("quantitejete");
-        articlePerime.setQuantiteJetee(quantiteJete);
-        GregorianCalendar date = new GregorianCalendar();
-        date.setTime(donnees.getDate("date"));
-        articlePerime.setDate(date);
+    private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws ExceptionsBD{
+        try {
+            articlePerime.setId(donnees.getString("id"));
+            Integer quantiteJete = donnees.getInt("quantitejete");
+            articlePerime.setQuantiteJetee(quantiteJete);
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTime(donnees.getDate("date"));
+            articlePerime.setDate(date);
 
-        MembreDuPersonnel mb = new MembreDuPersonnel();
-        articlePerime.setMatricule(mb);
-        TypeArticle t = new TypeArticle();
-        articlePerime.setCodeBarre(t);
+            articlePerime.setMatricule(new MembreDuPersonnelBDA().getMembreDuPersonnel(articlePerime.getMatricule().getMatricule()));
+            articlePerime.setCodeBarre(new TypeArticleBDA().getTypeArticle(articlePerime.getCodeBarre().getCodeBarre()));
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche article périmé");
+        }
     }
 }

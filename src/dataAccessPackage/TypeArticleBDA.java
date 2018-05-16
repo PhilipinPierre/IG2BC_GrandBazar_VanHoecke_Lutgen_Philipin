@@ -31,8 +31,18 @@ public class TypeArticleBDA implements TypeArticleDA{
         return liste;
     }
 
-    protected static TypeArticle getTypeArticle(int codeBarre){
-        return new TypeArticle();
+    public TypeArticle getTypeArticle(int codeBarre) throws ExceptionsBD{
+        TypeArticle typeArticle = new TypeArticle();
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from typearticle where codebarre = " + codeBarre;
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            completerTypeArticle(donnees, typeArticle);
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche de type d'article vie leur code barra");
+        }
+        return typeArticle;
     }
 
     public Integer rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{

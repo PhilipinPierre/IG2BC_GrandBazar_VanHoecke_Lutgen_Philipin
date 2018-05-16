@@ -44,7 +44,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
 
     }
 
-    protected static MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
+    public MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
         try {
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from memebredupersonnel where matricule = ?";
