@@ -13,4 +13,5 @@ public interface OrdrePreparationDA {
     ArrayList<OrdrePreparation> getNumSeqOrdrePreparation()throws ExceptionsBD;
     void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD;
     void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD;
+    void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD;
 }

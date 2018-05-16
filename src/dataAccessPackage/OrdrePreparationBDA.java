@@ -55,6 +55,45 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
+    public void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "UPDATE ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?) WHERE numerosequentiel = " + ordrePreparation.getNumeroSequentiel();
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
+            preparedStatement.setInt(2,ordrePreparation.getNumeroSequentiel());
+            preparedStatement.setInt(3,ordrePreparation.getQuantitePrevue());
+            if(ordrePreparation.getQuantiteProduite() == null)
+                preparedStatement.setNull(4, Types.INTEGER);
+            else
+                preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
+
+            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+
+            if(ordrePreparation.getRemarque() == null)
+                preparedStatement.setNull(7, Types.VARCHAR);
+            else
+                preparedStatement.setString(7, ordrePreparation.getRemarque());
+            preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
+            preparedStatement.setString(9, ordrePreparation.getNom().getNom());
+            if(ordrePreparation.getCodeBarre().getCodeBarre() == null)
+                preparedStatement.setNull(10, Types.INTEGER);
+            else {
+                preparedStatement.setInt(10, ordrePreparation.getCodeBarre().getCodeBarre());
+            }
+            if(ordrePreparation.getMatriculeCui().getMatricule() == null)
+                preparedStatement.setNull(11, Types.INTEGER);
+            else
+                preparedStatement.setInt(11, ordrePreparation.getMatriculeCui().getMatricule());
+            preparedStatement.setInt(12, ordrePreparation.getMatriculeRes().getMatricule());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw new ExceptionsBD("modification d'un ordre de préparation");
+        }
+    }
+
     public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
