@@ -19,6 +19,7 @@ public class FenetrePrincipale extends JFrame {
     private ModificationOrdrePrepa modificationOrdrePrepa;
     private SuppressionOrdrePrepa suppressionOrdrePrepa;
     private RechercheArticlePerime rechercheArtPerim;
+    private RechercheTypeArticle rechercheTypeArticle;
     private ListingOrdrePrepa listingOrdrePrepa;
     private ApplicationController applicationController; //DANS FENETRE LOG IN PLUS TARD !!!!
     private OrdrePreparation ordrePreparation; //PAREIL
@@ -151,6 +152,15 @@ public class FenetrePrincipale extends JFrame {
         rechercheArticleInfos = new JMenuItem("Recherche Infos");
         rechercheArticleInfos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.SHIFT_MASK));
         fonctMenu.add(rechercheArticleInfos);
+        rechercheArticlePerime.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.removeAll();
+                rechercheTypeArticle = new RechercheTypeArticle(applicationController, ordrePreparation);
+                container.add(rechercheTypeArticle);
+                setVisible(true);
+            }
+        });
 
         //RECHERCHE INFOS SUR UN ARTICLE DONNE
         rechercheArticleLocalite = new JMenuItem("Recherche Localité");
