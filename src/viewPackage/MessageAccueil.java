@@ -10,7 +10,6 @@ public class MessageAccueil extends JPanel {
     public MessageAccueil()
     {
         this.compteur = 0;
-        this.setLayout(new FlowLayout());
 
         ThreadBienvenue threadBienvenue = new ThreadBienvenue(this);
         threadBienvenue.start();
