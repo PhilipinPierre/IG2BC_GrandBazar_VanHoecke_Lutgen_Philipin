@@ -32,7 +32,7 @@ public class SuppressionOrdrePrepa extends JPanel {
 
             panneau.setLayout(new GridLayout(2, 2, 5, 5));
 
-            //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
+            //NUMERO SEQUENTIEL OBLIGATOIRE
             numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneau.add(numeroSequentielLabel);
