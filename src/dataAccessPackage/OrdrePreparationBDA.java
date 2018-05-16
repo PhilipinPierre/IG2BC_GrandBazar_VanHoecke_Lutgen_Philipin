@@ -58,7 +58,20 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
     public void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "UPDATE ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?) WHERE numerosequentiel = " + ordrePreparation.getNumeroSequentiel();
+            String requeteSQL = "update OrdreDePreparation " +
+                    "set date = ?"+
+                    ", numerosequentiel = ?"+
+                    ",quantitePrevue = ?"+
+                    ", quantiteProduite = ?"+
+                    ", dateVente = ?"+
+                    ", datePreparation = ?"+
+                    ", remarque = ?"+
+                    ", estUrgent = ?"+
+                    ", nom = ?"+
+                    ", codebarre = ?"+
+                    ", matricule_cui = ?"+
+                    ", matricule_res = ?"+
+                    " where numeroSequentiel = ?" + ordrePreparation.getNumeroSequentiel();
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
             preparedStatement.setInt(2,ordrePreparation.getNumeroSequentiel());
@@ -130,7 +143,6 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             preparedStatement.executeUpdate();
 
         } catch (Exception e){
-            System.out.println(e);
             throw  new ExceptionsBD(" accès à la base de données");
         }
     }
