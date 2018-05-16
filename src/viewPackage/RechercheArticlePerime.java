@@ -100,10 +100,6 @@ public class RechercheArticlePerime extends JPanel {
                     valuesArticlePerime.add(ap.getCodeBarre().getLibelle());
                     valuesArticlePerime.add(ap.getMatricule().getMatricule().toString());
                     valuesArticlePerime.add(ap.getQuantiteJetee().toString());
-
-
-
-
                 }
                 for (ArticlePerime articlePerime: articlePerimes){
                     articlePerimeTable = new JLabel(articlePerime.toString());
