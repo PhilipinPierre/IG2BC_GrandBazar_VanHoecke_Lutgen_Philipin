@@ -227,6 +227,7 @@ public class ModificationOrdrePrepa extends JPanel {
             {
                 ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
                 ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
+                ordrePreparation.setNumeroSequentiel(numeroSequentiel.getSelectedIndex());
                 ordrePreparation.setRemarque(remarque.getText());
                 ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
                 ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
@@ -247,7 +248,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                //applicationController.modifierOrdrePreparation(ordrePreparation);
+                applicationController.Modifier();
 
                 dateCreation = new JSpinner(dateCreationModel);
                 quantitePrevu.setText(null);
