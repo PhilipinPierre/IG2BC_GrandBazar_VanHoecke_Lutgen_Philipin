@@ -5,11 +5,13 @@ import modelPackage.Cuisinier;
 import modelPackage.MembreDuPersonnel;
 
 import javax.naming.NamingException;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
     public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD{
@@ -39,22 +41,36 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
         membreDuPersonnel.setNom(donnees.getString("nom"));
         membreDuPersonnel.setPrenom(donnees.getString("prenom"));
+        System.out.println(membreDuPersonnel.getPrenom());
+        GregorianCalendar dateNaissance = new GregorianCalendar();
+        dateNaissance.setTime(donnees.getDate("datenaissance"));
+        membreDuPersonnel.setDateNaissance(dateNaissance);
         membreDuPersonnel.setCodePostal(donnees.getInt("codepostal"));
         membreDuPersonnel.setLocalite(donnees.getString("localite"));
-
+        membreDuPersonnel.setRue(donnees.getString("rue"));
+        GregorianCalendar dateEntree = new GregorianCalendar();
+        dateEntree.setTime(donnees.getDate("dateentree"));
+        membreDuPersonnel.setDateEntree(dateEntree);
+        if(donnees.getDate("datesortie") != null) {
+            GregorianCalendar dateSortie = new GregorianCalendar();
+            dateSortie.setTime(donnees.getDate("datesortie"));
+            membreDuPersonnel.setDateSortie(dateSortie);
+        }
+        System.out.println(membreDuPersonnel.getPrenom());
     }
 
     public MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
+        MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from memebredupersonnel where matricule = ?";
+            String requeteSQL = "select * from memebredupersonnel where matricule = " + matricule;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
-            MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
+            System.out.println(donnees.getString("nom"));
             CompleterMDP(donnees, membreDuPersonnel);
-            return membreDuPersonnel;
         } catch (Exception e){
             throw  new ExceptionsBD("recherche d'un memebre du personnel");
         }
+        return membreDuPersonnel;
     }
 }

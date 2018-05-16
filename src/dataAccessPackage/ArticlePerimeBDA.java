@@ -50,15 +50,15 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             preparedStatement.setDate(1, new java.sql.Date(date1.getTimeInMillis()));
             preparedStatement.setDate(2, new java.sql.Date(date2.getTimeInMillis()));
             ResultSet donnees = preparedStatement.executeQuery();
+
             while(donnees.next()){
                 ArticlePerime articlePerime = new ArticlePerime();
                 CompleterArticlePerime(donnees, articlePerime);
-                System.out.println(articlePerime.getMatricule().getNom());
                 liste.add(articlePerime);
             }
             return liste;
         }catch (Exception e){
-            throw new ExceptionsBD("la recherche des articles périmé entre "+ date1.toString() + " et "+ date2.toString());
+            throw new ExceptionsBD("la recherche des articles périmé entre "+ date1.getWeeksInWeekYear() + " et "+ date2.getWeeksInWeekYear());
         }
     }
 
@@ -70,9 +70,14 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             GregorianCalendar date = new GregorianCalendar();
             date.setTime(donnees.getDate("date"));
             articlePerime.setDate(date);
-
-            articlePerime.setMatricule(new MembreDuPersonnelBDA().getMembreDuPersonnel(articlePerime.getMatricule().getMatricule()));
+            System.out.println(articlePerime.getDate().toString());
+            System.out.println(donnees.getInt("matricule"));
+            MembreDuPersonnelBDA membreDuPersonnelBDA = new MembreDuPersonnelBDA();
+            articlePerime.setMatricule(membreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("matricule")));
+            System.out.println(articlePerime.getMatricule().getNom());
+            System.out.println(articlePerime.getMatricule().getPrenom());
             articlePerime.setCodeBarre(new TypeArticleBDA().getTypeArticle(articlePerime.getCodeBarre().getCodeBarre()));
+            System.out.println(articlePerime.getCodeBarre().getLibelle());
         } catch (Exception e){
             throw new ExceptionsBD("recherche article périmé");
         }
