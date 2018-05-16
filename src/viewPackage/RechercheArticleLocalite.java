@@ -2,6 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import modelPackage.Fournisseur;
+import modelPackage.Lot;
 import modelPackage.OrdrePreparation;
 import modelPackage.TypeArticle;
 import javax.swing.*;
@@ -17,15 +18,13 @@ public class RechercheArticleLocalite extends JPanel{
     private JComboBox codeBarre;
     private JButton validation;
     private ApplicationController applicationController;
-    private OrdrePreparation ordrePreparation;
     private ArrayList<Fournisseur> listeFournisseur;
 
-    public RechercheArticleLocalite(ApplicationController applicationController, OrdrePreparation ordrePreparation)
+    public RechercheArticleLocalite(ApplicationController applicationController)
     {
         try
         {
             this.applicationController = applicationController;
-            this.ordrePreparation = ordrePreparation;
 
             panneauRecherche = new JPanel();
 
@@ -75,7 +74,7 @@ public class RechercheArticleLocalite extends JPanel{
         {
             try
             {
-                ;
+                String localite;
             }
             catch (Exception e)
             {
