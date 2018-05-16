@@ -248,7 +248,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                applicationController.Modifier();
+                applicationController.ModifierOrdrePreparation(ordrePreparation);
 
                 dateCreation = new JSpinner(dateCreationModel);
                 quantitePrevu.setText(null);
