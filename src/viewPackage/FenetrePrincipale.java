@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
