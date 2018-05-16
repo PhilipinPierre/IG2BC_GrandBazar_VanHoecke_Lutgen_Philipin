@@ -58,6 +58,10 @@ public class ApplicationController {
         return lot.getAllLot();
     }
 
+    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+        return lot.RechercheLotViaLocaliteFournisseur(localite);
+    }
+
     public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD
     {
         return membreDuPersonnel.getAllMembreDuPersonnel();
