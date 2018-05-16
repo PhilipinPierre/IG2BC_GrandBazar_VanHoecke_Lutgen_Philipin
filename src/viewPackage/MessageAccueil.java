@@ -12,12 +12,9 @@ public class MessageAccueil extends JPanel {
     {
         this.compteur = 0;
 
-        if(threadBienvenue == null) {
+        if(threadBienvenue == null)
             threadBienvenue = new ThreadBienvenue(this);
-            threadBienvenue.start();
-        }else {
-            threadBienvenue.start();
-        }
+        threadBienvenue.start();
     }
 
     public void paint(Graphics g){
