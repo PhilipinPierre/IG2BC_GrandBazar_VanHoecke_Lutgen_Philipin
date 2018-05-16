@@ -58,7 +58,20 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
     public void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "UPDATE ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?) WHERE numerosequentiel = " + ordrePreparation.getNumeroSequentiel();
+            String requeteSQL = "update OrdreDePreparation " +
+                    "set quantitePrevue = "+ordrePreparation.getQuantitePrevue() +
+                    ", numerosequentiel = "+ordrePreparation.getNumeroSequentiel()+
+                    ", quantiteProduite = "+ordrePreparation.getQuantiteProduite()+
+                    ", dateVente = "+ordrePreparation.getDateVente()+
+                    ", datePreparation = "+ ordrePreparation.getDatePreparation()+
+                    ", remarque = "+ordrePreparation.getRemarque()+
+                    ", matricule_res = "+ordrePreparation.getMatriculeRes().getMatricule()+
+                    ", codebarre = "+ordrePreparation.getCodeBarre().getCodeBarre()+
+                    ", nom = "+ ordrePreparation.getNom().getNom()+
+                    ", matricule_cui = "+ordrePreparation.getMatriculeCui().getMatricule()+
+                    ", estUrgent = "+ordrePreparation.getEstUrgent()+
+                    ", date = "+ ordrePreparation.getDate()+
+                    " where numeroSequentiel = " + ordrePreparation.getNumeroSequentiel();
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
             preparedStatement.setInt(2,ordrePreparation.getNumeroSequentiel());
