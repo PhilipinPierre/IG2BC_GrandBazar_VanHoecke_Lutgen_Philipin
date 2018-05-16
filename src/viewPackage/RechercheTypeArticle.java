@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import modelPackage.Lot;
 import modelPackage.OrdrePreparation;
 import modelPackage.TypeArticle;
 import javax.swing.*;
@@ -16,17 +17,14 @@ public class RechercheTypeArticle extends JPanel{
     private JComboBox codeBarre;
     private JButton validation;
     private ApplicationController applicationController;
-    private OrdrePreparation ordrePreparation;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Integer> valuesTypeArticle;
 
-    public RechercheTypeArticle(ApplicationController applicationController, OrdrePreparation ordrePreparation)
+    public RechercheTypeArticle(ApplicationController applicationController)
     {
         try
         {
             this.applicationController = applicationController;
-            this.ordrePreparation = ordrePreparation;
-
 
             panneauRecherche = new JPanel();
 
@@ -74,7 +72,8 @@ public class RechercheTypeArticle extends JPanel{
         {
             try
             {
-                applicationController.RechercheLotViaTypeArticle(valuesTypeArticle.get(codeBarre.getSelectedIndex()));
+                ArrayList<Lot> lot;
+                lot = applicationController.RechercheLotViaTypeArticle(valuesTypeArticle.get(codeBarre.getSelectedIndex()));
             }
             catch (Exception e)
             {

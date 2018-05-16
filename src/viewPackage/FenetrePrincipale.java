@@ -100,7 +100,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                modificationOrdrePrepa = new ModificationOrdrePrepa();
+                modificationOrdrePrepa = new ModificationOrdrePrepa(applicationController, ordrePreparation);
                 container.add(modificationOrdrePrepa);
                 setVisible(true);
             }
@@ -156,7 +156,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                rechercheTypeArticle = new RechercheTypeArticle(applicationController, ordrePreparation);
+                rechercheTypeArticle = new RechercheTypeArticle(applicationController);
                 container.add(rechercheTypeArticle);
                 setVisible(true);
             }
