@@ -74,7 +74,20 @@ public class RechercheArticleLocalite extends JPanel{
         {
             try
             {
-                String localite;
+                ArrayList<Lot> listeLot;
+
+                Object[][] data; /*= new Object[listeLot.size()][3];
+                int i = 0;
+                for(Lot lot : listeLot){
+                    data[0][i] = lot.getNumeroTVA().getNumeroTVA();
+                    data[1][i] = lot.getMatricule().getMatricule();
+                    data[2][i] = lot.getId();
+                    i++;
+                }
+                */
+                String titre[] = {"Numéro de tvé du fournisseur", "Matricule du memebre du personnel", "Identifiant du lot"};
+                //JTable tableau = new JTable(data, titre);
+                //add(tableau);
             }
             catch (Exception e)
             {
