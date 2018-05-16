@@ -6,13 +6,18 @@ import java.awt.*;
 public class MessageAccueil extends JPanel {
 
     private int compteur;
+    private ThreadBienvenue threadBienvenue;
 
     public MessageAccueil()
     {
         this.compteur = 0;
 
-        ThreadBienvenue threadBienvenue = new ThreadBienvenue(this);
-        threadBienvenue.start();
+        if(threadBienvenue == null) {
+            threadBienvenue = new ThreadBienvenue(this);
+            threadBienvenue.start();
+        }else {
+            threadBienvenue.start();
+        }
     }
 
     public void paint(Graphics g){
