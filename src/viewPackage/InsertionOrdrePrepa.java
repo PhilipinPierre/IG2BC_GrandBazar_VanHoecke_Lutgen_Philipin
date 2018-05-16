@@ -201,11 +201,9 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             removeAll();
             validate();
+            add(new MessageAccueil(), BorderLayout.CENTER);
 
-            MessageAccueil messageAccueil = new MessageAccueil();
-            add(messageAccueil, BorderLayout.CENTER);
-
-            revalidate();
+            validate();
             repaint();
         }
     }

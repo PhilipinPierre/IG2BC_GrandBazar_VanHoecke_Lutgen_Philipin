@@ -5,14 +5,28 @@ import java.awt.*;
 
 public class MessageAccueil extends JPanel {
 
-    private JLabel messageBienvenue1;
+    private int compteur;
 
     public MessageAccueil()
     {
-        messageBienvenue1 = new JLabel("Bienvenue");
-
+        this.compteur = 0;
         this.setLayout(new FlowLayout());
 
-        this.add(messageBienvenue1);
+        ThreadBienvenue threadBienvenue = new ThreadBienvenue(this);
+        threadBienvenue.start();
+    }
+
+    public void paint(Graphics g){
+        super.paint(g);
+        int fontSize = 30;
+        g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+        String message = "Bienvenue ";
+        for(int i = 0; i<compteur; i++){
+            message += " .";
+        }
+        compteur++;
+        if(compteur>3)
+            compteur = 0;
+        g.drawString(message,200,200);
     }
 }
