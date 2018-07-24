@@ -215,53 +215,79 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             try
             {
+
                 if(quantitePrevu.getText().isEmpty())
                     JOptionPane.showMessageDialog(panneauBoutons, "La quantité prévue est obligatoire");
                 if(numeroSequentiel.getText().isEmpty())
                     JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est obligatoire");
                 if(urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
                     JOptionPane.showMessageDialog(panneauBoutons, "L'urgence de l'ordre est obligatoire");
+
                 if(!(   quantitePrevu.getText().isEmpty() ||
                         numeroSequentiel.getText().isEmpty() ||
-                        (urgentTrue.isSelected()||urgentFalse.isSelected())||
-                        nomRecette.getSelectedIndex()==0 ||
-                        codeBarre.getSelectedIndex() == 0 ||
-                        matriculeCuisinier.getSelectedIndex() == 0 ||
-                        matriculeResponsable.getSelectedIndex() == 0
-                        )){
-                ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
-                ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
-                ordrePreparation.setRemarque(remarque.getText());
-                ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
-                ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
-                ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
-                ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
+                        (urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)                        )){
+                    StringBuilder affichage = new StringBuilder();
+                    affichage.append("Voici un récapitulatif de l'insertion:\n\n");
+                    affichage.append("Date :" + dateCreation.toString()+"\n");
+                    affichage.append("Numéro séquentiel :" + numeroSequentiel.getText()+"\n");
+                    affichage.append("Quantité prévue :" + quantitePrevu.getText()+"\n");
+                    affichage.append("Quantité produite :");
+                    if(quantiteProduite.getText().isEmpty())
+                        affichage.append("0\n");
+                    else
+                        affichage.append(quantiteProduite.getText()+"\n");
+                    affichage.append("Date de vente :" + dateVente.toString()+"\n");
+                    affichage.append("Date de préparation :" + datePrepa.toString() + "\n");
+                    affichage.append("Remarque :");
+                    if(!remarque.getText().isEmpty())
+                        affichage.append(remarque.getText());
+                    affichage.append("\n");
+                    if(urgentTrue.isSelected())
+                        affichage.append("Ordre urgent\n");
+                    else
+                        affichage.append("Ordre non urgent\n");
+                    affichage.append("Nom de la recette :" + nomRecette.toString() + "\n");
+                    affichage.append("Code barre :" + codeBarre.toString() + "\n");
+                    affichage.append("Matricule du cuisinier :" + matriculeCuisinier.toString()+"\n");
+                    affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.toString()+"\n");
 
-                GregorianCalendar dateC = new GregorianCalendar();
-                dateC.setTime(dateCreationModel.getDate());
-                ordrePreparation.setDate(dateC);
+                    JOptionPane.showMessageDialog(panneauBoutons, affichage.toString());
 
-                GregorianCalendar dateP = new GregorianCalendar();
-                dateP.setTime(datePrepaModel.getDate());
-                ordrePreparation.setDatePreparation(dateP);
 
-                GregorianCalendar dateV = new GregorianCalendar();
-                dateV.setTime(dateVenteModel.getDate());
-                ordrePreparation.setDateVente(dateV);
 
-                ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+                    ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
+                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
+                    ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
+                    ordrePreparation.setRemarque(remarque.getText());
+                    ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
+                    ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
+                    ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
+                    ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
 
-                applicationController.SetOrdrePreparation(ordrePreparation);
+                    GregorianCalendar dateC = new GregorianCalendar();
+                    dateC.setTime(dateCreationModel.getDate());
+                    ordrePreparation.setDate(dateC);
 
-                dateCreation = new JSpinner(dateCreationModel);
-                numeroSequentiel.setText(null);
-                quantitePrevu.setText(null);
-                quantiteProduite.setText(null);
-                dateVente = new JSpinner(dateVenteModel);
-                datePrepa = new JSpinner(datePrepaModel);
-                remarque.setText(null);
-                urgentButton.clearSelection();
+                    GregorianCalendar dateP = new GregorianCalendar();
+                    dateP.setTime(datePrepaModel.getDate());
+                    ordrePreparation.setDatePreparation(dateP);
+
+                    GregorianCalendar dateV = new GregorianCalendar();
+                    dateV.setTime(dateVenteModel.getDate());
+                    ordrePreparation.setDateVente(dateV);
+
+                    ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+
+                    applicationController.SetOrdrePreparation(ordrePreparation);
+
+                    dateCreation = new JSpinner(dateCreationModel);
+                    numeroSequentiel.setText(null);
+                    quantitePrevu.setText(null);
+                    quantiteProduite.setText(null);
+                    dateVente = new JSpinner(dateVenteModel);
+                    datePrepa = new JSpinner(datePrepaModel);
+                    remarque.setText(null);
+                    urgentButton.clearSelection();
                 }
 
             }
