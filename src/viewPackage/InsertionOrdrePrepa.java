@@ -45,7 +45,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
-            dateCreationLabel = new JLabel("Date : ");
+            dateCreationLabel = new JLabel("Date * : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             dateCreationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateCreationLabel);
@@ -56,14 +56,14 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(dateCreation);
 
             //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
-            numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
+            numeroSequentielLabel = new JLabel("Numéro Séquentiel * : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
-            quantitePrevueLabel = new JLabel("Quantité prévue : ");
+            quantitePrevueLabel = new JLabel("Quantité prévue * : ");
             quantitePrevueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantitePrevueLabel);
             quantitePrevu = new JTextField();
@@ -100,7 +100,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(remarque);
 
             //URGENT ? OBLIGATOIRE
-            urgentTrue = new JRadioButton("Urgent", false);
+            urgentTrue = new JRadioButton("* Urgent", false);
             panneauInsertion.add(urgentTrue);
             urgentFalse = new JRadioButton("Pas urgent", false);
             panneauInsertion.add(urgentFalse);
@@ -109,7 +109,7 @@ public class InsertionOrdrePrepa extends JPanel {
             urgentButton.add(urgentFalse);
 
             //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
-            nomRecetteLabel = new JLabel("Nom de la recette : ");
+            nomRecetteLabel = new JLabel("Nom de la recette * : ");
             nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomRecetteLabel);
             listeRecette = applicationController.getAllRecette();
@@ -123,7 +123,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(nomRecette);
 
             //CODE BARRE (FK TYPEARTICLE)
-            codeBarreLabel = new JLabel("Code Barre : ");
+            codeBarreLabel = new JLabel("Code Barre * : ");
             codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(codeBarreLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
@@ -137,7 +137,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(codeBarre);
 
             //MATRICULE CUISINE (FK CUISINIER)
-            matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
+            matriculeCuisinierLabel = new JLabel("Matricule cuisinier * : ");
             matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeCuisinierLabel);
             listeCuisinier = applicationController.getAllCuisinier();
@@ -151,7 +151,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(matriculeCuisinier);
 
             //MATRICULE RESPONSABLE OBLIGATOIRE (FK RESPONSABLE VENTE)
-            matriculeResponsableLabel = new JLabel("Matricule responsable vente : ");
+            matriculeResponsableLabel = new JLabel("Matricule responsable vente * : ");
             matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeResponsableLabel);
             listeResponsableVente = applicationController.getAllResponsableDesVentes();
@@ -215,6 +215,20 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             try
             {
+                if(quantitePrevu.getText().isEmpty())
+                    JOptionPane.showMessageDialog(panneauBoutons, "La quantité prévue est obligatoire");
+                if(numeroSequentiel.getText().isEmpty())
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est obligatoire");
+                if(urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
+                    JOptionPane.showMessageDialog(panneauBoutons, "L'urgence de l'ordre est obligatoire");
+                if(!(   quantitePrevu.getText().isEmpty() ||
+                        numeroSequentiel.getText().isEmpty() ||
+                        (urgentTrue.isSelected()||urgentFalse.isSelected())||
+                        nomRecette.getSelectedIndex()==0 ||
+                        codeBarre.getSelectedIndex() == 0 ||
+                        matriculeCuisinier.getSelectedIndex() == 0 ||
+                        matriculeResponsable.getSelectedIndex() == 0
+                        )){
                 ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
                 ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
                 ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
@@ -248,11 +262,14 @@ public class InsertionOrdrePrepa extends JPanel {
                 datePrepa = new JSpinner(datePrepaModel);
                 remarque.setText(null);
                 urgentButton.clearSelection();
+                }
+
             }
             catch (Exception e)
             {
                 JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données 3", JOptionPane.ERROR_MESSAGE);
             }
+
         }
     }
 
