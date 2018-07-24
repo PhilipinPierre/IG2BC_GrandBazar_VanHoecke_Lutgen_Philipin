@@ -228,7 +228,7 @@ public class InsertionOrdrePrepa extends JPanel {
                         (urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)                        )){
                     StringBuilder affichage = new StringBuilder();
                     affichage.append("Voici un récapitulatif de l'insertion:\n\n");
-                    affichage.append("Date :" + dateCreation.toString()+"\n");
+                    affichage.append("Date :" + dateCreation.getValue()+"\n");
                     affichage.append("Numéro séquentiel :" + numeroSequentiel.getText()+"\n");
                     affichage.append("Quantité prévue :" + quantitePrevu.getText()+"\n");
                     affichage.append("Quantité produite :");
@@ -236,8 +236,8 @@ public class InsertionOrdrePrepa extends JPanel {
                         affichage.append("0\n");
                     else
                         affichage.append(quantiteProduite.getText()+"\n");
-                    affichage.append("Date de vente :" + dateVente.toString()+"\n");
-                    affichage.append("Date de préparation :" + datePrepa.toString() + "\n");
+                    affichage.append("Date de vente :" + dateVente.getValue()+"\n");
+                    affichage.append("Date de préparation :" + datePrepa.getValue() + "\n");
                     affichage.append("Remarque :");
                     if(!remarque.getText().isEmpty())
                         affichage.append(remarque.getText());
@@ -246,10 +246,10 @@ public class InsertionOrdrePrepa extends JPanel {
                         affichage.append("Ordre urgent\n");
                     else
                         affichage.append("Ordre non urgent\n");
-                    affichage.append("Nom de la recette :" + nomRecette.toString() + "\n");
-                    affichage.append("Code barre :" + codeBarre.toString() + "\n");
-                    affichage.append("Matricule du cuisinier :" + matriculeCuisinier.toString()+"\n");
-                    affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.toString()+"\n");
+                    affichage.append("Nom de la recette :" + nomRecette.getSelectedItem().toString() + "\n");
+                    affichage.append("Code barre :" + codeBarre.getSelectedItem().toString() + "\n");
+                    affichage.append("Matricule du cuisinier :" + matriculeCuisinier.getSelectedItem().toString()+"\n");
+                    affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.getSelectedItem().toString()+"\n");
 
                     JOptionPane.showMessageDialog(panneauBoutons, affichage.toString());
 
@@ -263,10 +263,12 @@ public class InsertionOrdrePrepa extends JPanel {
                     ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
                     ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
                     ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
-
+                    System.out.println("help");
                     GregorianCalendar dateC = new GregorianCalendar();
                     dateC.setTime(dateCreationModel.getDate());
                     ordrePreparation.setDate(dateC);
+
+                    System.out.println(dateC.toString());
 
                     GregorianCalendar dateP = new GregorianCalendar();
                     dateP.setTime(datePrepaModel.getDate());
@@ -279,6 +281,12 @@ public class InsertionOrdrePrepa extends JPanel {
                     ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
                     applicationController.SetOrdrePreparation(ordrePreparation);
+
+
+
+
+
+
 
                     dateCreation = new JSpinner(dateCreationModel);
                     numeroSequentiel.setText(null);
