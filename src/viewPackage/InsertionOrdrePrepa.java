@@ -254,21 +254,19 @@ public class InsertionOrdrePrepa extends JPanel {
                     JOptionPane.showMessageDialog(panneauBoutons, affichage.toString());
 
 
-
                     ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
+                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantitePrevu.getText()));
                     ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
                     ordrePreparation.setRemarque(remarque.getText());
                     ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
                     ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
                     ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
                     ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
-                    System.out.println("help");
+
+
                     GregorianCalendar dateC = new GregorianCalendar();
                     dateC.setTime(dateCreationModel.getDate());
                     ordrePreparation.setDate(dateC);
-
-                    System.out.println(dateC.toString());
 
                     GregorianCalendar dateP = new GregorianCalendar();
                     dateP.setTime(datePrepaModel.getDate());
@@ -280,6 +278,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
                     ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
+                        //Il y a une erreur à la ligne suivante.
                     applicationController.SetOrdrePreparation(ordrePreparation);
 
 
@@ -301,7 +300,7 @@ public class InsertionOrdrePrepa extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données 3", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données", JOptionPane.ERROR_MESSAGE);
             }
 
         }
