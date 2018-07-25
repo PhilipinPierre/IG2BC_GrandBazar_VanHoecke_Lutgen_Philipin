@@ -198,6 +198,13 @@ public class InsertionOrdrePrepa extends JPanel {
 
     }
 
+    private class TextFieldListenerNumeroSequentiel implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            if(Integer.parseInt(numeroSequentiel.getText())<0 || Integer.parseInt(numeroSequentiel.getText())>2147483647)
+                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est obligatoire");
+        }
+    }
+
     //CLASSES PRIVEES POUR LES BOUTONS
     private class ButtonListenerRetour implements ActionListener
     {
