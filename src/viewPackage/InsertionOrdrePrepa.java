@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -27,6 +29,7 @@ public class InsertionOrdrePrepa extends JPanel {
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
+    private ArrayList<OrdrePreparation> listeOrdrePreparation;
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Cuisinier> listeCuisinier;
@@ -210,6 +213,8 @@ public class InsertionOrdrePrepa extends JPanel {
         }
     }
 
+
+
     private class ButtonListenerValidation implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
@@ -278,6 +283,32 @@ public class InsertionOrdrePrepa extends JPanel {
                     ordrePreparation.setDateVente(dateV);
 
                     ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+
+                    OrdrePreparation ordre = ordrePreparation;
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  hh:mm");
+                    java.util.Date dateD = dateC.getGregorianChange();
+
+                    StringBuilder affiche = new StringBuilder();
+                    affiche.append("date :"+ dateFormat.format(dateD) + "\n");
+                    affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
+                    affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
+                    affiche.append("Q prod :" + ordre.getQuantiteProduite()+"\n");
+
+
+                    dateD = dateV.getGregorianChange();
+                    affiche.append("date v :" + dateFormat.format(dateD) + "\n");
+                    dateD = dateV.getGregorianChange();
+                    affiche.append("Date p :" + dateFormat.format(dateD) + "\n");
+                    affiche.append("Remarque :"+ ordre.getRemarque() + "\n");
+                    affiche.append("Urgent :" + ordre.getEstUrgent() + "\n");
+                    affiche.append("recette :" + ordre.getNom().getNom() + "\n");
+                    affiche.append("Code barre :" + ordre.getCodeBarre().getCodeBarre() + "\n");
+                    affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
+                    affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
+
+                    JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());
+
+
 
                         //Il y a une erreur à la ligne suivante.
                     applicationController.SetOrdrePreparation(ordrePreparation);
