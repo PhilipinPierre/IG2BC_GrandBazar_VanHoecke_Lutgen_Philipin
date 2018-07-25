@@ -60,6 +60,7 @@ public class InsertionOrdrePrepa extends JPanel {
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
+            numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -257,7 +258,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
                     ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantitePrevu.getText()));
                     ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
-                    ordrePreparation.setRemarque(remarque.getText());
+                    ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
                     ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
                     ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
                     ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
@@ -281,11 +282,7 @@ public class InsertionOrdrePrepa extends JPanel {
                         //Il y a une erreur à la ligne suivante.
                     applicationController.SetOrdrePreparation(ordrePreparation);
 
-
-
-
-
-
+                    JOptionPane.showMessageDialog(panneauBoutons, "L'ordre à bien été créé.");
 
                     dateCreation = new JSpinner(dateCreationModel);
                     numeroSequentiel.setText(null);

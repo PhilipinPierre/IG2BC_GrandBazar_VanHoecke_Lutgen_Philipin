@@ -62,6 +62,25 @@ public class ModificationOrdrePrepa extends JPanel {
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
             listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
+
+            OrdrePreparation ordre = listeOrdrePreparation.get(0);
+            StringBuilder affiche = new StringBuilder();
+            affiche.append("date :"+ ordre.getDate() + "\n");
+            affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
+            affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
+            affiche.append("Q prod :" + ordre.getQuantiteProduite()+"\n");
+            affiche.append("date v :" + ordre.getDateVente() + "\n");
+            affiche.append("Date p :" + ordre.getDatePreparation() + "\n");
+            affiche.append("Remarque :"+ ordre.getRemarque() + "\n");
+            affiche.append("Urgent :" + ordre.getEstUrgent() + "\n");
+            affiche.append("recette :" + ordre.getNom().getNom() + "\n");
+            affiche.append("Code barre :" + ordre.getCodeBarre().getCodeBarre() + "\n");
+            affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
+            affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
+
+            JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());
+
+
             valuesNumeroSequentiel = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePreparation)
             {
