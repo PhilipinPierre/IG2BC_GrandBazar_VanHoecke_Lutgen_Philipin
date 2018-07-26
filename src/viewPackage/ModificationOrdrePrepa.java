@@ -63,7 +63,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentielLabel);
             listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
 
-            OrdrePreparation ordre = listeOrdrePreparation.get(0);
+            /*OrdrePreparation ordre = listeOrdrePreparation.get(0);
             StringBuilder affiche = new StringBuilder();
             affiche.append("date :"+ ordre.getDate() + "\n");
             affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
@@ -78,7 +78,7 @@ public class ModificationOrdrePrepa extends JPanel {
             affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
             affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
 
-            JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());
+            JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
 
 
             valuesNumeroSequentiel = new ArrayList<>();

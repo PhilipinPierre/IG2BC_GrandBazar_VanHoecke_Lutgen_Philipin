@@ -224,35 +224,34 @@ public class InsertionOrdrePrepa extends JPanel {
 
     private boolean NumeroSequentielDejaPresent(){
         for(OrdrePreparation ordre : listeOrdrePreparation)
-            if(ordre.getNumeroSequentiel() == Integer.parseInt(numeroSequentiel.getText().trim()))
+            if(ordre.getNumeroSequentiel() == Integer.valueOf(numeroSequentiel.getText().trim()))
                 return true;
         return false;
     }
 
     private boolean testNumeroSequentielIncorrect(String numSeq){
-        char[] upper = numSeq.toCharArray();
-        StringBuilder resultat = new StringBuilder();
-        for(char up : upper) {
-            switch (up) {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    resultat.append(up);
-                    break;
-                default:
-                    return true;
+        try{
+            //Permet de gere l'overflow
+            Integer.valueOf(numSeq);
+
+            char[] upper = numSeq.toCharArray();
+            StringBuilder resultat = new StringBuilder();
+            for(int i = 0; i<upper.length; i++) {
+                switch (upper[i]) {
+                    case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+                        resultat.append(upper[i]);
+                        break;
+                    default:
+                        return true;
+                }
             }
+            numeroSequentiel.setText(resultat.toString());
+
+            return false;
+        } catch (Exception e){
+            return true;
         }
 
-        numeroSequentiel.setText(resultat.toString());
-        return false;
     }
 
     //CLASSES PRIVEES POUR LES BOUTONS
@@ -345,7 +344,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  hh:mm");
                     java.util.Date dateD = dateC.getGregorianChange();
 
-                    StringBuilder affiche = new StringBuilder();
+                    /*StringBuilder affiche = new StringBuilder();
                     affiche.append("date :"+ dateFormat.format(dateD) + "\n");
                     affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
                     affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
@@ -363,7 +362,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
                     affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
 
-                    JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());
+                    JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
 
 
 
@@ -380,6 +379,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     datePrepa = new JSpinner(datePrepaModel);
                     remarque.setText(null);
                     urgentButton.clearSelection();
+                    listeOrdrePreparation.add(ordrePreparation);
                 }
 
             }
