@@ -20,7 +20,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel";
+            String requeteSQL = "select * from ordrepreparation order by 'NumeroSequentiel'";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
@@ -42,6 +42,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 ordrePreparation.setRemarque(donnees.getString("remarque"));
                 ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
+                ordrePreparation.setNom(applicationController.getRecette(donnees.getString("nom")));
                 listeOrdrePreparation.add(ordrePreparation);
             }
         } catch (Exception e){

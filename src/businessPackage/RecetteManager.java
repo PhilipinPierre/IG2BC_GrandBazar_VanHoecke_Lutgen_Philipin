@@ -17,4 +17,8 @@ public class RecetteManager {
     {
         return recetteBDA.getAllRecette();
     }
+
+    public Recette getRecette(String nom) throws ExceptionsBD{
+        return recetteBDA.getRecette(nom);
+    }
 }

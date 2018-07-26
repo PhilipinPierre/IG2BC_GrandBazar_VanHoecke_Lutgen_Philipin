@@ -9,4 +9,5 @@ import java.util.ArrayList;
 
 public interface RecetteDA {
     ArrayList<Recette> getAllRecette()throws ExceptionsBD;
+    Recette getRecette(String nom)throws ExceptionsBD;
 }

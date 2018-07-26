@@ -93,6 +93,10 @@ public class ApplicationController {
         return recette.getAllRecette();
     }
 
+    public Recette getRecette(String nom) throws ExceptionsBD{
+        return recette.getRecette(nom);
+    }
+
     public ArrayList<OrdrePreparation> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparation.getNumSeqOrdrePreparation();
     }
