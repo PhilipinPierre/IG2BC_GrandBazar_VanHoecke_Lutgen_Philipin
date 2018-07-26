@@ -49,6 +49,8 @@ public class InsertionOrdrePrepa extends JPanel {
 
             panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
 
+            listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
+
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
             dateCreationLabel = new JLabel("Date * : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
@@ -206,14 +208,51 @@ public class InsertionOrdrePrepa extends JPanel {
         public void focusGained(FocusEvent e) {}
         @Override
         public void focusLost(FocusEvent e) {
-            if(Integer.parseInt(numeroSequentiel.getText())<0 || Integer.parseInt(numeroSequentiel.getText())>2147483647) {
-                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
-                numeroSequentiel.setText(null);
-            } else if(listeOrdrePreparation.contains(Integer.parseInt(numeroSequentiel.getText()))){
-                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utiliser.\nVeuillez vous référez au listing pour connaitre tout les numéro séquentiel déjà utilisé.");
-                numeroSequentiel.setText(null);
+            if(numeroSequentiel.getText() != null) {
+                boolean numSeqIncorrect = testNumeroSequentielIncorrect(numeroSequentiel.getText().trim());
+
+                if (numSeqIncorrect) {
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
+                    numeroSequentiel.setText(null);
+                } else if (NumeroSequentielDejaPresent()) {
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utiliser.\nVeuillez vous référez au listing pour connaitre tout les numéro séquentiel déjà utilisé.");
+                    numeroSequentiel.setText(null);
+                }
             }
         }
+    }
+
+    private boolean NumeroSequentielDejaPresent(){
+        for(OrdrePreparation ordre : listeOrdrePreparation)
+            if(ordre.getNumeroSequentiel() == Integer.parseInt(numeroSequentiel.getText().trim()))
+                return true;
+        return false;
+    }
+
+    private boolean testNumeroSequentielIncorrect(String numSeq){
+        char[] upper = numSeq.toCharArray();
+        StringBuilder resultat = new StringBuilder();
+        for(char up : upper) {
+            switch (up) {
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    resultat.append(up);
+                    break;
+                default:
+                    return true;
+            }
+        }
+
+        numeroSequentiel.setText(resultat.toString());
+        return false;
     }
 
     //CLASSES PRIVEES POUR LES BOUTONS
