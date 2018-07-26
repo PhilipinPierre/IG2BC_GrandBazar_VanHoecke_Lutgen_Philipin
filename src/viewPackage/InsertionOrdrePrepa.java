@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,6 +66,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
+            numeroSequentiel.addFocusListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -198,10 +201,18 @@ public class InsertionOrdrePrepa extends JPanel {
 
     }
 
-    private class TextFieldListenerNumeroSequentiel implements ActionListener{
-        public void actionPerformed(ActionEvent event){
-            if(Integer.parseInt(numeroSequentiel.getText())<0 || Integer.parseInt(numeroSequentiel.getText())>2147483647)
-                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est obligatoire");
+    private class NumeroSequentielListener implements java.awt.event.FocusListener{
+        @Override
+        public void focusGained(FocusEvent e) {}
+        @Override
+        public void focusLost(FocusEvent e) {
+            if(Integer.parseInt(numeroSequentiel.getText())<0 || Integer.parseInt(numeroSequentiel.getText())>2147483647) {
+                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
+                numeroSequentiel.setText(null);
+            } else if(listeOrdrePreparation.contains(Integer.parseInt(numeroSequentiel.getText()))){
+                JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utiliser.\nVeuillez vous référez au listing pour connaitre tout les numéro séquentiel déjà utilisé.");
+                numeroSequentiel.setText(null);
+            }
         }
     }
 
