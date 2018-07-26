@@ -2,7 +2,7 @@ package modelPackage;
 
 import java.util.GregorianCalendar;
 
-public class OrdrePreparation {
+public class OrdrePreparation implements Comparable<OrdrePreparation> {
     private Integer numeroSequentiel, quantitePrevue, quantiteProduite;
     private GregorianCalendar date, dateVente, datePreparation;
     private String remarque;
@@ -37,4 +37,9 @@ public class OrdrePreparation {
     public void setCodeBarre(TypeArticle codeBarre) { this.codeBarre = codeBarre; }
     public void setMatriculeCui(Cuisinier matriculeCui) { this.matriculeCui = matriculeCui; }
     public void setMatriculeRes(ResponsableDesVentes matriculeRes) { this.matriculeRes = matriculeRes; }
+
+    @Override
+    public int compareTo(OrdrePreparation ordrePreparation) {
+        return (this.numeroSequentiel - ordrePreparation.getNumeroSequentiel());
+    }
 }

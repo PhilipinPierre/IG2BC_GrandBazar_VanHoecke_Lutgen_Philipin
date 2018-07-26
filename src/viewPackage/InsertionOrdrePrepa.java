@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 public class InsertionOrdrePrepa extends JPanel {
@@ -49,7 +50,9 @@ public class InsertionOrdrePrepa extends JPanel {
 
             panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
 
-            listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
+            listeOrdrePreparation = applicationController.getAllOrdrePreparation();
+            Collections.sort(listeOrdrePreparation);
+            System.out.println("essai");
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
             dateCreationLabel = new JLabel("Date * : ");
@@ -379,7 +382,9 @@ public class InsertionOrdrePrepa extends JPanel {
                     datePrepa = new JSpinner(datePrepaModel);
                     remarque.setText(null);
                     urgentButton.clearSelection();
+
                     listeOrdrePreparation.add(ordrePreparation);
+                    Collections.sort(listeOrdrePreparation);
                 }
 
             }

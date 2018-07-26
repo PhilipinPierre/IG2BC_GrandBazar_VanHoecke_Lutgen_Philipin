@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 
@@ -8,39 +9,60 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
-        ArrayList<OrdrePreparation> liste = new ArrayList<>();
+    private ArrayList<OrdrePreparation> listeOrdrePreparation;
+
+    private OrdrePreparationBDA() throws ExceptionsBD{
+        ApplicationController applicationController = new ApplicationController();
+        ArrayList<TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+        ArrayList<Recette> listeRecette = applicationController.getAllRecette();
+        ArrayList<Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
+        ArrayList<ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
+
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation";
+            String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 OrdrePreparation ordrePreparation = new OrdrePreparation();
-                ordrePreparation.getMatriculeRes().setNom(donnees.getString("Matricule_res"));
-                liste.add(ordrePreparation);
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(donnees.getDate("date"));
+                ordrePreparation.setDate(date);
+                ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
+                ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
+                ordrePreparation.setQuantiteProduite(donnees.getInt("quantiteproduite"));
+                GregorianCalendar datev = new GregorianCalendar();
+                datev.setTime(donnees.getDate("datevente"));
+                ordrePreparation.setDateVente(datev);
+                if(donnees.getDate("datepreparation") != null) {
+                    GregorianCalendar dateP = new GregorianCalendar();
+                    dateP.setTime(donnees.getDate("datepreparation"));
+                    ordrePreparation.setDatePreparation(dateP);
+                }
+                ordrePreparation.setRemarque(donnees.getString("remarque"));
+                ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
+
+                listeOrdrePreparation.add(ordrePreparation);
             }
         } catch (Exception e){
             throw  new ExceptionsBD("recherche de tout les ordres de préparations");
         }
-        return liste;
     }
 
-    public ArrayList<OrdrePreparation> getNumSeqOrdrePreparation()throws ExceptionsBD{
-        ArrayList<OrdrePreparation> liste = new ArrayList<>();
-        try{
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select numerosequentiel from ordrepreparation";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()){
-                OrdrePreparation ordrePreparation = new OrdrePreparation();
-                ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
-                liste.add(ordrePreparation);
-            }
-        }catch (Exception e){
-            throw new ExceptionsBD("Recherche des Numéro Séquentiels des ordres de préparations inaccessible");
-        }
+
+
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD{
+        if(listeOrdrePreparation.isEmpty())
+            new OrdrePreparationBDA();
+        return listeOrdrePreparation;
+    }
+
+    public ArrayList<Integer> getNumSeqOrdrePreparation()throws ExceptionsBD{
+        if(listeOrdrePreparation.isEmpty())
+            new OrdrePreparationBDA();
+        ArrayList<Integer> liste = new ArrayList<>();
+        for(OrdrePreparation ordre : listeOrdrePreparation)
+            liste.add(ordre.getNumeroSequentiel());
         return liste;
     }
 

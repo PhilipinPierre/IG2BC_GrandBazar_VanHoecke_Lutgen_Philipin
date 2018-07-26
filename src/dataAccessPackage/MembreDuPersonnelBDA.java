@@ -23,7 +23,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
-                membreDuPersonnel.setMatricule(donnees.getInt("Matricule"));
+                CompleterMDP(donnees, membreDuPersonnel);
                 liste.add(membreDuPersonnel);
             }
         } catch (Exception e){
