@@ -38,7 +38,7 @@ public class ModeleRechercheArticleLocalite extends AbstractTableModel {
         switch(col)
         {
             case 0 : return "CLE ETRANGERE ?";
-            case 1 : return "test";
+            case 1 : return "Pas de lien ?";
             //case 1 : return ligneLot.getCodeBarre().getLibelle();
             case 2 : return ligneLot.getQuantite();
             case 3 : return ligneLot.getNumeroTVA().getNom();
