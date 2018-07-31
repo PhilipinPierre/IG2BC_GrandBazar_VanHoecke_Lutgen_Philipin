@@ -36,14 +36,10 @@ public class LotBDA implements LotDA {
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from lot ";
-            System.out.println("coucou1");
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            System.out.println("coucou");
             ResultSet donnees = preparedStatement.executeQuery();
-            System.out.println("coucou");
             while(donnees.next()){
                 Lot lot = new Lot();
-                System.out.println("coucou2");
                 CompleterLot(donnees, lot);
                 liste.add(lot);
             }
