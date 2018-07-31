@@ -4,21 +4,19 @@ import dataAccessPackage.RecetteBDA;
 import dataAccessPackage.RecetteDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Recette;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RecetteManager {
-    private RecetteDA recetteBDA;
+    private RecetteDA recetteDA;
 
-    public RecetteManager() {recetteBDA = new RecetteBDA();}
+    public RecetteManager() {recetteDA = new RecetteBDA();}
 
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
-        return recetteBDA.getAllRecette();
+        return recetteDA.getAllRecette();
     }
 
     public Recette getRecette(String nom) throws ExceptionsBD{
-        return recetteBDA.getRecette(nom);
+        return recetteDA.getRecette(nom);
     }
 }

@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
+import javax.naming.NamingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +37,7 @@ public class SuppressionOrdrePrepa extends JPanel {
             numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneau.add(numeroSequentielLabel);
-            listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
+            listeOrdrePreparation = applicationController.getAllOrdrePreparation();
             valuesNumeroSequentiel = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePreparation)
             {

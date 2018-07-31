@@ -1,8 +1,7 @@
 package businessPackage;
 
-import dataAccessPackage.OrdrePreparationBDA;
-import dataAccessPackage.OrdrePreparationDA;
-import exceptionsPackage.ExceptionsBD;
+import dataAccessPackage.*;
+import exceptionsPackage.*;
 import modelPackage.OrdrePreparation;
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ public class OrdrePreparationManager {
         return ordrePreparationBDA.getAllOrdrePreparation();
     }
 
-    public ArrayList<OrdrePreparation> getNumSeqOrdrePreparation() throws  ExceptionsBD{
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparationBDA.getNumSeqOrdrePreparation();
     }
 

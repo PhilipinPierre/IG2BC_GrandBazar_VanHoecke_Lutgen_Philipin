@@ -3,7 +3,6 @@ package controllerPackage;
 import businessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.*;
-
 import java.util.*;
 
 
@@ -97,7 +96,7 @@ public class ApplicationController {
         return recette.getRecette(nom);
     }
 
-    public ArrayList<OrdrePreparation> getNumSeqOrdrePreparation() throws  ExceptionsBD{
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparation.getNumSeqOrdrePreparation();
     }
 

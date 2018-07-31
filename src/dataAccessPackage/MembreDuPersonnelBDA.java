@@ -37,7 +37,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
             CompleterMDP(donnees, membreDuPersonnel);
     }
 
-    private static void CompleterMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
+    protected static void CompleterMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
         membreDuPersonnel.setNom(donnees.getString("nom"));
         membreDuPersonnel.setPrenom(donnees.getString("prenom"));
@@ -57,7 +57,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         }
     }
 
-    public MembreDuPersonnel getMembreDuPersonnel(int matricule)throws ExceptionsBD{
+    protected static MembreDuPersonnel getMembreDuPersonnel(int matricule)throws SQLException{
         MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
         try {
             Connection connection = SingletonConnexion.getInstance();
@@ -68,8 +68,53 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
             CompleterMDP(donnees, membreDuPersonnel);
             System.out.println(membreDuPersonnel.getMatricule());
         } catch (Exception e){
-            throw  new ExceptionsBD("recherche d'un memebre du personnel");
+            throw  new SQLException("Erreur lors de la recherche d'un membre du personnel");
         }
         return membreDuPersonnel;
     }
+
+
+    public ArrayList<MembreDuPersonnel> getAllCuisiniers() throws ExceptionsBD
+    {
+        try
+        {
+            return getAllEmployesParType(MembreDuPersonnel.CUISINIER);
+        }
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("Erreur lors de la recherche des cuisiniers");
+        }
+    }
+
+    public ArrayList<MembreDuPersonnel> getAllRespDesVentes() throws ExceptionsBD
+    {
+        try
+        {
+            return getAllEmployesParType(MembreDuPersonnel.RESP_DES_VENTES);
+        }
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("Erreur lors de laa recherche des responsables des ventes");
+        }
+    }
+
+    private ArrayList<MembreDuPersonnel> getAllEmployesParType(String typeEmploye) throws Exception, SQLException
+    {
+        ArrayList<MembreDuPersonnel> listeEmploye = new ArrayList<>();
+        Connection connection = SingletonConnexion.getInstance();
+        String requete = "select * from MembreDuPersonnel where typePersonnel = ?";
+        PreparedStatement prepStat = connection.prepareStatement(requete);
+        prepStat.setString(1, typeEmploye);
+        ResultSet donnees = prepStat.executeQuery();
+        while(donnees.next())
+        {
+            MembreDuPersonnel mdp = new MembreDuPersonnel();
+            CompleterMDP(donnees, mdp);
+            if(mdp.getDateSortie() == null)
+                listeEmploye.add(mdp);
+        }
+        return listeEmploye;
+    }
 }
+
+

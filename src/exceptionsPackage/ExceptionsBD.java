@@ -1,6 +1,6 @@
 package exceptionsPackage;
 
-public class ExceptionsBD extends  Exception {
+public class ExceptionsBD extends Exception {
     private String typeDeProbleme;
 
     public ExceptionsBD(String typeDeProbleme)
@@ -10,6 +10,6 @@ public class ExceptionsBD extends  Exception {
 
     public String getMessage()
     {
-        return "Erreur lors de l'acces " + typeDeProbleme;
+        return "Erreur : " + typeDeProbleme;
     }
 }

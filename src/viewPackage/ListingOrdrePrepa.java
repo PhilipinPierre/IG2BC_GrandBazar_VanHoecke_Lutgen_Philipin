@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
+import javax.naming.NamingException;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class ListingOrdrePrepa extends JPanel {
 
             listing = new JLabel("Listing Ordre De Préparation : ");
 
-            listeOrdrePrepa = applicationController.getNumSeqOrdrePreparation();
+            listeOrdrePrepa = applicationController.getAllOrdrePreparation();
             ArrayList<Integer> valuesOrdrePrepa = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePrepa)
             {

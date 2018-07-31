@@ -1,11 +1,8 @@
 package dataAccessPackage;
 
-import exceptionsPackage.ExceptionsBD;
-import modelPackage.Recette;
-
-import javax.naming.NamingException;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
+import exceptionsPackage.*;
+import modelPackage.*;
 
 public interface RecetteDA {
     ArrayList<Recette> getAllRecette()throws ExceptionsBD;

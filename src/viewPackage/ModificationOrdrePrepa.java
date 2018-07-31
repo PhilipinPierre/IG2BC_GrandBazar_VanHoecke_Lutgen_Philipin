@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
+import javax.naming.NamingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +62,7 @@ public class ModificationOrdrePrepa extends JPanel {
             numeroSequentielLabel = new JLabel("Numéro Séquentiel : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
-            listeOrdrePreparation = applicationController.getNumSeqOrdrePreparation();
+            listeOrdrePreparation = applicationController.getAllOrdrePreparation();
 
             /*OrdrePreparation ordre = listeOrdrePreparation.get(0);
             StringBuilder affiche = new StringBuilder();

@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class InsertionOrdrePrepa extends JPanel {
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
     private ArrayList<OrdrePreparation> listeOrdrePreparation;
+    private ArrayList<Integer> listeNumSeq;
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Cuisinier> listeCuisinier;
@@ -51,7 +51,8 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
 
             listeOrdrePreparation = applicationController.getAllOrdrePreparation();
-            Collections.sort(listeOrdrePreparation);
+            listeNumSeq = applicationController.getNumSeqOrdrePreparation();
+            Collections.sort(listeNumSeq);
             System.out.println("essai");
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE

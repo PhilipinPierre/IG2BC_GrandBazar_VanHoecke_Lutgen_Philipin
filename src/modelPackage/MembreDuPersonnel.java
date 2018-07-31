@@ -3,6 +3,10 @@ package modelPackage;
 import java.util.GregorianCalendar;
 
 public class MembreDuPersonnel {
+    public static final String EMPLOYE = "Employe";
+    public static final String RESP_DES_VENTES = "Responsable des ventes";
+    public static final String CUISINIER = "Cuisinier";
+
     private String nom, prenom, localite, rue;
     private Integer codePostal, matricule;
     private GregorianCalendar dateNaissance, dateEntree, dateSortie;

@@ -2,15 +2,11 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.ArticlePerime;
-import modelPackage.Lot;
 import modelPackage.MembreDuPersonnel;
 import modelPackage.TypeArticle;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 

@@ -9,8 +9,8 @@ public class OrdrePreparation implements Comparable<OrdrePreparation> {
     private Boolean estUrgent;
     private Recette nom;
     private TypeArticle codeBarre;
-    private Cuisinier matriculeCui;
-    private ResponsableDesVentes matriculeRes;
+    private MembreDuPersonnel matriculeCui;
+    private MembreDuPersonnel matriculeRes;
 
     public Integer getNumeroSequentiel() { return numeroSequentiel; }
     public Integer getQuantitePrevue() { return quantitePrevue; }
@@ -22,8 +22,8 @@ public class OrdrePreparation implements Comparable<OrdrePreparation> {
     public Boolean getEstUrgent() { return estUrgent; }
     public Recette getNom() { return nom; }
     public TypeArticle getCodeBarre() { return codeBarre; }
-    public Cuisinier getMatriculeCui() { return matriculeCui; }
-    public ResponsableDesVentes getMatriculeRes() { return matriculeRes; }
+    public MembreDuPersonnel getMatriculeCui() { return matriculeCui; }
+    public MembreDuPersonnel getMatriculeRes() { return matriculeRes; }
 
     public void setNumeroSequentiel(Integer numeroSequentiel) { this.numeroSequentiel = numeroSequentiel; }
     public void setQuantitePrevue(Integer quantitePrevue) { this.quantitePrevue = quantitePrevue; }
@@ -35,8 +35,8 @@ public class OrdrePreparation implements Comparable<OrdrePreparation> {
     public void setEstUrgent(Boolean estUrgent) { this.estUrgent = estUrgent; }
     public void setNom(Recette nom) { this.nom = nom; }
     public void setCodeBarre(TypeArticle codeBarre) { this.codeBarre = codeBarre; }
-    public void setMatriculeCui(Cuisinier matriculeCui) { this.matriculeCui = matriculeCui; }
-    public void setMatriculeRes(ResponsableDesVentes matriculeRes) { this.matriculeRes = matriculeRes; }
+    public void setMatriculeCui(MembreDuPersonnel matriculeCui) { this.matriculeCui = matriculeCui; }
+    public void setMatriculeRes(MembreDuPersonnel matriculeRes) { this.matriculeRes = matriculeRes; }
 
     @Override
     public int compareTo(OrdrePreparation ordrePreparation) {
