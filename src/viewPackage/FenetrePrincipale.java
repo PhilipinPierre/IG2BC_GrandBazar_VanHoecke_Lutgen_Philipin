@@ -158,7 +158,7 @@ public class FenetrePrincipale extends JFrame {
             }
         });
 
-        //RECHERCHE INFOS SUR UN ARTICLE DONNE
+        //RECHERCHE INFORMATIONS SUR UN ARTICLE DONNE
         rechercheArticleInfos = new JMenuItem("Informations article");
         rechercheArticleInfos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.SHIFT_MASK));
         rechercheMenu.add(rechercheArticleInfos);
