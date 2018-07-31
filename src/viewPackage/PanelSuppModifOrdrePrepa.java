@@ -1,26 +1,26 @@
 package viewPackage;
 
-import modelPackage.*;
-import controllerPackage.*;
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.*;
+import modelPackage.*;
+import controllerPackage.*;
 
-public class PanelRechercheArticleLocalite extends JPanel {
+public class PanelSuppModifOrdrePrepa extends JPanel {
     private JTable table;
     private JLabel titre;
     private ListSelectionModel listSelect;
     private ApplicationController applicationController;
-    private ModeleRechercheArticleLocalite modeleRechercheArticleLocalite;
+    private ModeleSuppModifOrdrePrepa modeleSuppModifOrdrePrepa;
 
-    public PanelRechercheArticleLocalite(ApplicationController applicationController, ArrayList<Lot> lot)
+    public PanelSuppModifOrdrePrepa(ApplicationController applicationController, ArrayList<OrdrePreparation> op)
     {
         this.applicationController = applicationController;
         setLayout(new BorderLayout());
-        titre = new JLabel("Résultat recherche client");
+        titre = new JLabel("Résultat du listing");
         add(titre, BorderLayout.NORTH);
-        modeleRechercheArticleLocalite = new ModeleRechercheArticleLocalite(lot);
-        table = new JTable(modeleRechercheArticleLocalite);
+        modeleSuppModifOrdrePrepa = new ModeleSuppModifOrdrePrepa(op);
+        table = new JTable(modeleSuppModifOrdrePrepa);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listSelect = table.getSelectionModel();
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);

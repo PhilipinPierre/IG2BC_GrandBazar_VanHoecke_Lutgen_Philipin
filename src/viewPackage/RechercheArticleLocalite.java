@@ -88,7 +88,7 @@ public class RechercheArticleLocalite extends JPanel{
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBouton, e.getMessage(), "Erreur d'accès lors de la recherche des lots par localité", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showInputDialog("Erreur d'accès lors de la recherche des lots par localité", JOptionPane.ERROR_MESSAGE);
             }
 
         }

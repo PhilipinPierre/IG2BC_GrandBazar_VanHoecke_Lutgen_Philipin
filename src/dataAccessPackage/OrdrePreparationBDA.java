@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
 
-    private ArrayList<OrdrePreparation> getOrdrePrepa(Connection connection, PreparedStatement preparedStatement) throws SQLException, NamingException
+    private ArrayList<OrdrePreparation> getOrdrePrepa(Connection connection, PreparedStatement preparedStatement) throws SQLException
     {
         ArrayList<OrdrePreparation> listeOrdrePreparation = new ArrayList<>();
         ApplicationController applicationController = new ApplicationController();

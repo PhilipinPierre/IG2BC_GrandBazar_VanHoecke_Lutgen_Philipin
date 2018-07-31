@@ -2,7 +2,6 @@ package viewPackage;
 
 import java.util.*;
 import modelPackage.*;
-
 import javax.swing.table.AbstractTableModel;
 
 public class ModeleRechercheArticleLocalite extends AbstractTableModel {
@@ -37,9 +36,16 @@ public class ModeleRechercheArticleLocalite extends AbstractTableModel {
         Lot ligneLot = contenu.get(row);
         switch(col)
         {
-            case 0 : return "CLE ETRANGERE ?";
-            case 1 : return "Pas de lien ?";
-            //case 1 : return ligneLot.getCodeBarre().getLibelle();
+            case 0 : {if((ligneLot).getCodeLot() != null)
+                        return ligneLot.getCodeLot();
+                      else
+                        return null;
+                      }
+            case 1 : {if((ligneLot).getCodeBarre() != null)
+                        return ligneLot.getCodeBarre().getLibelle();
+                     else
+                         return null;
+                     }
             case 2 : return ligneLot.getQuantite();
             case 3 : return ligneLot.getNumeroTVA().getNom();
             default : return null;
