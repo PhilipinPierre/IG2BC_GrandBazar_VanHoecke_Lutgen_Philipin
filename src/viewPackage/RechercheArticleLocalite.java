@@ -1,10 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import modelPackage.Fournisseur;
-import modelPackage.Lot;
-import modelPackage.OrdrePreparation;
-import modelPackage.TypeArticle;
+import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +12,7 @@ public class RechercheArticleLocalite extends JPanel{
     private JPanel panneauRecherche;
     private JPanel panneauBouton;
     private JLabel typeFournisseurLabel;
-    private JComboBox codeBarre;
+    private JComboBox localite;
     private JButton validation;
     private ApplicationController applicationController;
     private ArrayList<Lot> listeLot;
@@ -32,7 +29,7 @@ public class RechercheArticleLocalite extends JPanel{
 
             panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
 
-            //RECHERCHE FOurnisseur
+            //RECHERCHE Fournisseur
             typeFournisseurLabel = new JLabel("Localité : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             typeFournisseurLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -47,9 +44,9 @@ public class RechercheArticleLocalite extends JPanel{
                 valuesFournisseur.add(f.getLocalite());
             }
 
-            codeBarre = new JComboBox(valuesFournisseur.toArray(new String[0]));
-            codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
-            panneauRecherche.add(codeBarre);
+            localite = new JComboBox(valuesFournisseur.toArray(new String[0]));
+            localite.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauRecherche.add(localite);
 
             //BOUTONS
             panneauBouton = new JPanel();
@@ -78,24 +75,20 @@ public class RechercheArticleLocalite extends JPanel{
         {
             try
             {
-                listeLot = applicationController.RechercheLotViaLocaliteFournisseur(valueFournisseur.get(codeBarre.getSelectedIndex()));
+                String localiteLot;
+                localiteLot = localite.getSelectedItem().toString();
 
-                Object [][] data = new Object[listeLot.size()][4];
-                int i = 0;
-                for(Lot lot : listeLot){
-                    data[0][i] = lot.getNumeroTVA();
-                    data[1][i] = lot.getQuantite();
-                    data[2][i] = "";
-                    data[3][i] = lot.getCodeBarre().getCodeBarre();
-                }
+                removeAll();
+                validate();
+                PanelRechercheArticleLocalite panelRechercheArticleLocalite = new PanelRechercheArticleLocalite(applicationController, applicationController.RechercheLotViaLocaliteFournisseur(localiteLot));
+                add(panelRechercheArticleLocalite, BorderLayout.CENTER);
+                revalidate();
+                repaint();
 
-                String titre[] = {"Numéro de tva du fournisseur", "Quantité du lot",  "Catégorie d'article", "Code barre d'article"};
-                //JTable tableau = new JTable(data, titre);
-                //add(tableau);
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBouton, e.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBouton, e.getMessage(), "Erreur d'accès lors de la recherche des lots par localité", JOptionPane.ERROR_MESSAGE);
             }
 
         }

@@ -83,7 +83,7 @@ public class RechercheTypeArticle extends JPanel{
                     data[2][i] = lot.getId();
                     i++;
                 }
-                String titre[] = {"Numéro de tvé du fournisseur", "Matricule du memebre du personnel", "Identifiant du lot"};
+                String titre[] = {"Numéro de TVA du fournisseur", "Matricule du membre du personnel", "Identifiant du lot"};
                 JTable tableau = new JTable(data, titre);
                 add(tableau);
             }

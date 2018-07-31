@@ -23,6 +23,6 @@ public class ArticlePerime {
 
     @Override
     public String toString() {
-        return "l'article périmé " + this.codeBarre.getLibelle() + " à été jeté par le membre du personnel "+ matricule.getMatricule() + " à la date du " + date.toString();
+        return "L'article périmé " + this.codeBarre.getLibelle() + " à été jeté par le membre du personnel "+ matricule.getMatricule() + " à la date du " + date.toString();
     }
 }

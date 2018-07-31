@@ -27,27 +27,30 @@ public class LotBDA implements LotDA {
             }
             return liste;
         } catch (Exception e){
-            throw  new ExceptionsBD("recherche de tout les lots");
+            throw  new ExceptionsBD("Erreur lors de la recherche de tout les lots");
         }
     }
 
     public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
-        ArrayList<Lot> liste = new ArrayList<>();
         try{
+            ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from lot where NumeroTVA = (select numeroTVA from fournisseur where localite = ?)";
+            String requeteSQL = "select * from lot ";
+            System.out.println("coucou1");
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            preparedStatement.setString(1, localite);
+            System.out.println("coucou");
             ResultSet donnees = preparedStatement.executeQuery();
+            System.out.println("coucou");
             while(donnees.next()){
                 Lot lot = new Lot();
+                System.out.println("coucou2");
                 CompleterLot(donnees, lot);
                 liste.add(lot);
             }
+            return liste;
         } catch (Exception e){
-            throw new ExceptionsBD("Recherche de tout les lots via la localité du fournisseur");
+            throw new ExceptionsBD("Erreur lors de la recherche des lots via la localité du fournisseur");
         }
-        return liste;
     }
 
     public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
@@ -64,7 +67,7 @@ public class LotBDA implements LotDA {
             }
             return liste;
         } catch (Exception e){
-            throw new ExceptionsBD("recherche de lots indisponible");
+            throw new ExceptionsBD("Erreur lors de la recherche des lots via le type d'article");
         }
     }
 

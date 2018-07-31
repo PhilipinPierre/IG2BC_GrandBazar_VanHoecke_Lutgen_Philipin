@@ -219,7 +219,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
                     numeroSequentiel.setText(null);
                 } else if (NumeroSequentielDejaPresent()) {
-                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utiliser.\nVeuillez vous référez au listing pour connaitre tout les numéro séquentiel déjà utilisé.");
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utilisé.\nVeuillez vous référez au listing pour connaitre tout les numéros séquentiels déjà utilisés.");
                     numeroSequentiel.setText(null);
                 }
             }
@@ -282,16 +282,14 @@ public class InsertionOrdrePrepa extends JPanel {
             try
             {
 
-                if(quantitePrevu.getText().isEmpty())
-                    JOptionPane.showMessageDialog(panneauBoutons, "La quantité prévue est obligatoire");
-                if(numeroSequentiel.getText().isEmpty())
-                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est obligatoire");
-                if(urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
-                    JOptionPane.showMessageDialog(panneauBoutons, "L'urgence de l'ordre est obligatoire");
+                if(quantitePrevu.getText().isEmpty() ||
+                        numeroSequentiel.getText().isEmpty() ||
+                        urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
+                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire sauf remarque !");
 
                 if(!(   quantitePrevu.getText().isEmpty() ||
                         numeroSequentiel.getText().isEmpty() ||
-                        (urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)                        )){
+                        (urgentTrue.isSelected() == false && urgentFalse.isSelected() == false))){
                     StringBuilder affichage = new StringBuilder();
                     affichage.append("Voici un récapitulatif de l'insertion:\n\n");
                     affichage.append("Date :" + dateCreation.getValue()+"\n");
