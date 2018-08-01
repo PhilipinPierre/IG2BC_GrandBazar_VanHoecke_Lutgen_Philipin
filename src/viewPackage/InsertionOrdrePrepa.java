@@ -20,13 +20,13 @@ public class InsertionOrdrePrepa extends JPanel {
     //POUR LE FORMULAIRE
     private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
             dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
-            codeBarreLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
+            typeArticleLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
     private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
     private SpinnerDateModel dateCreationModel, datePrepaModel, dateVenteModel;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
-    private JComboBox nomRecette, codeBarre, matriculeCuisinier, matriculeResponsable;
+    private JComboBox nomRecette, libelle, matriculeCuisinier, matriculeResponsable;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
@@ -135,45 +135,46 @@ public class InsertionOrdrePrepa extends JPanel {
             nomRecette.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
             panneauInsertion.add(nomRecette);
 
-            //CODE BARRE (FK TYPEARTICLE)
-            codeBarreLabel = new JLabel("Code Barre * : ");
-            codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            panneauInsertion.add(codeBarreLabel);
+            //LIBELLE <- CODE BARRE (FK TYPEARTICLE)
+            typeArticleLabel = new JLabel("Type article : ");
+            //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
+            typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(typeArticleLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
-            ArrayList<Integer> valuesTypeArticle = new ArrayList<>();
+            ArrayList <String> valuesTypeArticle = new ArrayList<>();
             for(TypeArticle t : listeTypeArticle)
             {
-                valuesTypeArticle.add(t.getCodeBarre());
+                valuesTypeArticle.add(t.getLibelle());
             }
-            codeBarre = new JComboBox(valuesTypeArticle.toArray(new Integer[0]));
-            codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
-            panneauInsertion.add(codeBarre);
+            libelle = new JComboBox(valuesTypeArticle.toArray(new String[0]));
+            libelle.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauInsertion.add(libelle);
 
-            //MATRICULE CUISINE (FK CUISINIER)
+            //CUISINIER (FK CUISINIER)
             matriculeCuisinierLabel = new JLabel("Matricule cuisinier * : ");
             matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeCuisinierLabel);
             listeCuisinier = applicationController.getAllCuisinier();
-            ArrayList<Integer> valuesCuisinier = new ArrayList<>();
+            ArrayList<String> valuesCuisinier = new ArrayList<>();
             for(Cuisinier c : listeCuisinier)
             {
-                valuesCuisinier.add(c.getMatricule());
+                valuesCuisinier.add(c.getNom());
             }
-            matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new Integer[0]));
+            matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new String[0]));
             matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
             panneauInsertion.add(matriculeCuisinier);
 
-            //MATRICULE RESPONSABLE OBLIGATOIRE (FK RESPONSABLE VENTE)
-            matriculeResponsableLabel = new JLabel("Matricule responsable vente * : ");
+            //RESPONSABLE DE VENTE OBLIGATOIRE (FK RESPONSABLE VENTE)
+            matriculeResponsableLabel = new JLabel("Nom responsable vente * : ");
             matriculeResponsableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeResponsableLabel);
             listeResponsableVente = applicationController.getAllResponsableDesVentes();
-            ArrayList<Integer> valuesResponsableVente = new ArrayList<>();
+            ArrayList<String> valuesResponsableVente = new ArrayList<>();
             for(ResponsableDesVentes rv : listeResponsableVente)
             {
-                valuesResponsableVente.add(rv.getMatricule());
+                valuesResponsableVente.add(rv.getNom());
             }
-            matriculeResponsable = new JComboBox(valuesResponsableVente.toArray(new Integer[0]));
+            matriculeResponsable = new JComboBox(valuesResponsableVente.toArray(new String[0]));
             matriculeResponsable.setEnabled(true);
             panneauInsertion.add(matriculeResponsable);
 
@@ -311,7 +312,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     else
                         affichage.append("Ordre non urgent\n");
                     affichage.append("Nom de la recette :" + nomRecette.getSelectedItem().toString() + "\n");
-                    affichage.append("Code barre :" + codeBarre.getSelectedItem().toString() + "\n");
+                    affichage.append("Code barre :" + libelle.getSelectedItem().toString() + "\n");
                     affichage.append("Matricule du cuisinier :" + matriculeCuisinier.getSelectedItem().toString()+"\n");
                     affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.getSelectedItem().toString()+"\n");
 
@@ -323,7 +324,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
                     ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
                     ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
-                    ordrePreparation.setCodeBarre(listeTypeArticle.get(codeBarre.getSelectedIndex()));
+                    ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()));
                     ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
                     ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
 
@@ -369,7 +370,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
 
                         //Il y a une erreur à la ligne suivante.
-                    applicationController.SetOrdrePreparation(ordrePreparation);
+                    applicationController.SetOrdrePreparation(applicationController, ordrePreparation);
 
                     JOptionPane.showMessageDialog(panneauBoutons, "L'ordre à bien été créé.");
 
@@ -389,7 +390,7 @@ public class InsertionOrdrePrepa extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur d'accès aux données", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
             }
 
         }

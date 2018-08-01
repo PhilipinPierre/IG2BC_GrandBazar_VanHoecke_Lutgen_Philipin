@@ -20,12 +20,13 @@ public class CuisinierBDA extends MembreDuPersonnelBDA implements CuisinierDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 Cuisinier cuisinier = new Cuisinier();
-                cuisinier.setMatricule(donnees.getInt("Matricule_cui"));
+                cuisinier.setNom(donnees.getString("nom"));
+                cuisinier.setMatricule(donnees.getInt("matricule_cui"));
                 liste.add(cuisinier);
             }
 
         } catch (Exception e){
-            throw new ExceptionsBD("recherche de tout les cuisiniers");
+            throw new ExceptionsBD("Erreur lors de la recherche de tout les cuisiniers");
         }
         return liste;
     }

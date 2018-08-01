@@ -20,8 +20,8 @@ public class LotManager {
         return lotBDA.RechercheLotViaLocaliteFournisseur(localite);
     }
 
-    public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
-        return lotBDA.RechercheLotViaTypeArticle(codeBarre);
+    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
+        return lotBDA.RechercheLotViaTypeArticle(libelle);
     }
 
 }

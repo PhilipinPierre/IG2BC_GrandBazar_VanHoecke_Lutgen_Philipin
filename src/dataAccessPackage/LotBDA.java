@@ -4,6 +4,7 @@ import exceptionsPackage.ExceptionsBD;
 import modelPackage.Fournisseur;
 import modelPackage.Lot;
 import modelPackage.MembreDuPersonnel;
+import modelPackage.TypeArticle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +36,10 @@ public class LotBDA implements LotDA {
         try{
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from lot ";
+            String requeteSQL = "select * from lot " +
+                    "join typearticle t ON lot.CodeBarre = t.CodeBarre " +
+                    "join categoriearticle c ON t.ID = c.ID " +
+                    "join fournisseur f ON lot.NumeroTVA = f.NumeroTVA";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
@@ -49,16 +53,28 @@ public class LotBDA implements LotDA {
         }
     }
 
-    public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
+    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
         try{
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from lot where codebarre = " + codeBarre;
+            String requeteSQL = "select * from lot " +
+                    "join fournisseur f ON lot.NumeroTVA = f.NumeroTVA " +
+                    "join membredupersonnel m ON lot.Matricule = m.Matricule";
+
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()){
                 Lot lot = new Lot();
-                CompleterLot(donnees, lot);
+
+                Fournisseur fournisseur = new Fournisseur();
+                fournisseur.setNom(donnees.getString("nom"));
+
+                lot.setQuantite(donnees.getInt("quantite"));
+
+                MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
+                membreDuPersonnel.setNom(donnees.getString("nom"));
+                membreDuPersonnel.setPrenom(donnees.getString("prenom"));
+
                 liste.add(lot);
             }
             return liste;

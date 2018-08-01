@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.OrdrePreparation;
@@ -23,8 +24,8 @@ public class OrdrePreparationManager {
         ordrePreparationBDA.SupprimerOrdrePreparation(numeroSequentiel);
     }
 
-    public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
-        ordrePreparationBDA.SetOrdrePreparation(ordrePreparation);
+    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        ordrePreparationBDA.SetOrdrePreparation(applicationController, ordrePreparation);
     }
 
     public void ModifierOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{

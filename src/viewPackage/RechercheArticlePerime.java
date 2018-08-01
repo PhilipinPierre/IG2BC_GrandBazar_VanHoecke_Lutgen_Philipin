@@ -86,26 +86,13 @@ public class RechercheArticlePerime extends JPanel {
                 GregorianCalendar dateF = new GregorianCalendar();
                 dateF.setTime(dateFinModel.getDate());
 
-                ArrayList<ArticlePerime> articlePerimes;
+                removeAll();
+                validate();
+                PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.RechercheArticlePerimeEntre2Date(dateD, dateF));
+                add(panelRechercheArticlePerime, BorderLayout.CENTER);
+                revalidate();
+                repaint();
 
-                articlePerimes = applicationController.RechercheArticlePerimeEntre2Date(dateD, dateF);
-
-                articlePerimesLabel = new JLabel("Article périmé : ");
-                articlePerimesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-                panneauBouton.add(articlePerimesLabel);
-                ArrayList<String> valuesArticlePerime = new ArrayList<>();
-                for(ArticlePerime ap : articlePerimes)
-                {
-                    System.out.println(ap.getQuantiteJetee());
-                    valuesArticlePerime.add(ap.getCodeBarre().getLibelle());
-                    valuesArticlePerime.add(ap.getMatricule().getMatricule().toString());
-                    valuesArticlePerime.add(ap.getQuantiteJetee().toString());
-                }
-                for (ArticlePerime articlePerime: articlePerimes){
-                    articlePerimeTable = new JLabel(articlePerime.toString());
-                    articlePerimeTable.setEnabled(true);
-                    panneauBouton.add(articlePerimeTable);
-                }
             }
             catch (Exception e)
             {

@@ -56,8 +56,8 @@ public class ApplicationController {
     {
         return lot.getAllLot();
     }
-    public ArrayList<Lot> RechercheLotViaTypeArticle(Integer codeBarre) throws ExceptionsBD{
-        return lot.RechercheLotViaTypeArticle(codeBarre);
+    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
+        return lot.RechercheLotViaTypeArticle(libelle);
     }
 
     public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
@@ -114,8 +114,8 @@ public class ApplicationController {
         connection.fermetureConnection();
     }
 
-    public void SetOrdrePreparation(OrdrePreparation ordrePrep) throws ExceptionsBD{
-        ordrePreparation.SetOrdrePreparation(ordrePrep);
+    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD{
+        ordrePreparation.SetOrdrePreparation(applicationController, ordrePrep);
     }
 
     public void ModifierOrdrePreparation(OrdrePreparation ordrePreparat) throws ExceptionsBD{

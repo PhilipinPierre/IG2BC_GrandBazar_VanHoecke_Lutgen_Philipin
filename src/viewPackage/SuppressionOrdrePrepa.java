@@ -101,7 +101,7 @@ public class SuppressionOrdrePrepa extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneau, e.getMessage(), "Erreur d'accès aux données", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneau, e.getMessage(), "Erreur lors de la suppression d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

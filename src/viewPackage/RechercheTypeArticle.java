@@ -2,7 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import modelPackage.Lot;
-import modelPackage.OrdrePreparation;
+import modelPackage.Recette;
 import modelPackage.TypeArticle;
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +14,10 @@ public class RechercheTypeArticle extends JPanel{
     private JPanel panneauRecherche;
     private JPanel panneauBouton;
     private JLabel typeArticleLabel;
-    private JComboBox codeBarre;
+    private JComboBox libelle;
     private JButton validation;
     private ApplicationController applicationController;
     private ArrayList<TypeArticle> listeTypeArticle;
-    private ArrayList<Integer> valuesTypeArticle;
 
     public RechercheTypeArticle(ApplicationController applicationController)
     {
@@ -36,14 +35,14 @@ public class RechercheTypeArticle extends JPanel{
             typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauRecherche.add(typeArticleLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
-            valuesTypeArticle = new ArrayList<>();
+            ArrayList <String> valuesTypeArticle = new ArrayList<>();
             for(TypeArticle t : listeTypeArticle)
             {
-                valuesTypeArticle.add(t.getCodeBarre());
+                valuesTypeArticle.add(t.getLibelle());
             }
-            codeBarre = new JComboBox(valuesTypeArticle.toArray(new Integer[0]));
-            codeBarre.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
-            panneauRecherche.add(codeBarre);
+            libelle = new JComboBox(valuesTypeArticle.toArray(new String[0]));
+            libelle.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            panneauRecherche.add(libelle);
 
             //BOUTONS
             panneauBouton = new JPanel();
@@ -72,8 +71,8 @@ public class RechercheTypeArticle extends JPanel{
         {
             try
             {
-                ArrayList<Lot> listeLot;
-                listeLot = applicationController.RechercheLotViaTypeArticle(valuesTypeArticle.get(codeBarre.getSelectedIndex()));
+                /*ArrayList<Lot> listeLot;
+                listeLot = applicationController.RechercheLotViaTypeArticle(libelle.getSelectedIndex());
 
                 Object[][] data = new Object[listeLot.size()][3];
                 int i = 0;
@@ -85,7 +84,16 @@ public class RechercheTypeArticle extends JPanel{
                 }
                 String titre[] = {"Numéro de TVA du fournisseur", "Matricule du membre du personnel", "Identifiant du lot"};
                 JTable tableau = new JTable(data, titre);
-                add(tableau);
+                add(tableau);*/
+
+
+                removeAll();
+                validate();
+                PanelRechercheTypeArticle panelRechercheTypeArticle = new PanelRechercheTypeArticle(applicationController, applicationController.RechercheLotViaTypeArticle(libelle.getSelectedItem().toString()));
+                add(panelRechercheTypeArticle, BorderLayout.CENTER);
+                revalidate();
+                repaint();
+
             }
             catch (Exception e)
             {

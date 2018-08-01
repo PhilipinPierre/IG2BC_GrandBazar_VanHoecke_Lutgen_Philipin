@@ -46,7 +46,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
 
-            // BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
+            // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
             //Recette recette = RecetteBDA.CompleterRecette(donnees);
             //ordrePreparation.setNom(recette);
 
@@ -150,24 +150,19 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 preparedStatement.setString(7, ordrePreparation.getRemarque());
             preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
             preparedStatement.setString(9, ordrePreparation.getNom().getNom());
-            if(ordrePreparation.getCodeBarre().getCodeBarre() == null)
-                preparedStatement.setNull(10, Types.INTEGER);
-            else {
-                preparedStatement.setInt(10, ordrePreparation.getCodeBarre().getCodeBarre());
-            }
-            if(ordrePreparation.getMatriculeCui().getMatricule() == null)
-                preparedStatement.setNull(11, Types.INTEGER);
-            else
-                preparedStatement.setInt(11, ordrePreparation.getMatriculeCui().getMatricule());
-            preparedStatement.setInt(12, ordrePreparation.getMatriculeRes().getMatricule());
+
+            preparedStatement.setString(10, ordrePreparation.getCodeBarre().getLibelle());
+
+            preparedStatement.setString(11, ordrePreparation.getMatriculeCui().getNom());
+            preparedStatement.setString(12, ordrePreparation.getMatriculeRes().getNom());
 
             preparedStatement.executeUpdate();
         } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la modification d'un ordre de préparation");
+            throw new ExceptionsBD("Erreur lors de modification d'un ordre de préparation");
         }
     }
 
-    public void SetOrdrePreparation(OrdrePreparation ordrePreparation) throws ExceptionsBD{
+    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "insert into ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -189,21 +184,45 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 preparedStatement.setString(7, ordrePreparation.getRemarque());
             preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
             preparedStatement.setString(9, ordrePreparation.getNom().getNom());
-            if(ordrePreparation.getCodeBarre().getCodeBarre() == null)
-                preparedStatement.setNull(10, Types.INTEGER);
-            else {
-                preparedStatement.setInt(10, ordrePreparation.getCodeBarre().getCodeBarre());
+
+
+            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+            String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
+            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+            int matriculeTypeArticle = 0;
+            for(TypeArticle ta : listeTypeArticle)
+            {
+                if (typeArticle.equals(ta.getLibelle()))
+                    matriculeTypeArticle = ta.getCodeBarre();
             }
-            if(ordrePreparation.getMatriculeCui().getMatricule() == null)
-                preparedStatement.setNull(11, Types.INTEGER);
-            else
-                preparedStatement.setInt(11, ordrePreparation.getMatriculeCui().getMatricule());
-            preparedStatement.setInt(12, ordrePreparation.getMatriculeRes().getMatricule());
+            preparedStatement.setInt(10, matriculeTypeArticle);
+
+            //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
+            String cuisinier = ordrePreparation.getMatriculeCui().getNom();
+            ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
+            int matriculeCuisinier = 0;
+            for(Cuisinier c : listeCuisinier)
+            {
+                if(cuisinier.equals(c.getNom()))
+                    matriculeCuisinier = c.getMatricule();
+            }
+            preparedStatement.setInt(11, matriculeCuisinier);
+
+            //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
+            String respVente = ordrePreparation.getMatriculeRes().getNom();
+            ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
+            int matriculeRespVente = 0;
+            for(ResponsableDesVentes rdv : listeResponsableDesVentes)
+            {
+                if(respVente.equals(rdv.getNom()))
+                    matriculeRespVente = rdv.getMatricule();
+            }
+            preparedStatement.setInt(12, matriculeRespVente);
 
             preparedStatement.executeUpdate();
 
         } catch (Exception e){
-            throw  new ExceptionsBD("Erreur lors d'une modification d'un ordre de préparation");
+            throw  new ExceptionsBD("Erreur lors de l'ajout d'un ordre de préparation");
         }
     }
 

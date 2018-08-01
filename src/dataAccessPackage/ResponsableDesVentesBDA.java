@@ -20,7 +20,8 @@ public class ResponsableDesVentesBDA extends MembreDuPersonnelBDA implements Res
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 ResponsableDesVentes responsableDesVentes = new ResponsableDesVentes();
-                responsableDesVentes.setMatricule(donnees.getInt("Matricule_res"));
+                responsableDesVentes.setNom(donnees.getString("nom"));
+                responsableDesVentes.setMatricule(donnees.getInt("matricule_res"));
                 liste.add(responsableDesVentes);
             }
         } catch (Exception e){

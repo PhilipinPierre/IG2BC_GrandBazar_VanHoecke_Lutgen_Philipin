@@ -1,6 +1,7 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
+import modelPackage.Lot;
 import modelPackage.TypeArticle;
 
 import javax.naming.NamingException;
@@ -12,23 +13,24 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
-    public ArrayList<TypeArticle> getAllTypeArticle()throws ExceptionsBD{
-        ArrayList<TypeArticle> liste = new ArrayList<>();
+    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD{
         try {
+            ArrayList<TypeArticle> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle";
+            String requeteSQL = "select * from typearticle order by Libelle";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
 
             while (donnees.next()) {
                 TypeArticle typeArticle = new TypeArticle();
-                typeArticle.setCodeBarre(donnees.getInt("codebarre"));
+                typeArticle.setLibelle(donnees.getString("libelle"));
+                typeArticle.setCodeBarre(donnees.getInt("codeBarre"));
                 liste.add(typeArticle);
             }
+            return liste;
         } catch (Exception e){
-            throw new ExceptionsBD("recherche de tout les type d'articles");
+            throw new ExceptionsBD("Erreur lors de la echerche de tout les types d'articles");
         }
-        return liste;
     }
 
     public TypeArticle getTypeArticle(int codeBarre) throws ExceptionsBD{
@@ -40,7 +42,7 @@ public class TypeArticleBDA implements TypeArticleDA{
             ResultSet donnees = preparedStatement.executeQuery();
             completerTypeArticle(donnees, typeArticle);
         } catch (Exception e){
-            throw new ExceptionsBD("recherche de type d'article vie leur code barra");
+            throw new ExceptionsBD("Erreur lors de la recherche de type d'article vie leur code barra");
         }
         return typeArticle;
     }
@@ -54,12 +56,12 @@ public class TypeArticleBDA implements TypeArticleDA{
             ResultSet donnees = preparedStatement.executeQuery();
             codeBarre =  donnees.getInt("codebarre");
         } catch (Exception e){
-            throw new ExceptionsBD("Recherche d'une type d'article via son libellé");
+            throw new ExceptionsBD("Erreur lors de la recherche d'une type d'article via son libellé");
         }
         return codeBarre;
     }
 
-    private static void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{
+    private void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
         typeArticle.setLibelle(donnees.getString("libelle"));
         typeArticle.setPrix(donnees.getDouble("prix"));
@@ -76,7 +78,5 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
         typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
         typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));
-
-        //A COMPLETER
     }
 }
