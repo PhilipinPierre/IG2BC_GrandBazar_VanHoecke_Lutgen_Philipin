@@ -4,7 +4,6 @@ import dataAccessPackage.ResponsableDesVentesBDA;
 import dataAccessPackage.ResponsableDesVentesDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.ResponsableDesVentes;
-
 import java.util.ArrayList;
 
 public class ResponsableDesVentesManager {

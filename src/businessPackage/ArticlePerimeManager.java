@@ -4,7 +4,6 @@ import dataAccessPackage.ArticlePerimeBDA;
 import dataAccessPackage.ArticlePerimeDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.ArticlePerime;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 

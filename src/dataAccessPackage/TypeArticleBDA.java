@@ -1,10 +1,7 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.Lot;
 import modelPackage.TypeArticle;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

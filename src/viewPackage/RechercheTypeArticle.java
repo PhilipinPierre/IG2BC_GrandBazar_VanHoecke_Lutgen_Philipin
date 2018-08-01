@@ -1,8 +1,6 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import modelPackage.Lot;
-import modelPackage.Recette;
 import modelPackage.TypeArticle;
 import javax.swing.*;
 import java.awt.*;

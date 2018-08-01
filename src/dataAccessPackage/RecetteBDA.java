@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.util.*;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-
-import javax.naming.NamingException;
 import java.sql.SQLException;
 
 public class RecetteBDA implements RecetteDA {
@@ -57,8 +55,7 @@ public class RecetteBDA implements RecetteDA {
         Recette recette = new Recette();
         recette.setNom(donnees.getString("nom"));
         recette.setDescriptif(donnees.getString("descriptif"));
-        Integer DLC = donnees.getInt("dlc");
-        recette.setDLC(DLC);
+        recette.setDLC(donnees.getInt("dlc"));
         return recette;
     }
 }

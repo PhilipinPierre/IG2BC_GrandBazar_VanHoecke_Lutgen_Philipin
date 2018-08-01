@@ -4,9 +4,6 @@ import exceptionsPackage.ExceptionsBD;
 import modelPackage.LigneTicket;
 import modelPackage.Ticket;
 import modelPackage.TypeArticle;
-
-import javax.naming.NamingException;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

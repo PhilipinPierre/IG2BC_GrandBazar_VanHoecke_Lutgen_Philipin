@@ -3,7 +3,6 @@ package dataAccessPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -47,8 +46,19 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
 
             // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
+            // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
             //Recette recette = RecetteBDA.CompleterRecette(donnees);
             //ordrePreparation.setNom(recette);
+
+            // FONCTIONNE PAS
+            /*int codeBarre = donnees.getInt("codeBarre");
+            if(!donnees.wasNull())
+            {
+                TypeArticle ta = new TypeArticle();
+                //ta.setCodeBarre(codeBarre);
+                ta.setLibelle(donnees.getString("libelle"));
+                ordrePreparation.setCodeBarre(ta);
+            }*/
 
             // FONCTIONNE PAS
             //MembreDuPersonnel cuisinier = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("cuisinier"));
@@ -58,15 +68,6 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             //MembreDuPersonnel rdv = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("respDesVentes"));
             //ordrePreparation.setMatriculeRes(rdv);
 
-            // FONCTIONNE PAS
-            /*int codeBarre = donnees.getInt("codeBarre");
-            if(!donnees.wasNull())
-            {
-                TypeArticle ta = new TypeArticle();
-                ta.setCodeBarre(codeBarre);
-                ta.setLibelle(donnees.getString("libelle"));
-                ordrePreparation.setCodeBarre(ta);
-            }*/
 
             listeOrdrePreparation.add(ordrePreparation);
         }

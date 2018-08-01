@@ -4,7 +4,6 @@ import dataAccessPackage.TypeArticleBDA;
 import dataAccessPackage.TypeArticleDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
-
 import java.util.ArrayList;
 
 public class TypeArticleManager {

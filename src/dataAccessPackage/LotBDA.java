@@ -4,8 +4,6 @@ import exceptionsPackage.ExceptionsBD;
 import modelPackage.Fournisseur;
 import modelPackage.Lot;
 import modelPackage.MembreDuPersonnel;
-import modelPackage.TypeArticle;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

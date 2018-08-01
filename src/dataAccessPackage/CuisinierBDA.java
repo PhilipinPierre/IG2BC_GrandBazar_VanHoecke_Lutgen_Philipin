@@ -2,12 +2,9 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Cuisinier;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CuisinierBDA extends MembreDuPersonnelBDA implements CuisinierDA {

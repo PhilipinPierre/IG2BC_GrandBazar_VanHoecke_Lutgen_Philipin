@@ -2,8 +2,6 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.CategorieArticle;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

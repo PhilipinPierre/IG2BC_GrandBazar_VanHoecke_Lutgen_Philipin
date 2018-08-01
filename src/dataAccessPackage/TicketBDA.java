@@ -4,8 +4,6 @@ import exceptionsPackage.ExceptionsBD;
 import modelPackage.Client;
 import modelPackage.MembreDuPersonnel;
 import modelPackage.Ticket;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

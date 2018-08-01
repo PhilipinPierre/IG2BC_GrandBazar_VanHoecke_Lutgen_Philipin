@@ -5,7 +5,6 @@ import exceptionsPackage.*;
 import modelPackage.*;
 import java.util.*;
 
-
 public class ApplicationController {
 
     private ClientManager client;

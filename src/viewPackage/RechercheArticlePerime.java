@@ -1,13 +1,11 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import modelPackage.ArticlePerime;
 import modelPackage.OrdrePreparation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class RechercheArticlePerime extends JPanel {

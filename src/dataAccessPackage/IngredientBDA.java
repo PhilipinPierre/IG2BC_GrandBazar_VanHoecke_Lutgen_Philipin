@@ -2,12 +2,8 @@ package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Ingredient;
-
 import modelPackage.Recette;
-import modelPackage.Reservation;
 import modelPackage.TypeArticle;
-
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

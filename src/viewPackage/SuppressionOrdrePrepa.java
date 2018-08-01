@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-import javax.naming.NamingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
