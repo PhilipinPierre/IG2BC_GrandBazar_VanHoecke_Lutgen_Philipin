@@ -37,7 +37,7 @@ public class TypeArticleBDA implements TypeArticleDA{
             String requeteSQL = "select * from typearticle where codebarre = " + codeBarre;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
-            completerTypeArticle(donnees, typeArticle);
+            completerTypeArticle(donnees);
         } catch (Exception e){
             throw new ExceptionsBD("Erreur lors de la recherche de type d'article vie leur code barra");
         }
@@ -58,7 +58,10 @@ public class TypeArticleBDA implements TypeArticleDA{
         return codeBarre;
     }
 
-    private void completerTypeArticle(ResultSet donnees, TypeArticle typeArticle) throws SQLException{
+    protected static TypeArticle completerTypeArticle(ResultSet donnees) throws SQLException
+    {
+        TypeArticle typeArticle = new TypeArticle();
+
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
         typeArticle.setLibelle(donnees.getString("libelle"));
         typeArticle.setPrix(donnees.getDouble("prix"));
@@ -75,5 +78,7 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
         typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
         typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));
+
+        return typeArticle;
     }
 }

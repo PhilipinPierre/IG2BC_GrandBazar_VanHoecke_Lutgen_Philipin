@@ -54,8 +54,8 @@ public class RecetteBDA implements RecetteDA {
     protected static Recette CompleterRecette(ResultSet donnees) throws SQLException {
         Recette recette = new Recette();
         recette.setNom(donnees.getString("nom"));
-        recette.setDescriptif(donnees.getString("descriptif"));
-        recette.setDLC(donnees.getInt("dlc"));
+        //recette.setDescriptif(donnees.getString("descriptif"));
+        //recette.setDLC(donnees.getInt("dlc"));
         return recette;
     }
 }

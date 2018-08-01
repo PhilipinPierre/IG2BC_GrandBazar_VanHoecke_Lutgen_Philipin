@@ -47,15 +47,16 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
             // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
             // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
-            //Recette recette = RecetteBDA.CompleterRecette(donnees);
-            //ordrePreparation.setNom(recette);
+            // J'AI MODIFIER COMPLETERRECETTE EN METTANT EN COMMENTAIRE CE QU'IL NE ME FALLAIT PAS, PAS SUR QUE C'EST BON
+            Recette recette = RecetteBDA.CompleterRecette(donnees);
+            ordrePreparation.setNom(recette);
 
             // FONCTIONNE PAS
             /*int codeBarre = donnees.getInt("codeBarre");
             if(!donnees.wasNull())
             {
                 TypeArticle ta = new TypeArticle();
-                //ta.setCodeBarre(codeBarre);
+                ta.setCodeBarre(codeBarre);
                 ta.setLibelle(donnees.getString("libelle"));
                 ordrePreparation.setCodeBarre(ta);
             }*/
