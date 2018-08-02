@@ -12,46 +12,47 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
     private ArrayList<OrdrePreparation> getOrdrePrepa(Connection connection, PreparedStatement preparedStatement) throws SQLException
     {
         ArrayList<OrdrePreparation> listeOrdrePreparation = new ArrayList<>();
-        ApplicationController applicationController = new ApplicationController();
-        ResultSet donnees = preparedStatement.executeQuery();
+        try {
+            ApplicationController applicationController = new ApplicationController();
+            ResultSet donnees = preparedStatement.executeQuery();
 
-        while (donnees.next()) {
-            OrdrePreparation ordrePreparation = new OrdrePreparation();
+            while (donnees.next()) {
+                OrdrePreparation ordrePreparation = new OrdrePreparation();
 
-            GregorianCalendar date = new GregorianCalendar();
-            date.setTime(donnees.getDate("date"));
-            ordrePreparation.setDate(date);
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(donnees.getDate("date"));
+                ordrePreparation.setDate(date);
 
-            ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
+                ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
 
-            ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
+                ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
 
-            ordrePreparation.setQuantiteProduite(donnees.getInt("quantiteproduite"));
+                ordrePreparation.setQuantiteProduite(donnees.getInt("quantiteproduite"));
 
-            GregorianCalendar datev = new GregorianCalendar();
-            datev.setTime(donnees.getDate("datevente"));
-            ordrePreparation.setDateVente(datev);
+                GregorianCalendar datev = new GregorianCalendar();
+                datev.setTime(donnees.getDate("datevente"));
+                ordrePreparation.setDateVente(datev);
 
-            if(donnees.getDate("datepreparation") != null) {
-                GregorianCalendar dateP = new GregorianCalendar();
-                dateP.setTime(donnees.getDate("datepreparation"));
-                ordrePreparation.setDatePreparation(dateP);
-            }
+                if (donnees.getDate("datepreparation") != null) {
+                    GregorianCalendar dateP = new GregorianCalendar();
+                    dateP.setTime(donnees.getDate("datepreparation"));
+                    ordrePreparation.setDatePreparation(dateP);
+                }
 
-            String remarque = donnees.getString("remarque");
-            if(!donnees.wasNull())
-                ordrePreparation.setRemarque(remarque);
+                String remarque = donnees.getString("remarque");
+                if (!donnees.wasNull())
+                    ordrePreparation.setRemarque(remarque);
 
-            ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
+                ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
 
-            // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
-            // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
-            // J'AI MODIFIER COMPLETERRECETTE EN METTANT EN COMMENTAIRE CE QU'IL NE ME FALLAIT PAS, PAS SUR QUE C'EST BON
-            Recette recette = RecetteBDA.CompleterRecette(donnees);
-            ordrePreparation.setNom(recette);
+                // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
+                // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
+                // J'AI MODIFIER COMPLETERRECETTE EN METTANT EN COMMENTAIRE CE QU'IL NE ME FALLAIT PAS, PAS SUR QUE C'EST BON
+                Recette recette = RecetteDA.getRecette(donnees.getString("nom"));
+                ordrePreparation.setNom(recette);
 
-            // FONCTIONNE PAS
+                // FONCTIONNE PAS
             /*int codeBarre = donnees.getInt("codeBarre");
             if(!donnees.wasNull())
             {
@@ -61,18 +62,22 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
                 ordrePreparation.setCodeBarre(ta);
             }*/
 
-            // FONCTIONNE PAS
-            //MembreDuPersonnel cuisinier = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("cuisinier"));
-            //ordrePreparation.setMatriculeCui(cuisinier);
+                // FONCTIONNE PAS
+                //MembreDuPersonnel cuisinier = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("cuisinier"));
+                //ordrePreparation.setMatriculeCui(cuisinier);
 
-            // FONCTIONNE PAS
-            //MembreDuPersonnel rdv = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("respDesVentes"));
-            //ordrePreparation.setMatriculeRes(rdv);
+                // FONCTIONNE PAS
+                //MembreDuPersonnel rdv = MembreDuPersonnelBDA.getMembreDuPersonnel(donnees.getInt("respDesVentes"));
+                //ordrePreparation.setMatriculeRes(rdv);
 
 
-            listeOrdrePreparation.add(ordrePreparation);
+                listeOrdrePreparation.add(ordrePreparation);
+            }
+
+            return listeOrdrePreparation;
+        } catch (Exception e){
+            new ExceptionsBD("Erreur d'accès à la Base de Données");
         }
-
         return listeOrdrePreparation;
     }
 
