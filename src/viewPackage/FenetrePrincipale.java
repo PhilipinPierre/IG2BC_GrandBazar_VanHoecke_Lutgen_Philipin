@@ -16,7 +16,6 @@ public class FenetrePrincipale extends JFrame {
     private JMenuItem rechercheArticlePerime, rechercheArticleInfos, rechercheArticleLocalite;
     private InsertionOrdrePrepa insertionOrdrePrepa;
     private ModificationOrdrePrepa modificationOrdrePrepa;
-    private SuppressionOrdrePrepa suppressionOrdrePrepa;
     private RechercheArticlePerime rechercheArtPerim;
     private RechercheTypeArticle rechercheTypeArticle;
     private RechercheArticleLocalite rechercheArticleLocal;
@@ -105,20 +104,6 @@ public class FenetrePrincipale extends JFrame {
                 container.add(modificationOrdrePrepa);
                 setVisible(true);
             }
-        });
-
-        //AJOUT D'UNE SUPPRESSION DANS FONCTIONNALITES
-        suppression = new JMenuItem("Suppression");
-        suppression.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-        fonctionnalitesMenu.add(suppression);
-        suppression.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            container.removeAll();
-            suppressionOrdrePrepa = new SuppressionOrdrePrepa(applicationController, ordrePreparation);
-            container.add(suppressionOrdrePrepa);
-            setVisible(true);
-        }
         });
 
         //AJOUT D'UN LISING DANS FONCTIONNALITES

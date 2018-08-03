@@ -114,7 +114,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.executeUpdate();
         } catch (Exception e){
-            throw new ExceptionsBD("Impossible de supprimer cet ordre de préparation " + numeroSequentiel);
+            throw new ExceptionsBD("Impossible de supprimer cet ordre de préparation : " + numeroSequentiel);
         }
     }
 
@@ -251,7 +251,6 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             preparedStatement.setInt(12, matriculeRespVente);
 
             preparedStatement.executeUpdate();
-
         } catch (Exception e){
             throw  new ExceptionsBD("Erreur lors de l'ajout d'un ordre de préparation");
         }

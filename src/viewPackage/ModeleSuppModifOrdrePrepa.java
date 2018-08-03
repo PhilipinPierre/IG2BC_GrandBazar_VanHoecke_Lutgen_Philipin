@@ -12,7 +12,6 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
     public ModeleSuppModifOrdrePrepa(ArrayList<OrdrePreparation> op)
     {
         contenu = op;
-        nomColonnes.add("Date");
         nomColonnes.add("Numéro Séquentiel");
         nomColonnes.add("Quantité Prévue");
         nomColonnes.add("Quantité Produite");
@@ -45,30 +44,29 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
         OrdrePreparation ligneop = contenu.get(row);
         switch(col)
         {
-            case 0 : return ligneop.getDate().getTime();
-            case 1 : return ligneop.getNumeroSequentiel();
-            case 2 : return ligneop.getQuantitePrevue();
-            case 3 : return ligneop.getQuantiteProduite();
-            case 4 : {if((ligneop).getDateVente() != null)
+            case 0 : return ligneop.getNumeroSequentiel();
+            case 1 : return ligneop.getQuantitePrevue();
+            case 2 : return ligneop.getQuantiteProduite();
+            case 3 : {if((ligneop).getDateVente() != null)
                         return ligneop.getDateVente().getTime();
                       else
                         return null;
                       }
-            case 5 : {if((ligneop).getDatePreparation() != null)
+            case 4 : {if((ligneop).getDatePreparation() != null)
                         return ligneop.getDatePreparation().getTime();
                       else
                         return null;
                       }
-            case 6 : {if((ligneop).getRemarque() != null)
+            case 5 : {if((ligneop).getRemarque() != null)
                         return ligneop.getRemarque();
                       else
                         return null;
                       }
-            case 7 : return ligneop.getEstUrgent();
-            case 8 : return ligneop.getNom().getNom();
-            case 9 : return ligneop.getCodeBarre().getCodeBarre();
-            case 10 : return ligneop.getMatriculeCui().getMatricule();
-            case 11 : return ligneop.getMatriculeRes().getMatricule();
+            case 6 : return ligneop.getEstUrgent();
+            case 7 : return ligneop.getNom().getNom();
+            case 8 : return ligneop.getCodeBarre().getCodeBarre();
+            case 9 : return ligneop.getMatriculeCui().getMatricule();
+            case 10 : return ligneop.getMatriculeRes().getMatricule();
             default : return null;
         }
     }
@@ -76,18 +74,17 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
     {
         switch(col)
         {
-            case 0 : return Date.class;
+            case 0 : return Integer.class;
             case 1 : return Integer.class;
             case 2 : return Integer.class;
-            case 3 : return Integer.class;
+            case 3 : return Date.class;
             case 4 : return Date.class;
-            case 5 : return Date.class;
-            case 6 : return String.class;
-            case 7 : return Boolean.class;
-            case 8 : return String.class;
+            case 5 : return String.class;
+            case 6 : return Boolean.class;
+            case 7 : return String.class;
+            case 8 : return Integer.class;
             case 9 : return Integer.class;
             case 10 : return Integer.class;
-            case 11 : return Integer.class;
             default : return String.class;
         }
     }
