@@ -71,7 +71,6 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             ResponsableDesVentes rdv = ResponsableDesVentesBDA.completerResponsableDesVentes(donnees);
             ordrePreparation.setMatriculeRes(rdv);
 
-
             listeOrdrePreparation.add(ordrePreparation);
         }
 
