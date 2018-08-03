@@ -15,7 +15,6 @@ public class RechercheArticlePerime extends JPanel {
     private SpinnerDateModel dateDebutModel, dateFinModel;
     private JButton validation;
     private ApplicationController applicationController;
-    private JLabel articlePerimesLabel;
 
     public RechercheArticlePerime(ApplicationController applicationController)
     {

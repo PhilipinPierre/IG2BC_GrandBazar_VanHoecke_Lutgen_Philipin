@@ -12,7 +12,7 @@ public class FenetrePrincipale extends JFrame {
     private MessageAccueil message;
     private JMenuBar menuBar;
     private JMenu applicationMenu, fonctionnalitesMenu, rechercheMenu;
-    private JMenuItem quitter, insertion, modification, suppression, listing;
+    private JMenuItem quitter, insertion, modification, recette, listing;
     private JMenuItem rechercheArticlePerime, rechercheArticleInfos, rechercheArticleLocalite;
     private InsertionOrdrePrepa insertionOrdrePrepa;
     private ModificationOrdrePrepa modificationOrdrePrepa;
@@ -20,8 +20,9 @@ public class FenetrePrincipale extends JFrame {
     private RechercheTypeArticle rechercheTypeArticle;
     private RechercheArticleLocalite rechercheArticleLocal;
     private ListingOrdrePrepa listingOrdrePrepa;
-    private ApplicationController applicationController; //DANS FENETRE LOG IN PLUS TARD !!!!
-    private OrdrePreparation ordrePreparation; //PAREIL
+    private RecetteInsertion recetteInsertion;
+    private ApplicationController applicationController;
+    private OrdrePreparation ordrePreparation;
 
     public FenetrePrincipale()
     {
@@ -116,6 +117,20 @@ public class FenetrePrincipale extends JFrame {
                 container.removeAll();
                 listingOrdrePrepa = new ListingOrdrePrepa(applicationController, ordrePreparation);
                 container.add(listingOrdrePrepa);
+                setVisible(true);
+            }
+        });
+
+        //AJOUT D'UNE OPTION POUR UNE NOUVELLE RECETTE
+        recette = new JMenuItem("Nouvelle recette");
+        recette.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+        fonctionnalitesMenu.add(recette);
+        recette.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.removeAll();
+                recetteInsertion = new RecetteInsertion();
+                container.add(recetteInsertion);
                 setVisible(true);
             }
         });
