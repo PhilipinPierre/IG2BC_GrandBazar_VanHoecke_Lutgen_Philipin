@@ -1,7 +1,6 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import modelPackage.OrdrePreparation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,20 +15,18 @@ public class RechercheArticlePerime extends JPanel {
     private SpinnerDateModel dateDebutModel, dateFinModel;
     private JButton validation;
     private ApplicationController applicationController;
-    private OrdrePreparation ordrePreparation;
     private JLabel articlePerimesLabel;
-    private JLabel articlePerimeTable;
 
-    public RechercheArticlePerime(ApplicationController applicationController, OrdrePreparation ordrePreparation)
+    public RechercheArticlePerime(ApplicationController applicationController)
     {
         try
         {
             this.applicationController = applicationController;
-            this.ordrePreparation = ordrePreparation;
+
+            setLayout(new BorderLayout());
+
             //ARTICLE PERIME ENTRE DEUX DATES
             panneauRecherche = new JPanel();
-
-            panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
 
             //DEBUT
             dateDebutLabel = new JLabel("Date début : ");
@@ -59,9 +56,8 @@ public class RechercheArticlePerime extends JPanel {
             ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
 
-
-            add(panneauRecherche, BorderLayout.CENTER);
-            add(panneauBouton, BorderLayout.SOUTH);
+            add(panneauRecherche, BorderLayout.NORTH);
+            add(panneauBouton, BorderLayout.CENTER);
 
             setVisible(true);
         }

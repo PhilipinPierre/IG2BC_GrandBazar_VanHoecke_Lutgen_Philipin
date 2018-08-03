@@ -27,6 +27,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
         panneauBoutons = new JPanel();
         setLayout(new BorderLayout());
         titre = new JLabel("Résultat du listing");
+        titre.setHorizontalAlignment(SwingConstants.CENTER);
         add(titre, BorderLayout.NORTH);
         modeleSuppModifOrdrePrepa = new ModeleSuppModifOrdrePrepa(op);
         table = new JTable(modeleSuppModifOrdrePrepa);

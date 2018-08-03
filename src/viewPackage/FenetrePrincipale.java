@@ -135,14 +135,14 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                rechercheArtPerim = new RechercheArticlePerime(applicationController, ordrePreparation);
+                rechercheArtPerim = new RechercheArticlePerime(applicationController);
                 container.add(rechercheArtPerim);
                 setVisible(true);
             }
         });
 
         //RECHERCHE INFORMATIONS SUR UN ARTICLE DONNE
-        rechercheArticleInfos = new JMenuItem("Informations article");
+        rechercheArticleInfos = new JMenuItem("Type article");
         rechercheArticleInfos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.SHIFT_MASK));
         rechercheMenu.add(rechercheArticleInfos);
         rechercheArticleInfos.addActionListener(new ActionListener() {

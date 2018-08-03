@@ -15,9 +15,7 @@ public class RechercheArticleLocalite extends JPanel{
     private JComboBox localite;
     private JButton validation;
     private ApplicationController applicationController;
-    private ArrayList<Lot> listeLot;
     private ArrayList<Fournisseur> listeFournisseur;
-    private ArrayList<String> valueFournisseur;
 
     public RechercheArticleLocalite(ApplicationController applicationController)
     {
@@ -25,26 +23,24 @@ public class RechercheArticleLocalite extends JPanel{
         {
             this.applicationController = applicationController;
 
+            setLayout(new BorderLayout());
+
             panneauRecherche = new JPanel();
 
-            panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
-
             //RECHERCHE Fournisseur
-            typeFournisseurLabel = new JLabel("Localité : ");
+            typeFournisseurLabel = new JLabel("Recherche d'article par localité du fournisseur : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-            typeFournisseurLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            typeFournisseurLabel.setHorizontalAlignment(SwingConstants.CENTER);
             panneauRecherche.add(typeFournisseurLabel);
 
-
             listeFournisseur = applicationController.getAllFournisseur();
-            ArrayList<String> valuesFournisseur = new ArrayList<>();
-            valuesFournisseur = new ArrayList<>();
+            ArrayList<String> valuesLocalite = new ArrayList<>();
             for(Fournisseur f : listeFournisseur)
             {
-                valuesFournisseur.add(f.getLocalite());
+                valuesLocalite.add(f.getLocalite()+ " " + f.getCodePostal());
             }
 
-            localite = new JComboBox(valuesFournisseur.toArray(new String[0]));
+            localite = new JComboBox(valuesLocalite.toArray(new String[0]));
             localite.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
             panneauRecherche.add(localite);
 
@@ -57,8 +53,8 @@ public class RechercheArticleLocalite extends JPanel{
             validation.addActionListener(listenerValidation);
 
 
-            add(panneauRecherche, BorderLayout.CENTER);
-            add(panneauBouton, BorderLayout.SOUTH);
+            add(panneauRecherche, BorderLayout.NORTH);
+            add(panneauBouton, BorderLayout.CENTER);
 
             setVisible(true);
         }

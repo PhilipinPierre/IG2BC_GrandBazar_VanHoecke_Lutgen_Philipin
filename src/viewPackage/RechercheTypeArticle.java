@@ -23,14 +23,14 @@ public class RechercheTypeArticle extends JPanel{
         {
             this.applicationController = applicationController;
 
+            setLayout(new BorderLayout());
+
             panneauRecherche = new JPanel();
 
-            panneauRecherche.setLayout(new GridLayout(2, 2, 5, 5));
-
             //RECHERCHE TYPE ARTICLE
-            typeArticleLabel = new JLabel("Type article : ");
+            typeArticleLabel = new JLabel("Information sur le type article : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-            typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            typeArticleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             panneauRecherche.add(typeArticleLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
             ArrayList <String> valuesTypeArticle = new ArrayList<>();
@@ -51,8 +51,8 @@ public class RechercheTypeArticle extends JPanel{
             validation.addActionListener(listenerValidation);
 
 
-            add(panneauRecherche, BorderLayout.CENTER);
-            add(panneauBouton, BorderLayout.SOUTH);
+            add(panneauRecherche, BorderLayout.NORTH);
+            add(panneauBouton, BorderLayout.CENTER);
 
             setVisible(true);
         }
