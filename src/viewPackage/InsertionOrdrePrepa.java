@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -195,8 +193,8 @@ public class InsertionOrdrePrepa extends JPanel {
             ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
-            add(panneauInsertion, BorderLayout.CENTER);
-            add(panneauBoutons, BorderLayout.SOUTH);
+            add(panneauInsertion);
+            add(panneauBoutons);
 
             setVisible(true);
         }
@@ -233,16 +231,25 @@ public class InsertionOrdrePrepa extends JPanel {
         return false;
     }
 
-    private boolean testNumeroSequentielIncorrect(String numSeq){
-        try{
-            //Permet de gere l'overflow
-            Integer.valueOf(numSeq);
+    private boolean testNumeroSequentielIncorrect(String numSeq) {
+        //Permet de gere l'overflow
+        Integer.valueOf(numSeq);
 
-            char[] upper = numSeq.toCharArray();
-            StringBuilder resultat = new StringBuilder();
-            for(int i = 0; i<upper.length; i++) {
-                switch (upper[i]) {
-                    case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+        char[] upper = numSeq.toCharArray();
+        StringBuilder resultat = new StringBuilder();
+        for (int i = 0; i < upper.length; i++)
+        {
+            switch (upper[i]) {
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
                         resultat.append(upper[i]);
                         break;
                     default:
@@ -252,10 +259,6 @@ public class InsertionOrdrePrepa extends JPanel {
             numeroSequentiel.setText(resultat.toString());
 
             return false;
-        } catch (Exception e){
-            return true;
-        }
-
     }
 
     //CLASSES PRIVEES POUR LES BOUTONS
@@ -273,8 +276,6 @@ public class InsertionOrdrePrepa extends JPanel {
         }
     }
 
-
-
     private class ButtonListenerValidation implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
@@ -284,7 +285,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 if(quantitePrevu.getText().isEmpty() ||
                         numeroSequentiel.getText().isEmpty() ||
                         urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
-                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire sauf remarque !");
+                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire sauf le champ remarque !");
 
                 if(!(   quantitePrevu.getText().isEmpty() ||
                         numeroSequentiel.getText().isEmpty() ||
@@ -381,7 +382,6 @@ public class InsertionOrdrePrepa extends JPanel {
                     listeOrdrePreparation.add(ordrePreparation);
                     Collections.sort(listeOrdrePreparation);
                 }
-
             }
             catch (Exception e)
             {
@@ -403,7 +403,6 @@ public class InsertionOrdrePrepa extends JPanel {
             datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();
-
         }
     }
 }

@@ -129,7 +129,7 @@ public class FenetrePrincipale extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                recetteInsertion = new RecetteInsertion();
+                recetteInsertion = new RecetteInsertion(applicationController);
                 container.add(recetteInsertion);
                 setVisible(true);
             }
