@@ -1,39 +1,10 @@
 package dataAccessPackage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.*;
 import exceptionsPackage.*;
 import modelPackage.*;
 
 public interface RecetteDA {
-    public static ArrayList<Recette> getAllRecette()throws ExceptionsBD{
-        ArrayList<Recette> listeRecette = new ArrayList<>();
-        try {
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select nom from recette order by 'nom'";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while (donnees.next()) {
-                Recette recette = new Recette();
-                recette.setNom(donnees.getString("Nom"));
-                listeRecette.add(recette);
-            }
-        } catch (Exception e) {
-            throw new ExceptionsBD("Erreur lors de la recherche de toutes les recettes");
-        }
-        return listeRecette;
-    }
-    public static Recette getRecette(String nom)throws ExceptionsBD{
-        try {
-            for (Recette recette : getAllRecette()) {
-                if (recette.getNom().equals(nom))
-                    return recette;
-            }
-        } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche d'une recette introuvable.");
-        }
-        return null;
-    }
+    ArrayList<Recette> getAllRecette()throws ExceptionsBD;
+    Recette getRecette(String nom)throws ExceptionsBD;
 }

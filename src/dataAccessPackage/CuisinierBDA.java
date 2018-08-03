@@ -5,6 +5,7 @@ import modelPackage.Cuisinier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CuisinierBDA extends MembreDuPersonnelBDA implements CuisinierDA {
@@ -26,6 +27,12 @@ public class CuisinierBDA extends MembreDuPersonnelBDA implements CuisinierDA {
             throw new ExceptionsBD("Erreur lors de la recherche de tout les cuisiniers");
         }
         return liste;
+    }
+
+    protected static Cuisinier completerCuisinier(ResultSet donnees) throws SQLException {
+        Cuisinier cuisinier = new Cuisinier();
+        cuisinier.setMatricule(donnees.getInt("matricule_cui"));
+        return cuisinier;
     }
 
 }

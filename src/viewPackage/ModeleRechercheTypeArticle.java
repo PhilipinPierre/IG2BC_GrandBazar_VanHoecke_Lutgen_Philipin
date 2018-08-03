@@ -11,10 +11,10 @@ public class ModeleRechercheTypeArticle extends AbstractTableModel {
     public ModeleRechercheTypeArticle(ArrayList<Lot> lot)
     {
         contenu = lot;
-        nomColonnes.add("Nom");
-        nomColonnes.add("Quantité");
         nomColonnes.add("Nom F");
-        nomColonnes.add("Prénom F");
+        nomColonnes.add("Quantité");
+        nomColonnes.add("Nom P");
+        nomColonnes.add("Prénom P");
     }
     public int getColumnCount()
     {

@@ -45,11 +45,7 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
         OrdrePreparation ligneop = contenu.get(row);
         switch(col)
         {
-            case 0 : {if((ligneop).getDate() != null)
-                        return ligneop.getDate().getTime();
-                      else
-                        return null;
-                      }
+            case 0 : return ligneop.getDate().getTime();
             case 1 : return ligneop.getNumeroSequentiel();
             case 2 : return ligneop.getQuantitePrevue();
             case 3 : return ligneop.getQuantiteProduite();
@@ -69,26 +65,10 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
                         return null;
                       }
             case 7 : return ligneop.getEstUrgent();
-            case 8 : {if((ligneop).getNom() != null)
-                        return ligneop.getNom().getNom();
-                      else
-                        return null;
-                      }
-            case 9 : {if((ligneop).getCodeBarre() != null)
-                        return ligneop.getCodeBarre().getLibelle();
-                      else
-                        return null;
-                     }
-            case 10 : {if((ligneop).getMatriculeCui() != null)
-                        return ligneop.getMatriculeCui().getNom();
-                      else
-                        return null;
-                      }
-            case 11 : {if((ligneop).getMatriculeRes() != null)
-                        return ligneop.getMatriculeRes().getNom();
-                       else
-                        return null;
-                      }
+            case 8 : return ligneop.getNom().getNom();
+            case 9 : return ligneop.getCodeBarre().getCodeBarre();
+            case 10 : return ligneop.getMatriculeCui().getMatricule();
+            case 11 : return ligneop.getMatriculeRes().getMatricule();
             default : return null;
         }
     }
@@ -103,11 +83,11 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
             case 4 : return Date.class;
             case 5 : return Date.class;
             case 6 : return String.class;
-            case 7 : return String.class;
+            case 7 : return Boolean.class;
             case 8 : return String.class;
-            case 9 : return String.class;
-            case 10 : return String.class;
-            case 11 : return String.class;
+            case 9 : return Integer.class;
+            case 10 : return Integer.class;
+            case 11 : return Integer.class;
             default : return String.class;
         }
     }

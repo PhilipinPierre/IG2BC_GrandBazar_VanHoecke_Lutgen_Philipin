@@ -246,13 +246,14 @@ public class ModificationOrdrePrepa extends JPanel {
             try
             {
                 ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()));
-                ordrePreparation.setNumeroSequentiel(numeroSequentiel.getSelectedIndex());
-                ordrePreparation.setRemarque(remarque.getText());
+                ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantiteProduite.getText()));
+                ordrePreparation.setNumeroSequentiel(numeroSequentiel.getSelectedIndex()+1);
+                ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
                 ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
                 ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()));
                 ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
                 ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
+
 
                 GregorianCalendar dateC = new GregorianCalendar();
                 dateC.setTime(dateCreationModel.getDate());
@@ -268,7 +269,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                applicationController.ModifierOrdrePreparation(ordrePreparation);
+                applicationController.ModifierOrdrePreparation(applicationController, ordrePreparation);
 
                 dateCreation = new JSpinner(dateCreationModel);
                 quantitePrevu.setText(null);

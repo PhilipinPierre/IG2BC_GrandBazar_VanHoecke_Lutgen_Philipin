@@ -1,9 +1,7 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.Fournisseur;
-import modelPackage.Lot;
-import modelPackage.MembreDuPersonnel;
+import modelPackage.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,14 +33,35 @@ public class LotBDA implements LotDA {
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from lot " +
+                    "join fournisseur f ON lot.NumeroTVA = f.NumeroTVA " +
                     "join typearticle t ON lot.CodeBarre = t.CodeBarre " +
                     "join categoriearticle c ON t.ID = c.ID " +
-                    "join fournisseur f ON lot.NumeroTVA = f.NumeroTVA";
+                    "where lot.CodeBarre = t.CodeBarre " +
+                    "and f.NumeroTVA = lot.NumeroTVA " +
+                    "and t.ID = c.ID " +
+                    "and f.localite = ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setString(1, localite);
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 Lot lot = new Lot();
-                CompleterLot(donnees, lot);
+
+                TypeArticle typeArticle = new TypeArticle();
+                typeArticle.setLibelle(donnees.getString("libelle"));
+
+                CategorieArticle categorieArticle = new CategorieArticle();
+                categorieArticle.setId(donnees.getString("id"));
+
+                typeArticle.setID(categorieArticle);
+                lot.setCodeBarre(typeArticle);
+
+                lot.setQuantite(donnees.getInt("quantite"));
+
+                Fournisseur fournisseur = new Fournisseur();
+                fournisseur.setNom(donnees.getString("nom"));
+
+                lot.setNumeroTVA(fournisseur);
+
                 liste.add(lot);
             }
             return liste;
@@ -57,9 +76,15 @@ public class LotBDA implements LotDA {
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "select * from lot " +
                     "join fournisseur f ON lot.NumeroTVA = f.NumeroTVA " +
-                    "join membredupersonnel m ON lot.Matricule = m.Matricule";
+                    "join membredupersonnel m ON lot.Matricule = m.Matricule " +
+                    "join typearticle t ON lot.CodeBarre = t.CodeBarre " +
+                    "where lot.NumeroTVA = f.NumeroTVA " +
+                    "and lot.Matricule = m.Matricule " +
+                    "and lot.CodeBarre = t.CodeBarre " +
+                    "and t.Libelle = ? ";
 
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setString(1, libelle);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()){
                 Lot lot = new Lot();
@@ -67,11 +92,15 @@ public class LotBDA implements LotDA {
                 Fournisseur fournisseur = new Fournisseur();
                 fournisseur.setNom(donnees.getString("nom"));
 
+                lot.setNumeroTVA(fournisseur);
+
                 lot.setQuantite(donnees.getInt("quantite"));
 
                 MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
                 membreDuPersonnel.setNom(donnees.getString("nom"));
                 membreDuPersonnel.setPrenom(donnees.getString("prenom"));
+
+                lot.setMatricule(membreDuPersonnel);
 
                 liste.add(lot);
             }

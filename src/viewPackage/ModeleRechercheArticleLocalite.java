@@ -36,8 +36,8 @@ public class ModeleRechercheArticleLocalite extends AbstractTableModel {
         Lot ligneLot = contenu.get(row);
         switch(col)
         {
-            case 0 : {if((ligneLot).getCodeLot() != null)
-                        return ligneLot.getCodeLot();
+            case 0 : {if((ligneLot).getCodeBarre() != null)
+                        return ligneLot.getCodeBarre().getId().getId();
                       else
                         return null;
                       }

@@ -53,7 +53,6 @@ public class InsertionOrdrePrepa extends JPanel {
             listeOrdrePreparation = applicationController.getAllOrdrePreparation();
             listeNumSeq = applicationController.getNumSeqOrdrePreparation();
             Collections.sort(listeNumSeq);
-            System.out.println("essai");
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
             dateCreationLabel = new JLabel("Date * : ");
@@ -320,7 +319,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
 
                     ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantitePrevu.getText()));
+                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantiteProduite.getText()));
                     ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
                     ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
                     ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));

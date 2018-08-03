@@ -63,7 +63,7 @@ public class TypeArticleBDA implements TypeArticleDA{
         TypeArticle typeArticle = new TypeArticle();
 
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
-        typeArticle.setLibelle(donnees.getString("libelle"));
+        /*typeArticle.setLibelle(donnees.getString("libelle"));
         typeArticle.setPrix(donnees.getDouble("prix"));
         typeArticle.setQuantiteeEnStock(donnees.getInt("quantiteenstock"));
         if(donnees.getDate("datepromotiondebut") != null){
@@ -77,7 +77,7 @@ public class TypeArticleBDA implements TypeArticleDA{
             typeArticle.setDatePromotionFin(datePromoFin);
         }
         typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
-        typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));
+        typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));*/
 
         return typeArticle;
     }

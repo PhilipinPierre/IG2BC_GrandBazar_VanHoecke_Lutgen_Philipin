@@ -13,10 +13,10 @@ public class RecetteManager {
 
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
-        return RecetteDA.getAllRecette();
+        return recetteDA.getAllRecette();
     }
 
     public Recette getRecette(String nom) throws ExceptionsBD{
-        return RecetteDA.getRecette(nom);
+        return recetteDA.getRecette(nom);
     }
 }

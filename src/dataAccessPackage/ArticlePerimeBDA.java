@@ -41,7 +41,12 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             }
             ArrayList<ArticlePerime> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from articleperiem where date > ? and date < ?";
+            String requeteSQL = "select * from articleperiem " +
+                    " join membredupersonnel m ON articleperiem.Matricule = m.Matricule" +
+                    " join typearticle t ON articleperiem.CodeBarre = t.CodeBarre " +
+                    " where articleperiem.Matricule = m.Matricule" +
+                    " and articleperiem.CodeBarre = t.CodeBarre " +
+                    " and articleperiem.Date  BETWEEN ? AND ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setDate(1, new java.sql.Date(date1.getTimeInMillis()));
             preparedStatement.setDate(2, new java.sql.Date(date2.getTimeInMillis()));
@@ -49,7 +54,18 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
 
             while(donnees.next()){
                 ArticlePerime articlePerime = new ArticlePerime();
-                CompleterArticlePerime(donnees, articlePerime);
+
+                MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
+                membreDuPersonnel.setNom(donnees.getString("nom"));
+                membreDuPersonnel.setPrenom(donnees.getString("prenom"));
+                articlePerime.setMatricule(membreDuPersonnel);
+
+                TypeArticle typeArticle = new TypeArticle();
+                typeArticle.setLibelle(donnees.getString("libelle"));
+                articlePerime.setCodeBarre(typeArticle);
+
+                articlePerime.setQuantiteJetee(donnees.getInt("quantiteJete"));
+
                 liste.add(articlePerime);
             }
             return liste;

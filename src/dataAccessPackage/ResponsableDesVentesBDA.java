@@ -1,10 +1,12 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
+import modelPackage.Recette;
 import modelPackage.ResponsableDesVentes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ResponsableDesVentesBDA extends MembreDuPersonnelBDA implements ResponsableDesVentesDA {
@@ -25,5 +27,12 @@ public class ResponsableDesVentesBDA extends MembreDuPersonnelBDA implements Res
             throw new ExceptionsBD("recherche de tout les responsables des ventes");
         }
         return liste;
+    }
+
+    protected static ResponsableDesVentes completerResponsableDesVentes(ResultSet donnees) throws SQLException {
+        ResponsableDesVentes responsableDesVentes = new ResponsableDesVentes();
+        responsableDesVentes.setMatricule(donnees.getInt("matricule_res"));
+
+        return responsableDesVentes;
     }
 }

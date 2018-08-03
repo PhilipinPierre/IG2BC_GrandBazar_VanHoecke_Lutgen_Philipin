@@ -8,6 +8,7 @@ public class TypeArticle {
     private String libelle;
     private Boolean estPerissable;
     private GregorianCalendar datePromotionDebut, datePromotionFin;
+    private CategorieArticle id;
 //GETTORS
     public Integer getCodeBarre() { return codeBarre; }
     public Integer getQuantiteeEnStock() { return quantiteeEnStock; }
@@ -17,7 +18,9 @@ public class TypeArticle {
     public Boolean getEstPerissable() { return estPerissable; }
     public GregorianCalendar getDatePromotionDebut() { return datePromotionDebut; }
     public GregorianCalendar getDatePromotionFin() { return datePromotionFin; }
-//SETTORS
+    public CategorieArticle getId() { return id; }
+
+    //SETTORS
     public void setCodeBarre(Integer codeBarre) { this.codeBarre = codeBarre; }
     public void setQuantiteeEnStock(Integer quantiteeEnStock) { this.quantiteeEnStock = quantiteeEnStock; }
     public void setQuantiteeMinimal(Integer quantiteeMinimal) { this.quantiteeMinimal = quantiteeMinimal; }
@@ -26,4 +29,5 @@ public class TypeArticle {
     public void setEstPerissable(Boolean estPerissable) { this.estPerissable = estPerissable; }
     public void setDatePromotionDebut(GregorianCalendar datePromotionDebut) { this.datePromotionDebut = datePromotionDebut; }
     public void setDatePromotionFin(GregorianCalendar datePromotionFin) { this.datePromotionFin = datePromotionFin; }
+    public void setID(CategorieArticle id) {this.id = id;}
 }
