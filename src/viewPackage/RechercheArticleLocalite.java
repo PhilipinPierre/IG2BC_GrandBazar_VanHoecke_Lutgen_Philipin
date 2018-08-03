@@ -51,7 +51,7 @@ public class RechercheArticleLocalite extends JPanel{
             //BOUTONS
             panneauBouton = new JPanel();
 
-            validation = new JButton("Validation");
+            validation = new JButton("Rechercher");
             panneauBouton.add(validation);
             ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
