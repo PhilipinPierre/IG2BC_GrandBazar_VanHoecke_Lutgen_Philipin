@@ -131,7 +131,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 valuesRecette.add(r.getNom());
             }
             nomRecette = new JComboBox(valuesRecette.toArray(new String[0]));
-            nomRecette.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            nomRecette.setEnabled(true);
             panneauInsertion.add(nomRecette);
 
             //LIBELLE <- CODE BARRE (FK TYPEARTICLE)
@@ -146,7 +146,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 valuesTypeArticle.add(t.getLibelle());
             }
             libelle = new JComboBox(valuesTypeArticle.toArray(new String[0]));
-            libelle.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            libelle.setEnabled(true);
             panneauInsertion.add(libelle);
 
             //CUISINIER (FK CUISINIER)
@@ -160,7 +160,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 valuesCuisinier.add(c.getNom());
             }
             matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new String[0]));
-            matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            matriculeCuisinier.setEnabled(true);
             panneauInsertion.add(matriculeCuisinier);
 
             //RESPONSABLE DE VENTE OBLIGATOIRE (FK RESPONSABLE VENTE)
@@ -281,7 +281,6 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             try
             {
-
                 if(quantitePrevu.getText().isEmpty() ||
                         numeroSequentiel.getText().isEmpty() ||
                         urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
@@ -342,11 +341,11 @@ public class InsertionOrdrePrepa extends JPanel {
 
                     ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                    OrdrePreparation ordre = ordrePreparation;
+                    /*OrdrePreparation ordre = ordrePreparation;
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  hh:mm");
                     java.util.Date dateD = dateC.getGregorianChange();
 
-                    /*StringBuilder affiche = new StringBuilder();
+                    StringBuilder affiche = new StringBuilder();
                     affiche.append("date :"+ dateFormat.format(dateD) + "\n");
                     affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
                     affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
@@ -366,9 +365,6 @@ public class InsertionOrdrePrepa extends JPanel {
 
                     JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
 
-
-
-                        //Il y a une erreur à la ligne suivante.
                     applicationController.SetOrdrePreparation(applicationController, ordrePreparation);
 
                     JOptionPane.showMessageDialog(panneauBoutons, "L'ordre à bien été créé.");
