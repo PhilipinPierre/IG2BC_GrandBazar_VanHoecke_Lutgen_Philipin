@@ -16,7 +16,7 @@ public class IngredientBDA implements IngredientDA {
         {
             ArrayList<Ingredient> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ingredient";
+            String requeteSQL = "select * from ingredient ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){

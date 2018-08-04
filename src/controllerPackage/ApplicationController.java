@@ -19,6 +19,7 @@ public class ApplicationController {
     private RecetteManager recette;
     private TypeArticleManager typeArticle;
     private ArticlePerimeManager articlePerime;
+    private IngredientManager ingredient;
 
     public ApplicationController()
     {
@@ -34,6 +35,7 @@ public class ApplicationController {
         recette = new RecetteManager();
         typeArticle = new TypeArticleManager();
         articlePerime = new ArticlePerimeManager();
+        ingredient = new IngredientManager();
     }
 
     public ArrayList<Client> getAllClient() throws ExceptionsBD
@@ -44,6 +46,11 @@ public class ApplicationController {
     public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD
     {
         return fournisseur.getAllFournisseur();
+    }
+
+    public ArrayList<Ingredient> getAllIngredient() throws ExceptionsBD
+    {
+        return ingredient.getAllIngredient();
     }
 
     public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD

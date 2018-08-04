@@ -236,10 +236,9 @@ public class InsertionOrdrePrepa extends JPanel {
         Integer.valueOf(numSeq);
 
         char[] upper = numSeq.toCharArray();
-        StringBuilder resultat = new StringBuilder();
-        for (int i = 0; i < upper.length; i++)
-        {
-            switch (upper[i]) {
+            StringBuilder resultat = new StringBuilder();
+            for (int i = 0; i < upper.length; i++) {
+                switch (upper[i]) {
                     case '0':
                     case '1':
                     case '2':

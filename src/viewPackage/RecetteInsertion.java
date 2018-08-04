@@ -35,12 +35,7 @@ public class RecetteInsertion extends JPanel {
 
             panneauInsertion.setLayout(new GridLayout(6, 2, 5, 5));
 
-            //NOUVELLE RECETTE
-            /*recetteLabel = new JLabel("Nouvelle recette ");
-            //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-            recetteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            panneauInsertion.add(recetteLabel);*/
-
+            //RECETTE
             //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
             nomRecetteLabel = new JLabel("Nom de la recette : ");
             nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -69,14 +64,9 @@ public class RecetteInsertion extends JPanel {
             descriptif = new JTextField();
             panneauInsertion.add(descriptif);
 
-            //LISTE DES INGREDIENTS
-            /*ingredientLabel = new JLabel("Liste des ingrédients ");
-            //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
-            ingredientLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            panneauInsertion.add(ingredientLabel);*/
-
-            //NOM INGREDIENTS
-            nomIngredientLabel = new JLabel("Nom ingrédients : ");
+            //INGREDIENTS
+            //LIBELLE -> CODE BARRE
+            nomIngredientLabel = new JLabel("Type Article : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             nomIngredientLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomIngredientLabel);
@@ -108,8 +98,8 @@ public class RecetteInsertion extends JPanel {
             retour.addActionListener(listenerRetour);
             ajoutRecette = new JButton("Ajouter recette");
             panneauBoutons.add(ajoutRecette);
-            RecetteInsertion.ButtonListenerAjouterRecette buttonListenerAjouterRecette = new RecetteInsertion.ButtonListenerAjouterRecette();
-            ajoutRecette.addActionListener(buttonListenerAjouterRecette);
+            RecetteInsertion.ButtonListenerAjouterRecette listenerAjouterRecette = new RecetteInsertion.ButtonListenerAjouterRecette();
+            ajoutRecette.addActionListener(listenerAjouterRecette);
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             RecetteInsertion.ButtonListenerReinitialiser listenerReinitialiser = new RecetteInsertion.ButtonListenerReinitialiser();
@@ -128,7 +118,7 @@ public class RecetteInsertion extends JPanel {
         }
         catch (ExceptionsBD ebd)
         {
-            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -177,7 +167,12 @@ public class RecetteInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            ;
+            removeAll();
+            validate();
+            IngredientInsertion ingredientInsertion = new IngredientInsertion(applicationController);
+            add(ingredientInsertion);
+            revalidate();
+            repaint();
         }
     }
 }
