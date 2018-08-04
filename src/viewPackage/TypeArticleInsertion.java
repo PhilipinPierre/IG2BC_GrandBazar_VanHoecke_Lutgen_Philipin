@@ -142,7 +142,7 @@ public class TypeArticleInsertion extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un type d'article", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -69,7 +70,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
-            numeroSequentiel.addFocusListener(new NumeroSequentielListener());
+            //numeroSequentiel.addFocusListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -200,12 +201,12 @@ public class InsertionOrdrePrepa extends JPanel {
         }
         catch (ExceptionsBD ebd)
         {
-            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'insertion d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
-    private class NumeroSequentielListener implements java.awt.event.FocusListener{
+    /*private class NumeroSequentielListener implements java.awt.event.FocusListener{
         @Override
         public void focusGained(FocusEvent e) {}
         @Override
@@ -258,7 +259,7 @@ public class InsertionOrdrePrepa extends JPanel {
             numeroSequentiel.setText(resultat.toString());
 
             return false;
-    }
+    }*/
 
     //CLASSES PRIVEES POUR LES BOUTONS
     private class ButtonListenerRetour implements ActionListener

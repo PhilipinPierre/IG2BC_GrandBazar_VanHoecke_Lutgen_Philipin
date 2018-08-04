@@ -60,6 +60,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
                 Integer numSeq = (Integer) table.getValueAt(numeroSequentiel, 0);
 
                 applicationController.SupprimerOrdrePreparation(numSeq);
+
                 removeAll();
                 validate();
 
@@ -70,7 +71,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de la suppression d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBoutons, "Aucun ordre de préparation selectionné ! ");
             }
         }
     }
