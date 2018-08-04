@@ -98,8 +98,19 @@ public class ApplicationController {
         return recette.getAllRecette();
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD{
+    public Recette getRecette(String nom) throws ExceptionsBD
+    {
         return recette.getRecette(nom);
+    }
+
+    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
+    {
+        recette.ajouterRecette(applicationController, r);
+    }
+
+    public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD
+    {
+        ingredient.ajouterIngredient(applicationController, i);
     }
 
     public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{

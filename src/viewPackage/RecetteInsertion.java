@@ -18,9 +18,9 @@ public class RecetteInsertion extends JPanel {
     private JTextField dlc, descriptif, quantitePortion, nomRecette;
     private JList nomIngredients;
     //POUR LES BOUTONS
-    private JButton retour, ajoutRecette, reinitialiser, ajoutIngredients;
+    private JButton retour, ajoutRecette, reinitialiser, ajoutIngredients, listingRecette;
     private ApplicationController applicationController;
-
+    private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeIngredients;
     private DefaultListModel defaultListModel = new DefaultListModel();
 
@@ -94,6 +94,11 @@ public class RecetteInsertion extends JPanel {
             RecetteInsertion.ButtonListenerRetour listenerRetour = new RecetteInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
 
+            listingRecette = new JButton("Listing recette");
+            panneauBoutons.add(listingRecette);
+            RecetteInsertion.ButtonListenerListingRecette listenerListingRecette = new RecetteInsertion.ButtonListenerListingRecette();
+            listingRecette.addActionListener(listenerListingRecette);
+
             ajoutRecette = new JButton("Ajouter recette");
             panneauBoutons.add(ajoutRecette);
             RecetteInsertion.ButtonListenerAjouterRecette listenerAjouterRecette = new RecetteInsertion.ButtonListenerAjouterRecette();
@@ -143,7 +148,17 @@ public class RecetteInsertion extends JPanel {
         {
             try
             {
-                ;
+                Recette recette = new Recette();
+                recette.setNom(nomRecette.getText());
+                recette.setDLC(Integer.valueOf(dlc.getText()));
+                recette.setDescriptif(descriptif.getText());
+
+                Ingredient ingredient = new Ingredient();
+                ingredient.setNom(recette);
+                ingredient.setCodeBarre(listeIngredients.get(nomIngredients.getSelectedIndex()));
+                ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
+
+                applicationController.ajouterRecette(applicationController, recette);
             }
             catch (Exception e)
             {
@@ -173,6 +188,29 @@ public class RecetteInsertion extends JPanel {
             add(typeArticleInsertion);
             revalidate();
             repaint();
+        }
+    }
+
+    private class ButtonListenerListingRecette implements ActionListener
+    {
+        public void actionPerformed(ActionEvent event)
+        {
+            try {
+                listeRecette = applicationController.getAllRecette();
+
+                removeAll();
+                validate();
+
+                PanelRecette panelRecette = new PanelRecette(applicationController, listeRecette);
+                add(panelRecette);
+
+                revalidate();
+                repaint();
+            }
+            catch (ExceptionsBD e)
+            {
+                JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors du listing des recettes");
+            }
         }
     }
 }

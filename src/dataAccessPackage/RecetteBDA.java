@@ -1,45 +1,51 @@
 package dataAccessPackage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.*;
+import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-import java.sql.SQLException;
 
 public class RecetteBDA implements RecetteDA {
 
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD {
-        ArrayList<Recette> listeRecette = new ArrayList<>();
-        try {
+        try
+        {
+            ArrayList<Recette> listeRecette = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select nom from recette order by 'nom'";
+            String requeteSQL = "select * from recette order by nom ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 Recette recette = new Recette();
-                recette.setNom(donnees.getString("Nom"));
-                //recette.setDescriptif(donnees.getString("Descriptif"));
-                //recette.setDLC(donnees.getInt("DLC"));
+                recette.setNom(donnees.getString("nom"));
+                recette.setDLC(donnees.getInt("dlc"));
+                recette.setDescriptif(donnees.getString("descriptif"));
                 listeRecette.add(recette);
             }
-        } catch (Exception e) {
+            return listeRecette;
+        }
+        catch (Exception e)
+        {
             throw new ExceptionsBD("Erreur lors de la recherche de toutes les recettes");
         }
-        return listeRecette;
     }
 
-    public void AjouterRecette(Recette recette) throws ExceptionsBD{
+    public void ajouterRecette(ApplicationController applicationController, Recette recette) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "insert into recette values('"+recette.getNom()+"',"+recette.getDLC()+",'"+recette.getDescriptif()+"');";
+            String requeteSQL = "insert into recette values (?,?,?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+
+            preparedStatement.setString(1, recette.getNom());
+            preparedStatement.setInt(2, recette.getDLC());
+            preparedStatement.setString(3, recette.getDescriptif());
+
+            preparedStatement.executeUpdate();
         } catch (Exception e){
             throw  new ExceptionsBD("Erreur lors de l'ajout d'une recette à la base de données");
         }
     }
-
 
     public Recette getRecette(String nom) throws ExceptionsBD{
         try {
@@ -53,11 +59,10 @@ public class RecetteBDA implements RecetteDA {
         return null;
     }
 
-    protected static Recette CompleterRecette(ResultSet donnees) throws SQLException {
+    protected static Recette completerRecette(ResultSet donnees) throws SQLException {
         Recette recette = new Recette();
         recette.setNom(donnees.getString("nom"));
-        //recette.setDescriptif(donnees.getString("descriptif"));
-        //recette.setDLC(donnees.getInt("dlc"));
+
         return recette;
     }
 }

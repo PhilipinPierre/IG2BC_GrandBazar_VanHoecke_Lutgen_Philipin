@@ -24,14 +24,14 @@ public class ListingOrdrePrepa extends JPanel {
             removeAll();
             validate();
             PanelSuppModifOrdrePrepa panelSuppModifOrdrePrepa = new PanelSuppModifOrdrePrepa(applicationController, listeOrdrePrepa);
-            add(panelSuppModifOrdrePrepa, BorderLayout.CENTER);
+            add(panelSuppModifOrdrePrepa);
             revalidate();
             repaint();
 
         }
         catch (ExceptionsBD ebd)
         {
-            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors du listing des ordres de préparation", JOptionPane.ERROR_MESSAGE);
         }
     }
 

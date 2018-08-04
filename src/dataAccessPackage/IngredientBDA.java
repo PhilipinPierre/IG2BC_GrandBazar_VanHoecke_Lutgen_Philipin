@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Ingredient;
 import modelPackage.Recette;
@@ -21,7 +22,7 @@ public class IngredientBDA implements IngredientDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 Ingredient ingredient = new Ingredient();
-                CompleterIngredient(donnees, ingredient);
+                completerIngredient(donnees, ingredient);
                 liste.add(ingredient);
             }
             return liste;
@@ -32,7 +33,34 @@ public class IngredientBDA implements IngredientDA {
         }
     }
 
-    private void CompleterIngredient(ResultSet donnees, Ingredient ingredient) throws SQLException{
+    public void ajouterIngredient(ApplicationController applicationController, Ingredient ingredient) throws ExceptionsBD
+    {
+        try
+        {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert into ingredient values (?,?,?) ";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+
+            preparedStatement.setString(1, ingredient.getNom().getNom());
+            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+            String typeArticle = ingredient.getCodeBarre().getLibelle();
+            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+            int matriculeTypeArticle = 0;
+            for(TypeArticle ta : listeTypeArticle)
+            {
+                if (typeArticle.equals(ta.getLibelle()))
+                    matriculeTypeArticle = ta.getCodeBarre();
+            }
+            preparedStatement.setInt(2, matriculeTypeArticle);
+            preparedStatement.setInt(3, ingredient.getQuantitePortion());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw  new ExceptionsBD("Erreur lors de l'ajout d'un ingrédients à la base de données");
+        }
+    }
+
+    private void completerIngredient(ResultSet donnees, Ingredient ingredient) throws SQLException{
         Integer quantitePortion = new Integer(donnees.getInt("quantiteportion"));
         ingredient.setQuantitePortion(quantitePortion);
 

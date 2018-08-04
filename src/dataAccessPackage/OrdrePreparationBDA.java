@@ -48,7 +48,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
             // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
             // J'AI MODIFIER COMPLETERRECETTE EN METTANT EN COMMENTAIRE CE QU'IL NE ME FALLAIT PAS, PAS SUR QUE C'EST BON
-            Recette recette = RecetteBDA.CompleterRecette(donnees);
+            Recette recette = RecetteBDA.completerRecette(donnees);
             ordrePreparation.setNom(recette);
 
             // FONCTIONNE AVEC MATRICULE

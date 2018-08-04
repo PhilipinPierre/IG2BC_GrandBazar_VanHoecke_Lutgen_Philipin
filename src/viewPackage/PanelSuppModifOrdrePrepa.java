@@ -37,11 +37,6 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
         JScrollPane defilant = new JScrollPane(table);
         panneauJList.add(defilant, BorderLayout.CENTER);
 
-        retour = new JButton("<- Retour");
-        panneauBoutons.add(retour);
-        PanelSuppModifOrdrePrepa.ButtonListenerRetour listenerRetour = new PanelSuppModifOrdrePrepa.ButtonListenerRetour();
-        retour.addActionListener(listenerRetour);
-
         suppression = new JButton("Suppression");
         panneauBoutons.add(suppression);
         PanelSuppModifOrdrePrepa.ButtonListenerSuppression listenerSuppression = new PanelSuppModifOrdrePrepa.ButtonListenerSuppression();
@@ -51,22 +46,6 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
         add(panneauBoutons, BorderLayout.SOUTH);
 
         setVisible(true);
-    }
-
-    //CLASSES PRIVEES POUR LES BOUTONS
-    private class ButtonListenerRetour implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
-            removeAll();
-            validate();
-
-            RecetteInsertion recetteInsertion = new RecetteInsertion(applicationController);
-            add(recetteInsertion);
-
-            revalidate();
-            repaint();
-        }
     }
 
     private class ButtonListenerSuppression implements ActionListener

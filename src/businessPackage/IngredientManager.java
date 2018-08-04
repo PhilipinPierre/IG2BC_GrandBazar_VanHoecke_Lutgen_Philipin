@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.IngredientBDA;
 import dataAccessPackage.IngredientDA;
 import exceptionsPackage.ExceptionsBD;
@@ -14,6 +15,11 @@ public class IngredientManager {
     public ArrayList<Ingredient> getAllIngredient() throws ExceptionsBD
     {
         return ingredientDA.getAllIngredient();
+    }
+
+    public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD
+    {
+        ingredientDA.ajouterIngredient(applicationController, i);
     }
 
 }

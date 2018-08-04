@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.RecetteBDA;
 import dataAccessPackage.RecetteDA;
 import exceptionsPackage.ExceptionsBD;
@@ -18,5 +19,10 @@ public class RecetteManager {
 
     public Recette getRecette(String nom) throws ExceptionsBD{
         return recetteDA.getRecette(nom);
+    }
+
+    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
+    {
+        recetteDA.ajouterRecette(applicationController, r);
     }
 }
