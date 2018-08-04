@@ -129,25 +129,27 @@ public class LotInsertion extends JPanel {
 
             panneauBoutons.setLayout(new FlowLayout());
 
-            retour = new JButton("Retour");
+            retour = new JButton("<- Retour");
             panneauBoutons.add(retour);
             LotInsertion.ButtonListenerRetour listenerRetour = new LotInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
+
             ajoutLot = new JButton("Ajouter lot");
             panneauBoutons.add(ajoutLot);
             LotInsertion.ButtonListenerAjouterLot listenerAjouterLot = new LotInsertion.ButtonListenerAjouterLot();
             ajoutLot.addActionListener(listenerAjouterLot);
+
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             LotInsertion.ButtonListenerReinitialiser listenerReinitialiser = new LotInsertion.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
-            add(panneauInsertion, BorderLayout.NORTH);
-
-            ajoutFournisseur = new JButton("Ajouter fournisseur");
-            add(ajoutFournisseur);
+            ajoutFournisseur = new JButton("Créer un fournisseur ->");
+            panneauBoutons.add(ajoutFournisseur);
             LotInsertion.ButtonListenerAjouterFournisseur listenerAjouterFournisseur = new LotInsertion.ButtonListenerAjouterFournisseur();
             ajoutFournisseur.addActionListener(listenerAjouterFournisseur);
+
+            add(panneauInsertion, BorderLayout.NORTH);
 
             add(panneauBoutons, BorderLayout.SOUTH);
 
@@ -167,7 +169,8 @@ public class LotInsertion extends JPanel {
             removeAll();
             validate();
 
-            add(new MessageAccueil(), BorderLayout.CENTER);
+            TypeArticleInsertion typeArticleInsertion = new TypeArticleInsertion(applicationController);
+            add(typeArticleInsertion);
 
             revalidate();
             repaint();

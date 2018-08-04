@@ -71,8 +71,10 @@ public class RechercheArticleLocalite extends JPanel{
         {
             try
             {
-                String localiteLot;
-                localiteLot = localite.getSelectedItem().toString();
+                String localiteCodePostal = localite.getSelectedItem().toString();
+                //SEPARER LA LOCALITE DU CODE POSTAL
+                String [] loc = localiteCodePostal.split(" ");
+                String localiteLot = loc[0];
 
                 removeAll();
                 validate();

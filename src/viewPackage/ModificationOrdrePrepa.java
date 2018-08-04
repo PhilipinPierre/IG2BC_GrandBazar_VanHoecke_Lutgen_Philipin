@@ -41,6 +41,9 @@ public class ModificationOrdrePrepa extends JPanel {
         {
             this.applicationController = applicationController;
             this.ordrePreparation = ordrePreparation;
+
+            setLayout(new BorderLayout());
+
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
@@ -198,7 +201,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
             panneauBoutons.setLayout(new FlowLayout());
 
-            retour = new JButton("Retour");
+            retour = new JButton("<- Retour");
             panneauBoutons.add(retour);
             ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
@@ -211,7 +214,7 @@ public class ModificationOrdrePrepa extends JPanel {
             ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
-            add(panneauInsertion, BorderLayout.CENTER);
+            add(panneauInsertion, BorderLayout.NORTH);
             add(panneauBoutons, BorderLayout.SOUTH);
 
             setVisible(true);

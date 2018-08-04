@@ -17,12 +17,14 @@ public class MessageAccueil extends JPanel {
         threadBienvenue.start();
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g)
+    {
         super.paint(g);
         int fontSize = 30;
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
         String message = "Bienvenue ";
-        for(int i = 0; i<compteur; i++){
+        for(int i = 0; i<compteur; i++)
+        {
             message += " .";
         }
         compteur++;

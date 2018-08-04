@@ -50,8 +50,7 @@ public class FenetrePrincipale extends JFrame {
         /////////////////////////////AJOUT DU MESSAGE D'ACCUEIL/////////////////////////////
         message = new MessageAccueil();
         container = getContentPane();
-        container.setLayout(new BorderLayout());
-        container.add(message, BorderLayout.CENTER);
+        container.add(message);
         ////////////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////BARRE D'OPTIONS MENU////////////////////////////////

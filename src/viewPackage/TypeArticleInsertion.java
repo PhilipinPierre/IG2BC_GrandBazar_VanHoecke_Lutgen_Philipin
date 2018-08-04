@@ -92,25 +92,27 @@ public class TypeArticleInsertion extends JPanel {
 
         panneauBoutons.setLayout(new FlowLayout());
 
-        retour = new JButton("Retour");
+        retour = new JButton("<- Retour");
         panneauBoutons.add(retour);
         TypeArticleInsertion.ButtonListenerRetour listenerRetour = new TypeArticleInsertion.ButtonListenerRetour();
         retour.addActionListener(listenerRetour);
+
         ajoutIngredient = new JButton("Ajouter type article");
         panneauBoutons.add(ajoutIngredient);
         TypeArticleInsertion.ButtonListenerAjouterTypeArticle listenerAjouterTypeArticle = new TypeArticleInsertion.ButtonListenerAjouterTypeArticle();
         ajoutIngredient.addActionListener(listenerAjouterTypeArticle);
+
         reinitialiser = new JButton("Réinitialiser");
         panneauBoutons.add(reinitialiser);
         TypeArticleInsertion.ButtonListenerReinitialiser listenerReinitialiser = new TypeArticleInsertion.ButtonListenerReinitialiser();
         reinitialiser.addActionListener(listenerReinitialiser);
 
-        add(panneauInsertion, BorderLayout.NORTH);
-
-        ajoutTypeArticle = new JButton("Ajouter lot");
-        add(ajoutTypeArticle, BorderLayout.CENTER);
+        ajoutTypeArticle = new JButton("Créer un lot ->");
+        panneauBoutons.add(ajoutTypeArticle);
         TypeArticleInsertion.ButtonListenerAjouterLot listenerAjouterLot = new TypeArticleInsertion.ButtonListenerAjouterLot();
         ajoutTypeArticle.addActionListener(listenerAjouterLot);
+
+        add(panneauInsertion, BorderLayout.NORTH);
 
         add(panneauBoutons, BorderLayout.SOUTH);
 
@@ -125,7 +127,8 @@ public class TypeArticleInsertion extends JPanel {
             removeAll();
             validate();
 
-            add(new MessageAccueil(), BorderLayout.CENTER);
+            RecetteInsertion recetteInsertion = new RecetteInsertion(applicationController);
+            add(recetteInsertion);
 
             revalidate();
             repaint();

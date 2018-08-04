@@ -67,7 +67,7 @@ public class FournisseurInsertion extends JPanel {
 
         panneauBoutons.setLayout(new FlowLayout());
 
-        retour = new JButton("Retour");
+        retour = new JButton("<- Retour");
         panneauBoutons.add(retour);
         FournisseurInsertion.ButtonListenerRetour listenerRetour = new FournisseurInsertion.ButtonListenerRetour();
         retour.addActionListener(listenerRetour);
@@ -95,7 +95,8 @@ public class FournisseurInsertion extends JPanel {
             removeAll();
             validate();
 
-            add(new MessageAccueil(), BorderLayout.CENTER);
+            LotInsertion lotInsertion = new LotInsertion(applicationController);
+            add(lotInsertion);
 
             revalidate();
             repaint();

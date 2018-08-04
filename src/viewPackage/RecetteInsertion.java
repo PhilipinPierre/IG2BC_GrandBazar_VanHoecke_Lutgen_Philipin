@@ -21,7 +21,6 @@ public class RecetteInsertion extends JPanel {
     private JButton retour, ajoutRecette, reinitialiser, ajoutIngredients;
     private ApplicationController applicationController;
 
-    private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeIngredients;
     private DefaultListModel defaultListModel = new DefaultListModel();
 
@@ -30,6 +29,8 @@ public class RecetteInsertion extends JPanel {
         try
         {
             this.applicationController = applicationController;
+
+            setLayout(new BorderLayout());
 
             //FORMULAIRE
             panneauInsertion = new JPanel();
@@ -88,27 +89,29 @@ public class RecetteInsertion extends JPanel {
 
             panneauBoutons.setLayout(new FlowLayout());
 
-            retour = new JButton("Retour");
+            retour = new JButton("<- Retour");
             panneauBoutons.add(retour);
             RecetteInsertion.ButtonListenerRetour listenerRetour = new RecetteInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
+
             ajoutRecette = new JButton("Ajouter recette");
             panneauBoutons.add(ajoutRecette);
             RecetteInsertion.ButtonListenerAjouterRecette listenerAjouterRecette = new RecetteInsertion.ButtonListenerAjouterRecette();
             ajoutRecette.addActionListener(listenerAjouterRecette);
+
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             RecetteInsertion.ButtonListenerReinitialiser listenerReinitialiser = new RecetteInsertion.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
-            add(panneauInsertion);
-
-            ajoutIngredients = new JButton("Ajouter type article");
-            add(ajoutIngredients);
+            ajoutIngredients = new JButton("Créer un type article ->");
+            panneauBoutons.add(ajoutIngredients);
             RecetteInsertion.ButtonListenerAjouterIngredients listenerAjouterIngredients = new RecetteInsertion.ButtonListenerAjouterIngredients();
             ajoutIngredients.addActionListener(listenerAjouterIngredients);
 
-            add(panneauBoutons);
+            add(panneauInsertion, BorderLayout.NORTH);
+
+            add(panneauBoutons, BorderLayout.SOUTH);
 
             setVisible(true);
         }
@@ -126,7 +129,8 @@ public class RecetteInsertion extends JPanel {
             removeAll();
             validate();
 
-            add(new MessageAccueil(), BorderLayout.CENTER);
+            MessageAccueil messageAccueil = new MessageAccueil();
+            add(messageAccueil);
 
             revalidate();
             repaint();
