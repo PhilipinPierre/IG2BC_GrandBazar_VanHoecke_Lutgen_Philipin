@@ -15,14 +15,15 @@ public class RecetteInsertion extends JPanel {
     //POUR LE FORMULAIRE
     private JLabel dlcLabel, nomRecetteLabel, descriptifLabel,
              quantitePortionLabel, nomIngredientLabel;
-    private JTextField dlc, descriptif, quantitePortion;
-    private JComboBox nomRecette, nomIngredients;
+    private JTextField dlc, descriptif, quantitePortion, nomRecette;
+    private JList nomIngredients;
     //POUR LES BOUTONS
     private JButton retour, ajoutRecette, reinitialiser, ajoutIngredients;
     private ApplicationController applicationController;
 
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeIngredients;
+    private DefaultListModel defaultListModel = new DefaultListModel();
 
     public RecetteInsertion(ApplicationController applicationController)
     {
@@ -40,14 +41,7 @@ public class RecetteInsertion extends JPanel {
             nomRecetteLabel = new JLabel("Nom de la recette : ");
             nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomRecetteLabel);
-            listeRecette = applicationController.getAllRecette();
-            ArrayList<String> valuesRecette = new ArrayList<>();
-            for(Recette r : listeRecette)
-            {
-                valuesRecette.add(r.getNom());
-            }
-            nomRecette = new JComboBox(valuesRecette.toArray(new String[0]));
-            nomRecette.setEnabled(true);
+            nomRecette = new JTextField();
             panneauInsertion.add(nomRecette);
 
             //DLC
@@ -66,18 +60,20 @@ public class RecetteInsertion extends JPanel {
 
             //INGREDIENTS
             //LIBELLE -> CODE BARRE
-            nomIngredientLabel = new JLabel("Type Article : ");
+            nomIngredientLabel = new JLabel("Type article : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             nomIngredientLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomIngredientLabel);
             listeIngredients = applicationController.getAllTypeArticle();
-            ArrayList <String> valuesIngredients = new ArrayList<>();
+            int i = 0;
             for(TypeArticle t : listeIngredients)
             {
-                valuesIngredients.add(t.getLibelle());
+                defaultListModel.add(i, t.getLibelle());
+                i++;
             }
-            nomIngredients = new JComboBox(valuesIngredients.toArray(new String[0]));
-            nomIngredients.setEnabled(true);
+            nomIngredients = new JList(defaultListModel);
+            nomIngredients.setVisibleRowCount(3);
+            nomIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             panneauInsertion.add(nomIngredients);
 
             //QUANTITE PORTION
@@ -107,7 +103,7 @@ public class RecetteInsertion extends JPanel {
 
             add(panneauInsertion);
 
-            ajoutIngredients = new JButton("Ajouter ingrédients");
+            ajoutIngredients = new JButton("Ajouter type article");
             add(ajoutIngredients);
             RecetteInsertion.ButtonListenerAjouterIngredients listenerAjouterIngredients = new RecetteInsertion.ButtonListenerAjouterIngredients();
             ajoutIngredients.addActionListener(listenerAjouterIngredients);
@@ -169,8 +165,8 @@ public class RecetteInsertion extends JPanel {
         {
             removeAll();
             validate();
-            IngredientInsertion ingredientInsertion = new IngredientInsertion(applicationController);
-            add(ingredientInsertion);
+            TypeArticleInsertion typeArticleInsertion = new TypeArticleInsertion(applicationController);
+            add(typeArticleInsertion);
             revalidate();
             repaint();
         }
