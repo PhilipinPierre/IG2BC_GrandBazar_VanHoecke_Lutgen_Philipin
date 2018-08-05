@@ -75,7 +75,7 @@ public class RecetteInsertion extends JPanel {
             nomIngredients = new JList(defaultListModel);
             nomIngredients.setVisibleRowCount(3);
             nomIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            panneauInsertion.add(nomIngredients);
+            panneauInsertion.add(new JScrollPane(nomIngredients));
 
             //QUANTITE PORTION
             quantitePortionLabel = new JLabel("Quantité portion : ");
