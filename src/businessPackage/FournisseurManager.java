@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.FournisseurBDA;
 import dataAccessPackage.FournisseurDA;
 import exceptionsPackage.ExceptionsBD;
@@ -16,6 +17,11 @@ public class FournisseurManager {
     {
         ArrayList<Fournisseur> fournisseurList = fournisseurBDA.getAllFournisseur();
         return fournisseurList;
+    }
+
+    public void ajouterFournisseur(ApplicationController applicationController, Fournisseur fournisseur) throws ExceptionsBD
+    {
+        fournisseurBDA.ajouterFournisseur(applicationController, fournisseur);
     }
 
 

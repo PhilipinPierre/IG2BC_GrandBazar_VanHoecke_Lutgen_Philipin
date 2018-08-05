@@ -1,17 +1,13 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionsPackage.ExceptionsBD;
-import modelPackage.Cuisinier;
-import modelPackage.Fournisseur;
-import modelPackage.MembreDuPersonnel;
-import modelPackage.TypeArticle;
-
+import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class LotInsertion extends JPanel {
     private JPanel panneauInsertion;
@@ -183,11 +179,31 @@ public class LotInsertion extends JPanel {
         {
             try
             {
-                ;
+                //AJOUT LOT
+                Lot lot = new Lot();
+
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(datePeremptionModel.getDate());
+                lot.setDatePeremption(date);
+
+                lot.setQuantite(Integer.valueOf(quantite.getText()));
+                lot.setCodeLot(Integer.valueOf(codeLot.getText()));
+
+                date.setTime(dateFourniturePrevueModel.getDate());
+                lot.setDateFourniturePrevue(date);
+
+                date.setTime(dateCommandeModel.getDate());
+                lot.setDateCommande(date);
+
+                lot.setCodeBarre(listeTypeArticle.get(typeArticle.getSelectedIndex()));
+                lot.setMatricule(listeMembreDuPersonnel.get(membreDuPersonnel.getSelectedIndex()));
+                lot.setNumeroTVA(listeFournisseur.get(fournisseur.getSelectedIndex()));
+
+                applicationController.ajouterLot(applicationController, lot);
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un lot", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauBoutons, "Erreur lors de l'ajout d'un nouveau lot");
             }
         }
     }

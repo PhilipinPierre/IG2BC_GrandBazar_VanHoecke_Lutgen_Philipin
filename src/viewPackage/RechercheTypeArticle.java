@@ -87,7 +87,7 @@ public class RechercheTypeArticle extends JPanel{
 
                 removeAll();
                 validate();
-                PanelRechercheTypeArticle panelRechercheTypeArticle = new PanelRechercheTypeArticle(applicationController, applicationController.RechercheLotViaTypeArticle(libelle.getSelectedItem().toString()));
+                PanelRechercheTypeArticle panelRechercheTypeArticle = new PanelRechercheTypeArticle(applicationController, applicationController.rechercheLotViaTypeArticle(libelle.getSelectedItem().toString()));
                 add(panelRechercheTypeArticle, BorderLayout.CENTER);
                 revalidate();
                 repaint();

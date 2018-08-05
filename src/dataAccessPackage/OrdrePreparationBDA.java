@@ -28,14 +28,12 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
             ordrePreparation.setQuantiteProduite(donnees.getInt("quantiteproduite"));
 
-            GregorianCalendar datev = new GregorianCalendar();
-            datev.setTime(donnees.getDate("datevente"));
-            ordrePreparation.setDateVente(datev);
+            date.setTime(donnees.getDate("datevente"));
+            ordrePreparation.setDateVente(date);
 
             if(donnees.getDate("datepreparation") != null) {
-                GregorianCalendar dateP = new GregorianCalendar();
-                dateP.setTime(donnees.getDate("datepreparation"));
-                ordrePreparation.setDatePreparation(dateP);
+                date.setTime(donnees.getDate("datepreparation"));
+                ordrePreparation.setDatePreparation(date);
             }
 
             String remarque = donnees.getString("remarque");
@@ -107,7 +105,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
-    public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
@@ -118,7 +116,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
-    public void ModifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "update ordrepreparation " +
@@ -194,7 +192,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         }
     }
 
-    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "insert into ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?)";

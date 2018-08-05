@@ -205,7 +205,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauBoutons.add(retour);
             ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
-            validation = new JButton("Validation");
+            validation = new JButton("Modifier");
             panneauBoutons.add(validation);
             ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
@@ -250,7 +250,7 @@ public class ModificationOrdrePrepa extends JPanel {
             {
                 ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
                 ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantiteProduite.getText()));
-                ordrePreparation.setNumeroSequentiel(numeroSequentiel.getSelectedIndex()+1);
+                ordrePreparation.setNumeroSequentiel(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
                 ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
                 ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
                 ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()));
@@ -272,7 +272,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
                 ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                applicationController.ModifierOrdrePreparation(applicationController, ordrePreparation);
+                applicationController.modifierOrdrePreparation(applicationController, ordrePreparation);
 
                 dateCreation = new JSpinner(dateCreationModel);
                 quantitePrevu.setText(null);

@@ -166,6 +166,7 @@ public class TypeArticleInsertion extends JPanel {
         {
             try
             {
+                //AJOUT TYPE ARTICLE
                 TypeArticle typeArticle = new TypeArticle();
                 typeArticle.setLibelle(libelle.getText());
                 typeArticle.setPrix(Double.valueOf(prix.getText()));

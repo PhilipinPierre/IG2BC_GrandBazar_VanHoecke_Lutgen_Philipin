@@ -58,7 +58,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
             {
                 Integer numSeq = (Integer) table.getValueAt(numeroSequentiel, 0);
 
-                applicationController.SupprimerOrdrePreparation(numSeq);
+                applicationController.supprimerOrdrePreparation(numSeq);
 
                 removeAll();
                 validate();

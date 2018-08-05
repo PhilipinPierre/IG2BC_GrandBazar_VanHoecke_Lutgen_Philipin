@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class LotBDA implements LotDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while (donnees.next()) {
                 Lot lot = new Lot();
-                CompleterLot(donnees, lot);
+                completerLot(donnees, lot);
                 liste.add(lot);
             }
             return liste;
@@ -28,7 +29,7 @@ public class LotBDA implements LotDA {
         }
     }
 
-    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+    public ArrayList<Lot> rechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
         try{
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
@@ -70,7 +71,7 @@ public class LotBDA implements LotDA {
         }
     }
 
-    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
+    public ArrayList<Lot> rechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
         try{
             ArrayList<Lot> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
@@ -110,7 +111,94 @@ public class LotBDA implements LotDA {
         }
     }
 
-    private void CompleterLot(ResultSet donnees, Lot lot) throws SQLException{
+    public void ajouterLot(ApplicationController applicationController, Lot lot) throws ExceptionsBD{
+        try
+        {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert into lot values (?,?,?,?,?,?,?,?,?) ";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+
+            //POUR SAVOIR LE CODE BARRE
+            ArrayList <Lot> listeLot = applicationController.getAllLot();
+            int i = 1;
+            String id;
+            for(Lot l : listeLot)
+            {
+                i++;
+            }
+
+            if (i > 999)
+            {
+                id = "lot" + i;
+            }
+            else
+            {
+                if (i > 99)
+                {
+                    id = "lot0" + i;
+                }
+                else
+                {
+                    if (i > 9)
+                    {
+                        id = "lot00" + i;
+                    }
+                    else
+                    {
+                        id = "lot0000" + i;
+                    }
+                }
+            }
+            preparedStatement.setString(1, id);
+
+            preparedStatement.setDate(2, new java.sql.Date(lot.getDatePeremption().getTimeInMillis()));
+            preparedStatement.setInt(3, lot.getQuantite());
+            preparedStatement.setInt(4, lot.getCodeLot());
+            preparedStatement.setDate(5, new java.sql.Date(lot.getDateFourniturePrevue().getTimeInMillis()));
+            preparedStatement.setDate(6, new java.sql.Date(lot.getDateCommande().getTimeInMillis()));
+
+            //POUR CONVERTIR LE LIBELLE DE TYPE ARTICLE EN CODE BARRE
+            String typeArticle = lot.getCodeBarre().getLibelle();
+            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+            int codeBarreTypeArticle = 0;
+            for(TypeArticle ta : listeTypeArticle)
+            {
+                if (typeArticle.equals(ta.getLibelle()))
+                    codeBarreTypeArticle = ta.getCodeBarre();
+            }
+            preparedStatement.setInt(7, codeBarreTypeArticle);
+
+            //POUR CONVERTIR NOM DU MEMBRE DU PERSONNEL EN MATRICULE
+            String membreDuPersonnel = lot.getMatricule().getNom();
+            ArrayList <MembreDuPersonnel> listeMembreDuPersonnel = applicationController.getAllMembreDuPersonnel();
+            int matriculeMembreDuPersonnel = 0;
+            for(MembreDuPersonnel mp : listeMembreDuPersonnel)
+            {
+                if (membreDuPersonnel.equals(mp.getNom()))
+                    matriculeMembreDuPersonnel = mp.getMatricule();
+            }
+            preparedStatement.setInt(8, matriculeMembreDuPersonnel);
+
+            //POUR CONVERTIR LE NOM DU FOURNISSEUR EN NUMERO DE TVA
+            String fournisseur = lot.getNumeroTVA().getNom();
+            ArrayList <Fournisseur> listeFournisseur = applicationController.getAllFournisseur();
+            int numeroTvaFournisseur = 0;
+            for(Fournisseur f : listeFournisseur)
+            {
+                if (fournisseur.equals(f.getNom()))
+                    numeroTvaFournisseur = f.getNumeroTVA();
+            }
+            preparedStatement.setInt(9, numeroTvaFournisseur);
+
+            preparedStatement.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            throw  new ExceptionsBD("Erreur lors de l'ajout d'une recette à la base de données");
+        }
+    }
+
+    private void completerLot(ResultSet donnees, Lot lot) throws SQLException{
         lot.setId(donnees.getString("id"));
         if(donnees.getDate("dateperemption")!=null){
             GregorianCalendar date = new GregorianCalendar();

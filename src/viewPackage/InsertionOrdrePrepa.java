@@ -188,7 +188,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauBoutons.add(retour);
             ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
-            validation = new JButton("Validation");
+            validation = new JButton("Créer");
             panneauBoutons.add(validation);
             ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
@@ -369,7 +369,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
                     JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
 
-                    applicationController.SetOrdrePreparation(applicationController, ordrePreparation);
+                    applicationController.setOrdrePreparation(applicationController, ordrePreparation);
 
                     JOptionPane.showMessageDialog(panneauBoutons, "L'ordre à bien été créé.");
 

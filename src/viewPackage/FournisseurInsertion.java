@@ -1,7 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-
+import modelPackage.Fournisseur;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +61,6 @@ public class FournisseurInsertion extends JPanel {
         rue = new JTextField();
         panneauInsertion.add(rue);
 
-
         //BOUTONS
         panneauBoutons = new JPanel();
 
@@ -109,7 +108,16 @@ public class FournisseurInsertion extends JPanel {
         {
             try
             {
-                ;
+                //AJOUT FOURNISSEUR
+                Fournisseur fournisseur = new Fournisseur();
+
+                fournisseur.setNumeroTVA(Integer.valueOf(numeroTva.getText()));
+                fournisseur.setNom(nom.getText());
+                fournisseur.setLocalite(localite.getText());
+                fournisseur.setCodePostal(Integer.valueOf(codePostal.getText()));
+                fournisseur.setRue(rue.getText());
+
+                applicationController.ajouterFournisseur(applicationController, fournisseur);
             }
             catch (Exception e)
             {
@@ -129,5 +137,4 @@ public class FournisseurInsertion extends JPanel {
             rue.setText(null);
         }
     }
-
 }

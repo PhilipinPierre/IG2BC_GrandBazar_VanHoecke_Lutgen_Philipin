@@ -81,7 +81,7 @@ public class RechercheArticlePerime extends JPanel {
 
                 removeAll();
                 validate();
-                PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.RechercheArticlePerimeEntre2Date(dateD, dateF));
+                PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.rechercheArticlePerimeEntre2Date(dateD, dateF));
                 add(panelRechercheArticlePerime, BorderLayout.CENTER);
                 revalidate();
                 repaint();

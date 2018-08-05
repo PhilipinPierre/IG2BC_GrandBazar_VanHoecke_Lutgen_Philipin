@@ -65,12 +65,12 @@ public class ApplicationController {
         return lot.getAllLot();
     }
 
-    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
-        return lot.RechercheLotViaTypeArticle(libelle);
+    public ArrayList<Lot> rechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
+        return lot.rechercheLotViaTypeArticle(libelle);
     }
 
-    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
-        return lot.RechercheLotViaLocaliteFournisseur(localite);
+    public ArrayList<Lot> rechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+        return lot.rechercheLotViaLocaliteFournisseur(localite);
     }
 
     public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD
@@ -126,12 +126,22 @@ public class ApplicationController {
         ingredient.ajouterIngredient(applicationController, i);
     }
 
+    public void ajouterLot(ApplicationController applicationController, Lot l) throws ExceptionsBD
+    {
+        lot.ajouterLot(applicationController, l);
+    }
+
+    public void ajouterFournisseur(ApplicationController applicationController, Fournisseur f) throws ExceptionsBD
+    {
+        fournisseur.ajouterFournisseur(applicationController, f);
+    }
+
     public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparation.getNumSeqOrdrePreparation();
     }
 
-    public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
-        ordrePreparation.SupprimerOrdrePreparation(numeroSequentiel);
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        ordrePreparation.supprimerOrdrePreparation(numeroSequentiel);
     }
 
     /*public MembreDuPersonnel getUtilisateur(String utilisateur, String motDePasse) throws ExceptionsBD
@@ -144,15 +154,15 @@ public class ApplicationController {
         connection.fermetureConnection();
     }
 
-    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD{
-        ordrePreparation.SetOrdrePreparation(applicationController, ordrePrep);
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD{
+        ordrePreparation.setOrdrePreparation(applicationController, ordrePrep);
     }
 
-    public void ModifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD{
-        ordrePreparation.ModifierOrdrePreparation(applicationController, ordrePreparat);
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD{
+        ordrePreparation.modifierOrdrePreparation(applicationController, ordrePreparat);
     }
 
-    public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
+    public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
     {
         return articlePerime.RechercheArticlePerimeEntre2Date(date1, date2);
     }

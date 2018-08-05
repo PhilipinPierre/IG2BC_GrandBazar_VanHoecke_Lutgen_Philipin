@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.LotBDA;
 import dataAccessPackage.LotDA;
 import exceptionsPackage.ExceptionsBD;
@@ -16,12 +17,17 @@ public class LotManager {
         return lotBDA.getAllLot();
     }
 
-    public ArrayList<Lot> RechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
-        return lotBDA.RechercheLotViaLocaliteFournisseur(localite);
+    public ArrayList<Lot> rechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
+        return lotBDA.rechercheLotViaLocaliteFournisseur(localite);
     }
 
-    public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
-        return lotBDA.RechercheLotViaTypeArticle(libelle);
+    public ArrayList<Lot> rechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
+        return lotBDA.rechercheLotViaTypeArticle(libelle);
+    }
+
+    public void ajouterLot(ApplicationController applicationController, Lot lot) throws ExceptionsBD
+    {
+        lotBDA.ajouterLot(applicationController, lot);
     }
 
 }

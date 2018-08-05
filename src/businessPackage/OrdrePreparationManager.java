@@ -20,16 +20,16 @@ public class OrdrePreparationManager {
         return ordrePreparationBDA.getNumSeqOrdrePreparation();
     }
 
-    public void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
-        ordrePreparationBDA.SupprimerOrdrePreparation(numeroSequentiel);
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        ordrePreparationBDA.supprimerOrdrePreparation(numeroSequentiel);
     }
 
-    public void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
-        ordrePreparationBDA.SetOrdrePreparation(applicationController, ordrePreparation);
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        ordrePreparationBDA.setOrdrePreparation(applicationController, ordrePreparation);
     }
 
-    public void ModifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
-        ordrePreparationBDA.ModifierOrdrePreparation(applicationController, ordrePreparation);
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        ordrePreparationBDA.modifierOrdrePreparation(applicationController, ordrePreparation);
     }
 
 }

@@ -78,7 +78,7 @@ public class RechercheArticleLocalite extends JPanel{
 
                 removeAll();
                 validate();
-                PanelRechercheArticleLocalite panelRechercheArticleLocalite = new PanelRechercheArticleLocalite(applicationController, applicationController.RechercheLotViaLocaliteFournisseur(localiteLot));
+                PanelRechercheArticleLocalite panelRechercheArticleLocalite = new PanelRechercheArticleLocalite(applicationController, applicationController.rechercheLotViaLocaliteFournisseur(localiteLot));
                 add(panelRechercheArticleLocalite, BorderLayout.CENTER);
                 revalidate();
                 repaint();

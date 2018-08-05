@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface OrdrePreparationDA {
     ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD;
     ArrayList<Integer> getNumSeqOrdrePreparation() throws ExceptionsBD;
-    void SetOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD;
-    void SupprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD;
-    void ModifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD;
+    void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD;
+    void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD;
+    void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD;
 }
