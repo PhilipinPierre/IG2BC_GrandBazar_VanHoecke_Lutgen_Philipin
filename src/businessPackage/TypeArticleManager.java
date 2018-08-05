@@ -1,5 +1,6 @@
 package businessPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.TypeArticleBDA;
 import dataAccessPackage.TypeArticleDA;
 import exceptionsPackage.ExceptionsBD;
@@ -15,5 +16,9 @@ public class TypeArticleManager {
     {
         ArrayList<TypeArticle> typeArticleList = typeArticleBDA.getAllTypeArticle();
         return typeArticleList;
+    }
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD
+    {
+        typeArticleBDA.ajouterTypeArticle(applicationController, typeArticle);
     }
 }

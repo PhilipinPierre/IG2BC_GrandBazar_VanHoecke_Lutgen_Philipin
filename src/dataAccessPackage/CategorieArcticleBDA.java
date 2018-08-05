@@ -19,7 +19,7 @@ public class CategorieArcticleBDA implements CategorieArticleDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 CategorieArticle categorieArticle = new CategorieArticle();
-                CompleterCategorieArticle(donnees, categorieArticle);
+                completerCategorieArticle(donnees, categorieArticle);
                 liste.add(categorieArticle);
             }
             return liste;
@@ -31,7 +31,7 @@ public class CategorieArcticleBDA implements CategorieArticleDA {
 
     }
 
-    private void CompleterCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException{
+    private void completerCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException{
         categorieArticle.setId(donnees.getString("id"));
         categorieArticle.setLibelle(donnees.getString("libelle"));
     }

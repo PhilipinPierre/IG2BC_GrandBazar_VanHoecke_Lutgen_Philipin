@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class TypeArticleBDA implements TypeArticleDA{
         try {
             ArrayList<TypeArticle> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle order by Libelle";
+            String requeteSQL = "select * from typearticle order by CodeBarre";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
 
@@ -56,6 +57,42 @@ public class TypeArticleBDA implements TypeArticleDA{
             throw new ExceptionsBD("Erreur lors de la recherche d'une type d'article via son libellé");
         }
         return codeBarre;
+    }
+
+
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert into typearticle values (?,?,?,?,?,?,?,?,?) ";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+
+
+
+            //POUR SAVOIR LE CODE BARRE
+            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+            int codeBarre = 1;
+            for(TypeArticle ta : listeTypeArticle)
+            {
+                codeBarre++;
+            }
+
+            preparedStatement.setInt(1, codeBarre);
+            preparedStatement.setString(2, typeArticle.getLibelle());
+            preparedStatement.setDouble(3, typeArticle.getPrix());
+            preparedStatement.setInt(4, typeArticle.getQuantiteeEnStock());
+
+            preparedStatement.setDate(5, new java.sql.Date(typeArticle.getDatePromotionDebut().getTimeInMillis()));
+
+            preparedStatement.setDate(6, new java.sql.Date(typeArticle.getDatePromotionFin().getTimeInMillis()));
+
+            preparedStatement.setBoolean(7, typeArticle.getEstPerissable());
+            preparedStatement.setInt(8, typeArticle.getQuantiteeMinimal());
+            preparedStatement.setString(9, typeArticle.getId().getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw  new ExceptionsBD("Erreur lors de l'ajout d'un type d'article à la base de données");
+        }
     }
 
     protected static TypeArticle completerTypeArticle(ResultSet donnees) throws SQLException

@@ -20,6 +20,7 @@ public class ApplicationController {
     private TypeArticleManager typeArticle;
     private ArticlePerimeManager articlePerime;
     private IngredientManager ingredient;
+    private CategorieArticleManager categorieArticle;
 
     public ApplicationController()
     {
@@ -36,6 +37,7 @@ public class ApplicationController {
         typeArticle = new TypeArticleManager();
         articlePerime = new ArticlePerimeManager();
         ingredient = new IngredientManager();
+        categorieArticle = new CategorieArticleManager();
     }
 
     public ArrayList<Client> getAllClient() throws ExceptionsBD
@@ -62,6 +64,7 @@ public class ApplicationController {
     {
         return lot.getAllLot();
     }
+
     public ArrayList<Lot> RechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
         return lot.RechercheLotViaTypeArticle(libelle);
     }
@@ -81,6 +84,11 @@ public class ApplicationController {
 
     public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD{
         return cuisinier.getAllCuisinier();
+    }
+
+    public ArrayList<CategorieArticle> getAllCategorieArticle()throws ExceptionsBD
+    {
+        return categorieArticle.getAllCategorieArticle();
     }
 
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
@@ -106,6 +114,11 @@ public class ApplicationController {
     public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
     {
         recette.ajouterRecette(applicationController, r);
+    }
+
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle t) throws ExceptionsBD
+    {
+        typeArticle.ajouterTypeArticle(applicationController, t);
     }
 
     public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD

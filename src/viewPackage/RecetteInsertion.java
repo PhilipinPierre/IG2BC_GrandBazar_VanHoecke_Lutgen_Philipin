@@ -94,7 +94,7 @@ public class RecetteInsertion extends JPanel {
             RecetteInsertion.ButtonListenerRetour listenerRetour = new RecetteInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
 
-            listingRecette = new JButton("Listing recette");
+            listingRecette = new JButton("Listing");
             panneauBoutons.add(listingRecette);
             RecetteInsertion.ButtonListenerListingRecette listenerListingRecette = new RecetteInsertion.ButtonListenerListingRecette();
             listingRecette.addActionListener(listenerListingRecette);
@@ -109,7 +109,7 @@ public class RecetteInsertion extends JPanel {
             RecetteInsertion.ButtonListenerReinitialiser listenerReinitialiser = new RecetteInsertion.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
-            ajoutIngredients = new JButton("Créer un type article ->");
+            ajoutIngredients = new JButton("Créer article ->");
             panneauBoutons.add(ajoutIngredients);
             RecetteInsertion.ButtonListenerAjouterIngredients listenerAjouterIngredients = new RecetteInsertion.ButtonListenerAjouterIngredients();
             ajoutIngredients.addActionListener(listenerAjouterIngredients);
@@ -159,6 +159,7 @@ public class RecetteInsertion extends JPanel {
                 ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
 
                 applicationController.ajouterRecette(applicationController, recette);
+                applicationController.ajouterIngredient(applicationController, ingredient);
             }
             catch (Exception e)
             {
