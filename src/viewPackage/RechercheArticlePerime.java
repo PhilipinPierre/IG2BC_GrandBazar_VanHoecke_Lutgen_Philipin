@@ -79,12 +79,16 @@ public class RechercheArticlePerime extends JPanel {
                 GregorianCalendar dateF = new GregorianCalendar();
                 dateF.setTime(dateFinModel.getDate());
 
-                removeAll();
-                validate();
-                PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.rechercheArticlePerimeEntre2Date(dateD, dateF));
-                add(panelRechercheArticlePerime, BorderLayout.CENTER);
-                revalidate();
-                repaint();
+                if(dateD.before(dateF)) {
+                    removeAll();
+                    validate();
+                    PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.rechercheArticlePerimeEntre2Date(dateD, dateF));
+                    add(panelRechercheArticlePerime, BorderLayout.CENTER);
+                    revalidate();
+                    repaint();
+                } else{
+                    JOptionPane.showMessageDialog(panneauBouton,"La date de début de recherche doit être inférieur à la date de fin de recherche!");
+                }
 
             }
             catch (Exception e)
