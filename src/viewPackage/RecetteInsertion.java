@@ -148,24 +148,29 @@ public class RecetteInsertion extends JPanel {
         {
             try
             {
+                //AJOUT RECETTE
                 Recette recette = new Recette();
                 recette.setNom(nomRecette.getText());
                 recette.setDLC(Integer.valueOf(dlc.getText()));
                 recette.setDescriptif(descriptif.getText());
-
-                Ingredient ingredient = new Ingredient();
-                ingredient.setNom(recette);
-                ingredient.setCodeBarre(listeIngredients.get(nomIngredients.getSelectedIndex()));
-                ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
-
                 applicationController.ajouterRecette(applicationController, recette);
-                applicationController.ajouterIngredient(applicationController, ingredient);
+
+                //AJOUT INGREDIENTS
+                //POUR LES MULTIPLES INGREDIENTS !!!
+                int[] tab = nomIngredients.getSelectedIndices();
+                for(int j=0 ; j<=tab.length-1 ; j++)
+                {
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setNom(recette);
+                    ingredient.setCodeBarre(listeIngredients.get(tab[j]));
+                    ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
+                    applicationController.ajouterIngredient(applicationController, ingredient);
+                }
             }
             catch (Exception e)
             {
                 JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }
 

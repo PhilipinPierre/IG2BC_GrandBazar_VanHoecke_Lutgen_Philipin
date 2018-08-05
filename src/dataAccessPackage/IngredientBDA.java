@@ -42,7 +42,7 @@ public class IngredientBDA implements IngredientDA {
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
 
             preparedStatement.setString(1, ingredient.getNom().getNom());
-            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN CODE BARRE
             String typeArticle = ingredient.getCodeBarre().getLibelle();
             ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
             int matriculeTypeArticle = 0;
