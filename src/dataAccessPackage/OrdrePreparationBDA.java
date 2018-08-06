@@ -78,6 +78,18 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         return listeOrdrePreparation;
     }
 
+    public OrdrePreparation getOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from ordrepreparation where numerosequentiel =?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setInt(1,numeroSequentiel);
+            return getOrdrePrepa(connection, preparedStatement).get(0);
+        } catch (Exception e){
+            throw new ExceptionsBD("Erreur lors de la recherche d'un ordre de préparation");
+        }
+    }
+
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD {
         try {
             Connection connection = SingletonConnexion.getInstance();

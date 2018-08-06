@@ -230,6 +230,18 @@ public class ModificationOrdrePrepa extends JPanel {
         }
     }
 
+    private class NumeroSequentielListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            OrdrePreparation ordrePreparation= listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex());
+            dateCreationModel.setValue(ordrePreparation.getDate());
+            dateCreation = new JSpinner(dateCreationModel);
+            quantitePrevu.setText(ordrePreparation.getQuantitePrevue().toString());
+
+
+        }
+    }
+
+
     private class CheckBoxListenerDateVente implements ItemListener
     {
         public void itemStateChanged(ItemEvent event)

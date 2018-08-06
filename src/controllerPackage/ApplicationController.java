@@ -95,6 +95,9 @@ public class ApplicationController {
     {
         return ordrePreparation.getAllOrdrePreparation();
     }
+    public OrdrePreparation getOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        return ordrePreparation.getOrdrePreparation(numeroSequentiel);
+    }
 
     public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD
     {
