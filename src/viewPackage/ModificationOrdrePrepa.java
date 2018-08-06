@@ -76,6 +76,7 @@ public class ModificationOrdrePrepa extends JPanel {
             }
             numeroSequentiel = new JComboBox(valuesNumeroSequentiel.toArray(new Integer[0]));
             numeroSequentiel.setEnabled(true);
+            numeroSequentiel.addActionListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -232,6 +233,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
     private class NumeroSequentielListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
+            System.out.println(listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex()).getMatriculeRes().getNom());
             OrdrePreparation ordrePreparation= listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex());
             dateCreationModel.setValue(ordrePreparation.getDate());
             dateCreation = new JSpinner(dateCreationModel);
@@ -406,6 +408,7 @@ public class ModificationOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            numeroSequentiel.setSelectedIndex(0);
             dateCreation = new JSpinner(dateCreationModel);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);

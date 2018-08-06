@@ -18,22 +18,47 @@ public class CategorieArcticleBDA implements CategorieArticleDA {
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
-                CategorieArticle categorieArticle = new CategorieArticle();
-                completerCategorieArticle(donnees, categorieArticle);
-                liste.add(categorieArticle);
+                liste.add(completerCategorieArticle(donnees));
             }
             return liste;
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             throw new ExceptionsBD("Problème recherche catégorie article");
         }
 
     }
 
-    private void completerCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException{
-        categorieArticle.setId(donnees.getString("id"));
-        categorieArticle.setLibelle(donnees.getString("libelle"));
+    public static CategorieArticle getCategorieArticle(String id) throws ExceptionsBD{
+        CategorieArticle categorieArticle;
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from categoriearticle where id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setString(1,id);
+            ResultSet donnee = preparedStatement.executeQuery();
+
+            categorieArticle = completerCategorieArticle(donnee);
+        } catch (Exception e){
+            throw new ExceptionsBD("recherche d'une catégorie d'article impossible");
+        }
+
+        return categorieArticle;
+    }
+
+    private static CategorieArticle completerCategorieArticle(ResultSet donnees) throws ExceptionsBD{
+        CategorieArticle categorieArticle = new CategorieArticle();
+        try {
+            String id = donnees.getString("id");
+            categorieArticle.setId(id);
+            String libelle = donnees.getString("libelle");
+            categorieArticle.setLibelle(libelle);
+        } catch (Exception e){
+            System.out.println("ex");
+            throw new ExceptionsBD("accès à certaine donnée des catégorie d'article impossible");
+        }
+        return categorieArticle;
     }
 
 }

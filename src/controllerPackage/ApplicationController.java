@@ -104,6 +104,10 @@ public class ApplicationController {
         return typeArticle.getAllTypeArticle();
     }
 
+    public TypeArticle rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
+        return typeArticle.rechercheTypeArticleViaLibelle(libelle);
+    }
+
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
         return recette.getAllRecette();
@@ -119,9 +123,9 @@ public class ApplicationController {
         recette.ajouterRecette(applicationController, r);
     }
 
-    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle t) throws ExceptionsBD
+    public void ajouterTypeArticle(TypeArticle t) throws ExceptionsBD
     {
-        typeArticle.ajouterTypeArticle(applicationController, t);
+        typeArticle.ajouterTypeArticle(t);
     }
 
     public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD

@@ -17,8 +17,13 @@ public class TypeArticleManager {
         ArrayList<TypeArticle> typeArticleList = typeArticleBDA.getAllTypeArticle();
         return typeArticleList;
     }
-    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD
+    public void ajouterTypeArticle(TypeArticle typeArticle) throws ExceptionsBD
     {
-        typeArticleBDA.ajouterTypeArticle(applicationController, typeArticle);
+        typeArticleBDA.ajouterTypeArticle(typeArticle);
     }
+
+    public TypeArticle rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
+        return typeArticleBDA.rechercheTypeArticleViaLibelle(libelle);
+    }
+
 }
