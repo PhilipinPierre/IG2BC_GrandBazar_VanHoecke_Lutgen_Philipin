@@ -79,13 +79,13 @@ public class RechercheArticlePerime extends JPanel {
                 GregorianCalendar dateF = new GregorianCalendar();
                 dateF.setTime(dateFinModel.getDate());
 
+
                 removeAll();
                 validate();
                 PanelRechercheArticlePerime panelRechercheArticlePerime = new PanelRechercheArticlePerime(applicationController, applicationController.rechercheArticlePerimeEntre2Date(dateD, dateF));
                 add(panelRechercheArticlePerime, BorderLayout.CENTER);
                 revalidate();
                 repaint();
-
             }
             catch (Exception e)
             {
