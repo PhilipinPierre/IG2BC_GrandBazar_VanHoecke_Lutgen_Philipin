@@ -285,6 +285,23 @@ public class InsertionOrdrePrepa extends JPanel {
                     JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre !");
                     nbErreurs++;
                 }
+                try {
+                    ArrayList<OrdrePreparation> listeOrdrePreparation = new ArrayList<>();
+                    listeOrdrePreparation = applicationController.getAllOrdrePreparation();
+                    int numSeq = Integer.parseInt(numeroSequentiel.getText());
+                    for (OrdrePreparation o : listeOrdrePreparation) {
+                        if (numSeq == o.getNumeroSequentiel()) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "Ce numéro séquentiel est déjà utilisé !");
+                            nbErreurs++;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être différent des autres et doit être un nombre entier positif !");
+                    nbErreurs++;
+                }
+
                 try
                 {
                     int quantPrevu = Integer.parseInt(quantitePrevu.getText());
@@ -417,7 +434,7 @@ public class InsertionOrdrePrepa extends JPanel {
                         remarque.setText(null);
                         urgentButton.clearSelection();
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(panneauInsertion, "La date de création et le numéro séquentiel existe déjà !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de l'insertion d'un nouvel ordre de préparation !");
                     }
                 }
             }
