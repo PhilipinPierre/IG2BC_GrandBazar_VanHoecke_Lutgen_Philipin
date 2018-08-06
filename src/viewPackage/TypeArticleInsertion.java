@@ -117,15 +117,15 @@ public class TypeArticleInsertion extends JPanel {
             TypeArticleInsertion.ButtonListenerRetour listenerRetour = new TypeArticleInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
 
-            ajoutIngredient = new JButton("Ajouter article");
-            panneauBoutons.add(ajoutIngredient);
-            TypeArticleInsertion.ButtonListenerAjouterTypeArticle listenerAjouterTypeArticle = new TypeArticleInsertion.ButtonListenerAjouterTypeArticle();
-            ajoutIngredient.addActionListener(listenerAjouterTypeArticle);
-
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             TypeArticleInsertion.ButtonListenerReinitialiser listenerReinitialiser = new TypeArticleInsertion.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
+
+            ajoutIngredient = new JButton("Ajouter article");
+            panneauBoutons.add(ajoutIngredient);
+            TypeArticleInsertion.ButtonListenerAjouterTypeArticle listenerAjouterTypeArticle = new TypeArticleInsertion.ButtonListenerAjouterTypeArticle();
+            ajoutIngredient.addActionListener(listenerAjouterTypeArticle);
 
             ajoutTypeArticle = new JButton("Créer un lot ->");
             panneauBoutons.add(ajoutTypeArticle);

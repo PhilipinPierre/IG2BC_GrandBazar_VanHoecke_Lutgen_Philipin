@@ -75,6 +75,7 @@ public class RecetteInsertion extends JPanel {
             nomIngredients = new JList(defaultListModel);
             nomIngredients.setVisibleRowCount(3);
             nomIngredients.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            nomIngredients.setToolTipText("Appuyez sur ctrl + clic droit pour sélectionner plusieurs ingrédients");
             panneauInsertion.add(new JScrollPane(nomIngredients));
 
             //QUANTITE PORTION
@@ -94,6 +95,11 @@ public class RecetteInsertion extends JPanel {
             RecetteInsertion.ButtonListenerRetour listenerRetour = new RecetteInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
 
+            reinitialiser = new JButton("Réinitialiser");
+            panneauBoutons.add(reinitialiser);
+            RecetteInsertion.ButtonListenerReinitialiser listenerReinitialiser = new RecetteInsertion.ButtonListenerReinitialiser();
+            reinitialiser.addActionListener(listenerReinitialiser);
+
             listingRecette = new JButton("Listing");
             panneauBoutons.add(listingRecette);
             RecetteInsertion.ButtonListenerListingRecette listenerListingRecette = new RecetteInsertion.ButtonListenerListingRecette();
@@ -103,11 +109,6 @@ public class RecetteInsertion extends JPanel {
             panneauBoutons.add(ajoutRecette);
             RecetteInsertion.ButtonListenerAjouterRecette listenerAjouterRecette = new RecetteInsertion.ButtonListenerAjouterRecette();
             ajoutRecette.addActionListener(listenerAjouterRecette);
-
-            reinitialiser = new JButton("Réinitialiser");
-            panneauBoutons.add(reinitialiser);
-            RecetteInsertion.ButtonListenerReinitialiser listenerReinitialiser = new RecetteInsertion.ButtonListenerReinitialiser();
-            reinitialiser.addActionListener(listenerReinitialiser);
 
             ajoutIngredients = new JButton("Créer article ->");
             panneauBoutons.add(ajoutIngredients);
@@ -146,30 +147,65 @@ public class RecetteInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            int nbErreurs = 0;
             try
             {
                 if(nomRecette.getText().isEmpty() || dlc.getText().isEmpty() || descriptif.getText().isEmpty() || nomIngredients.isSelectionEmpty() || quantitePortion.getText().isEmpty())
                 {
-                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire ! ");
+                    JOptionPane.showMessageDialog(panneauInsertion, "Tout les champs sont obligatoire ! ");
                 }
                 else
                 {
-                    //AJOUT RECETTE
-                    Recette recette = new Recette();
-                    recette.setNom(nomRecette.getText());
-                    recette.setDLC(Integer.valueOf(dlc.getText()));
-                    recette.setDescriptif(descriptif.getText());
-                    applicationController.ajouterRecette(applicationController, recette);
+                    try
+                    {
+                        int dureeLimCons = Integer.parseInt(dlc.getText());
+                        if(dureeLimCons < 0)
+                        {
+                            JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre positif !");
+                            nbErreurs++;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre !");
+                        nbErreurs++;
+                    }
 
-                    //AJOUT INGREDIENTS
-                    //POUR LES MULTIPLES INGREDIENTS !!!
-                    int[] tab = nomIngredients.getSelectedIndices();
-                    for (int j = 0; j <= tab.length - 1; j++) {
-                        Ingredient ingredient = new Ingredient();
-                        ingredient.setNom(recette);
-                        ingredient.setCodeBarre(listeIngredients.get(tab[j]));
-                        ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
-                        applicationController.ajouterIngredient(applicationController, ingredient);
+                    try
+                    {
+                        int quantPortion = Integer.parseInt(quantitePortion.getText());
+                        if(quantPortion < 0)
+                        {
+                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre positif !");
+                            nbErreurs++;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre !");
+                        nbErreurs++;
+                    }
+
+                    if(nbErreurs == 0)
+                    {
+                        //AJOUT RECETTE
+                        Recette recette = new Recette();
+                        recette.setNom(nomRecette.getText());
+                        recette.setDLC(Integer.valueOf(dlc.getText()));
+                        recette.setDescriptif(descriptif.getText());
+                        applicationController.ajouterRecette(applicationController, recette);
+
+                        //AJOUT INGREDIENTS
+                        //POUR LES MULTIPLES INGREDIENTS !!!
+                        int[] tab = nomIngredients.getSelectedIndices();
+                        for (int j = 0; j <= tab.length - 1; j++)
+                        {
+                            Ingredient ingredient = new Ingredient();
+                            ingredient.setNom(recette);
+                            ingredient.setCodeBarre(listeIngredients.get(tab[j]));
+                            ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
+                            applicationController.ajouterIngredient(applicationController, ingredient);
+                        }
                     }
                 }
             }
@@ -184,9 +220,11 @@ public class RecetteInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            nomRecette.setText(null);
             dlc.setText(null);
             descriptif.setText(null);
             quantitePortion.setText(null);
+            nomIngredients.clearSelection();
         }
     }
 

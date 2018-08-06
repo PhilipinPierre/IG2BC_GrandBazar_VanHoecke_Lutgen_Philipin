@@ -202,14 +202,14 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauBoutons.add(retour);
             ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
-            validation = new JButton("Créer");
-            panneauBoutons.add(validation);
-            ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
-            validation.addActionListener(listenerValidation);
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
+            validation = new JButton("Créer");
+            panneauBoutons.add(validation);
+            ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
+            validation.addActionListener(listenerValidation);
 
             add(panneauInsertion, BorderLayout.NORTH);
             add(panneauBoutons, BorderLayout.SOUTH);
@@ -449,12 +449,12 @@ public class InsertionOrdrePrepa extends JPanel {
             numeroSequentiel.setText(null);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
-            dateVente = new JSpinner(dateVenteModel);
-            dateVente.setEnabled(true);
-
-            datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();
+            nomRecette.setSelectedIndex(0);
+            libelle.setSelectedIndex(0);
+            matriculeCuisinier.setSelectedIndex(0);
+            matriculeResponsable.setSelectedIndex(0);
         }
     }
 }

@@ -210,14 +210,14 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauBoutons.add(retour);
             ModificationOrdrePrepa.ButtonListenerRetour listenerRetour = new ModificationOrdrePrepa.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
-            validation = new JButton("Modifier");
-            panneauBoutons.add(validation);
-            ModificationOrdrePrepa.ButtonListenerValidation listenerValidation = new ModificationOrdrePrepa.ButtonListenerValidation();
-            validation.addActionListener(listenerValidation);
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             ModificationOrdrePrepa.ButtonListenerReinitialiser listenerReinitialiser = new ModificationOrdrePrepa.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
+            validation = new JButton("Modifier");
+            panneauBoutons.add(validation);
+            ModificationOrdrePrepa.ButtonListenerValidation listenerValidation = new ModificationOrdrePrepa.ButtonListenerValidation();
+            validation.addActionListener(listenerValidation);
 
             add(panneauInsertion, BorderLayout.NORTH);
             add(panneauBoutons, BorderLayout.SOUTH);
@@ -418,14 +418,16 @@ public class ModificationOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            numeroSequentiel.setSelectedIndex(0);
             dateCreation = new JSpinner(dateCreationModel);
+            numeroSequentiel.setSelectedIndex(0);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
-            dateVente = new JSpinner(dateVenteModel);
-            datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();
+            nomRecette.setSelectedIndex(0);
+            libelle.setSelectedIndex(0);
+            matriculeCuisinier.setSelectedIndex(0);
+            matriculeResponsable.setSelectedIndex(0);
         }
     }
 }

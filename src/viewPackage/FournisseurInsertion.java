@@ -70,14 +70,14 @@ public class FournisseurInsertion extends JPanel {
         panneauBoutons.add(retour);
         FournisseurInsertion.ButtonListenerRetour listenerRetour = new FournisseurInsertion.ButtonListenerRetour();
         retour.addActionListener(listenerRetour);
-        ajoutFournisseur = new JButton("Ajouter fournisseur");
-        panneauBoutons.add(ajoutFournisseur);
-        FournisseurInsertion.ButtonListenerAjouterFournisseur listenerAjouterFournisseur = new FournisseurInsertion.ButtonListenerAjouterFournisseur();
-        ajoutFournisseur.addActionListener(listenerAjouterFournisseur);
         reinitialiser = new JButton("Réinitialiser");
         panneauBoutons.add(reinitialiser);
         FournisseurInsertion.ButtonListenerReinitialiser listenerReinitialiser = new FournisseurInsertion.ButtonListenerReinitialiser();
         reinitialiser.addActionListener(listenerReinitialiser);
+        ajoutFournisseur = new JButton("Ajouter fournisseur");
+        panneauBoutons.add(ajoutFournisseur);
+        FournisseurInsertion.ButtonListenerAjouterFournisseur listenerAjouterFournisseur = new FournisseurInsertion.ButtonListenerAjouterFournisseur();
+        ajoutFournisseur.addActionListener(listenerAjouterFournisseur);
 
         add(panneauInsertion, BorderLayout.NORTH);
 

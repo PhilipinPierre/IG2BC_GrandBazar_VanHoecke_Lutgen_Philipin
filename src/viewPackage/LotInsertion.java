@@ -130,15 +130,15 @@ public class LotInsertion extends JPanel {
             LotInsertion.ButtonListenerRetour listenerRetour = new LotInsertion.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
 
-            ajoutLot = new JButton("Ajouter lot");
-            panneauBoutons.add(ajoutLot);
-            LotInsertion.ButtonListenerAjouterLot listenerAjouterLot = new LotInsertion.ButtonListenerAjouterLot();
-            ajoutLot.addActionListener(listenerAjouterLot);
-
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
             LotInsertion.ButtonListenerReinitialiser listenerReinitialiser = new LotInsertion.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
+
+            ajoutLot = new JButton("Ajouter lot");
+            panneauBoutons.add(ajoutLot);
+            LotInsertion.ButtonListenerAjouterLot listenerAjouterLot = new LotInsertion.ButtonListenerAjouterLot();
+            ajoutLot.addActionListener(listenerAjouterLot);
 
             ajoutFournisseur = new JButton("Créer un fournisseur ->");
             panneauBoutons.add(ajoutFournisseur);
