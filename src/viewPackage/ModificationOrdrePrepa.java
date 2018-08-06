@@ -327,6 +327,27 @@ public class ModificationOrdrePrepa extends JPanel {
                 if(nbErreurs == 0)
                 {
                     try {
+                        Integer numSeq = Integer.valueOf(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
+                        Reservation reservation = new Reservation();
+                        ArrayList<Reservation> listeReservation = applicationController.getAllReservation();
+                        Boolean estReserve = false;
+
+                        for (Reservation r : listeReservation)
+                        {
+                            if (numSeq.equals(r.getNumeroSequentiel()))
+                            {
+                                GregorianCalendar dateC = new GregorianCalendar();
+                                dateC.setTime(dateCreationModel.getDate());
+                                reservation.setDate(dateC);
+
+                                reservation.setNumeroSequentiel(numSeq);
+                                reservation.setCodeBarre(r.getCodeBarre());
+                                reservation.setQuantiteReservee(r.getQuantiteReservee());
+                                applicationController.supprimerReservation(numSeq);
+                                estReserve = true;
+                            }
+                        }
+
                         ordrePreparation.setNumeroSequentiel(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
                         ordrePreparation.setQuantitePrevue(Integer.valueOf(quantitePrevu.getText()));
 
@@ -371,6 +392,9 @@ public class ModificationOrdrePrepa extends JPanel {
                         ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
                         applicationController.modifierOrdrePreparation(applicationController, ordrePreparation);
+
+                        if(estReserve)
+                            applicationController.modifierReservation(reservation);
 
                         JOptionPane.showMessageDialog(panneauInsertion, "L'ordre a bien été modifié.");
 

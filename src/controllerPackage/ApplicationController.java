@@ -168,12 +168,19 @@ public class ApplicationController {
         connection.fermetureConnection();
     }
 
-    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD{
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD
+    {
         ordrePreparation.setOrdrePreparation(applicationController, ordrePrep);
     }
 
-    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD{
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD
+    {
         ordrePreparation.modifierOrdrePreparation(applicationController, ordrePreparat);
+    }
+
+    public void modifierReservation(Reservation reservat) throws ExceptionsBD
+    {
+        reservation.modifierReservation(reservat);
     }
 
     public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD

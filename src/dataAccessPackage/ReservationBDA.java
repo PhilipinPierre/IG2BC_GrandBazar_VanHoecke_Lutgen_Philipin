@@ -1,13 +1,8 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.OrdrePreparation;
-import modelPackage.Reservation;
-import modelPackage.TypeArticle;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import modelPackage.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -29,6 +24,15 @@ public class ReservationBDA implements ReservationDA {
 
                 reservation.setNumeroSequentiel(donnees.getInt("numeroSequentiel"));
 
+                int codeBarre = donnees.getInt("codeBarre");
+                if(!donnees.wasNull())
+                {
+                    TypeArticle ta = TypeArticleBDA.completerTypeArticle(donnees);
+                    reservation.setCodeBarre(ta);
+                }
+
+                reservation.setQuantiteReservee(donnees.getInt("quantiteReserve"));
+
                 liste.add(reservation);
             }
             return liste;
@@ -47,6 +51,23 @@ public class ReservationBDA implements ReservationDA {
             preparedStatement.executeUpdate();
         } catch (Exception e){
             throw new ExceptionsBD("Impossible de supprimer cet réservation : " + numeroSequentiel);
+        }
+    }
+
+    public void modifierReservation(Reservation reservation) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert reservation values(?,?,?,?) ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setDate(1, new java.sql.Date(reservation.getDate().getTimeInMillis()));
+            preparedStatement.setInt(2, reservation.getNumeroSequentiel());
+            preparedStatement.setInt(3, reservation.getCodeBarre().getCodeBarre());
+            preparedStatement.setInt(4, reservation.getQuantiteReservee());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw new ExceptionsBD("Erreur lors de modification d'un ordre de préparation");
         }
     }
 

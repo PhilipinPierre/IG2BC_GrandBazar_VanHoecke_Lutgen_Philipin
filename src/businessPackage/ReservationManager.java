@@ -4,7 +4,6 @@ import dataAccessPackage.ReservationBDA;
 import dataAccessPackage.ReservationDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Reservation;
-
 import java.util.ArrayList;
 
 public class ReservationManager {
@@ -20,5 +19,10 @@ public class ReservationManager {
     public void supprimerReservation(Integer numeroSequentiel) throws ExceptionsBD
     {
         reservationDA.supprimerReservation(numeroSequentiel);
+    }
+
+    public void modifierReservation(Reservation reservation) throws ExceptionsBD
+    {
+        reservationDA.modifierReservation(reservation);
     }
 }
