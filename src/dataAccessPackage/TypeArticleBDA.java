@@ -65,8 +65,6 @@ public class TypeArticleBDA implements TypeArticleDA{
             String requeteSQL = "insert into typearticle values (?,?,?,?,?,?,?,?,?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
 
-
-
             //POUR SAVOIR LE CODE BARRE
             ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
             int codeBarre = 1;
