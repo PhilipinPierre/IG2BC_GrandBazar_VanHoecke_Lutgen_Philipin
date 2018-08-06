@@ -12,8 +12,8 @@ public class ArticlePerimeManager {
 
     public ArticlePerimeManager(){this.articlePerime = new ArticlePerimeBDA();}
 
-    public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
-        return articlePerime.RechercheArticlePerimeEntre2Date(date1,date2);
+    public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
+        return articlePerime.rechercheArticlePerimeEntre2Date(date1,date2);
     }
 
 }

@@ -21,7 +21,7 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 ArticlePerime articlePerime = new ArticlePerime();
-                CompleterArticlePerime(donnees, articlePerime);
+                completerArticlePerime(donnees, articlePerime);
                 liste.add(articlePerime);
             }
             return liste;
@@ -32,7 +32,7 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }
     }
 
-    public ArrayList<ArticlePerime> RechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
+    public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
         try{
             if(date1.getTimeInMillis() > date2.getTimeInMillis()){
                 GregorianCalendar date = date1;
@@ -74,7 +74,7 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }
     }
 
-    private void CompleterArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws ExceptionsBD{
+    private void completerArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws ExceptionsBD{
         try {
             articlePerime.setId(donnees.getString("id"));
             Integer quantiteJete = donnees.getInt("quantitejete");

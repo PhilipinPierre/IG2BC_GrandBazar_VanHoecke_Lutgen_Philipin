@@ -164,6 +164,6 @@ public class ApplicationController {
 
     public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
     {
-        return articlePerime.RechercheArticlePerimeEntre2Date(date1, date2);
+        return articlePerime.rechercheArticlePerimeEntre2Date(date1, date2);
     }
 }
