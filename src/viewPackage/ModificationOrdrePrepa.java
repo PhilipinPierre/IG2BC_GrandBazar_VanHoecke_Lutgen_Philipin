@@ -318,6 +318,12 @@ public class ModificationOrdrePrepa extends JPanel {
                     nbErreurs++;
                 }
 
+                if(dateVenteModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !dateVenteCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de création de l'ordre !");
+                    nbErreurs++;
+                }
+
                 if(nbErreurs == 0)
                 {
                     try {

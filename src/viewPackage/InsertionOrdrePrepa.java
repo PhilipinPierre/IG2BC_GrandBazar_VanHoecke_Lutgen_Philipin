@@ -381,11 +381,17 @@ public class InsertionOrdrePrepa extends JPanel {
                     nbErreurs++;
                 }
 
+                if(dateVenteModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !dateVenteCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de création de l'ordre !");
+                    nbErreurs++;
+                }
+
                 if(nbErreurs == 0)
                 {
                     try {
                         StringBuilder affichage = new StringBuilder();
-                        affichage.append("Voici un récapitulatif de l'insertion:\n\n");
+                        affichage.append("Voici un récapitulatif de l'insertion :\n\n");
                         affichage.append("Date :" + dateCreation.getValue() + "\n");
                         affichage.append("Numéro séquentiel :" + numeroSequentiel.getText() + "\n");
                         affichage.append("Quantité prévue :" + quantitePrevu.getText() + "\n");
