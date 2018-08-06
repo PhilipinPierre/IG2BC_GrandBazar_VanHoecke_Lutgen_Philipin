@@ -15,7 +15,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
     private ApplicationController applicationController;
     private ArrayList<OrdrePreparation> op;
     private ModeleSuppModifOrdrePrepa modeleSuppModifOrdrePrepa;
-    private JButton retour, suppression;
+    private JButton suppression;
     private JPanel panneauJList;
     private JPanel panneauBoutons;
 

@@ -7,10 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 
 public class InsertionOrdrePrepa extends JPanel {
@@ -19,19 +18,19 @@ public class InsertionOrdrePrepa extends JPanel {
     //POUR LE FORMULAIRE
     private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
             dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
-            typeArticleLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
+            typeArticleLabel, matriculeCuisinierLabel, matriculeResponsableLabel,
+            dateVenteCheckboxLabel, datePrepaCheckboxLabel;
     private JTextField numeroSequentiel, quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
     private SpinnerDateModel dateCreationModel, datePrepaModel, dateVenteModel;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
     private JComboBox nomRecette, libelle, matriculeCuisinier, matriculeResponsable;
+    private JCheckBox dateVenteCheckbox, datePrepaCheckbox;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
     private OrdrePreparation ordrePreparation;
-    private ArrayList<OrdrePreparation> listeOrdrePreparation;
-    private ArrayList<Integer> listeNumSeq;
     private ArrayList<Recette> listeRecette;
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Cuisinier> listeCuisinier;
@@ -50,11 +49,7 @@ public class InsertionOrdrePrepa extends JPanel {
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
-
-            listeOrdrePreparation = applicationController.getAllOrdrePreparation();
-            listeNumSeq = applicationController.getNumSeqOrdrePreparation();
-            Collections.sort(listeNumSeq);
+            panneauInsertion.setLayout(new GridLayout(14, 2, 5, 5));
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
             dateCreationLabel = new JLabel("Date * : ");
@@ -67,13 +62,12 @@ public class InsertionOrdrePrepa extends JPanel {
             dateCreation.setToolTipText("Date de la création de l'ordre de préparation");
             panneauInsertion.add(dateCreation);
 
-            //NUMERO SEQUENTIEL AUTO INCREMENTE OBLIGATOIRE
+            //NUMERO SEQUENTIEL OBLIGATOIRE
             numeroSequentielLabel = new JLabel("Numéro Séquentiel * : ");
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
-            //numeroSequentiel.addFocusListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -98,6 +92,15 @@ public class InsertionOrdrePrepa extends JPanel {
             dateVente = new JSpinner(dateVenteModel);
             panneauInsertion.add(dateVente);
 
+            //DATE DE VENTE CHECKBOX POUR DESACTIVER LA DATE
+            dateVenteCheckboxLabel = new JLabel("Activer/Désactiver la date de vente : ");
+            dateVenteCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateVenteCheckboxLabel);
+            dateVenteCheckbox = new JCheckBox();
+            CheckBoxListenerDateVente listenerDateVente = new CheckBoxListenerDateVente();
+            dateVenteCheckbox.addItemListener(listenerDateVente);
+            panneauInsertion.add(dateVenteCheckbox);
+
             //DATE DE PREPARATION
             datePrepaLabel = new JLabel("Date de préparation : ");
             datePrepaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -105,6 +108,15 @@ public class InsertionOrdrePrepa extends JPanel {
             datePrepaModel = new SpinnerDateModel();
             datePrepa = new JSpinner(datePrepaModel);
             panneauInsertion.add(datePrepa);
+
+            //DATE DE PREPARATION CHECKBOX POUR DESACTIVER LA DATE
+            datePrepaCheckboxLabel = new JLabel("Activer/Désactiver la date de préparation : ");
+            datePrepaCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(datePrepaCheckboxLabel);
+            datePrepaCheckbox = new JCheckBox();
+            CheckBoxListenerDatePrepa listenerDatePrepa = new CheckBoxListenerDatePrepa();
+            datePrepaCheckbox.addItemListener(listenerDatePrepa);
+            panneauInsertion.add(datePrepaCheckbox);
 
             //REMARQUE
             remarqueLabel = new JLabel("Remarque : ");
@@ -143,6 +155,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(typeArticleLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
             ArrayList <String> valuesTypeArticle = new ArrayList<>();
+            valuesTypeArticle.add(" ");
             for(TypeArticle t : listeTypeArticle)
             {
                 valuesTypeArticle.add(t.getLibelle());
@@ -152,11 +165,12 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(libelle);
 
             //CUISINIER (FK CUISINIER)
-            matriculeCuisinierLabel = new JLabel("Matricule cuisinier * : ");
+            matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
             matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeCuisinierLabel);
             listeCuisinier = applicationController.getAllCuisinier();
             ArrayList<String> valuesCuisinier = new ArrayList<>();
+            valuesCuisinier.add(" ");
             for(Cuisinier c : listeCuisinier)
             {
                 valuesCuisinier.add(c.getNom());
@@ -208,6 +222,29 @@ public class InsertionOrdrePrepa extends JPanel {
         }
 
     }
+
+    private class CheckBoxListenerDateVente implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                dateVente.setEnabled(false);
+            else
+                dateVente.setEnabled(true);
+        }
+    }
+
+    private class CheckBoxListenerDatePrepa implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                datePrepa.setEnabled(false);
+            else
+                datePrepa.setEnabled(true);
+        }
+    }
+
 
     /*private class NumeroSequentielListener implements java.awt.event.FocusListener{
         @Override
@@ -283,114 +320,157 @@ public class InsertionOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            try
+            int nbErreurs = 0;
+            if(quantitePrevu.getText().isEmpty() || numeroSequentiel.getText().isEmpty() || urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
             {
-                if(quantitePrevu.getText().isEmpty() ||
-                        numeroSequentiel.getText().isEmpty() ||
-                        urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
-                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire sauf le champ remarque !");
+                JOptionPane.showMessageDialog(panneauInsertion, "Les champs obligatoire sont : date, numéro séquentiel, quantité prévue, urgent, recette et responsable de vente !");
+            }
+            else
+            {
+                try
+                {
+                    int numSeq = Integer.parseInt(numeroSequentiel.getText());
+                    if(numSeq < 0)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre positif !");
+                        nbErreurs++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre !");
+                    nbErreurs++;
+                }
+                try
+                {
+                    int quantPrevu = Integer.parseInt(quantitePrevu.getText());
+                    if(quantPrevu < 0)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre positif !");
+                        nbErreurs++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre !");
+                    nbErreurs++;
+                }
+                try
+                {
+                    if(!quantiteProduite.getText().isEmpty() && (Integer.parseInt(quantiteProduite.getText()) < 0))
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre positif !");
+                        nbErreurs++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre !");
+                    nbErreurs++;
+                }
 
-                if(!(   quantitePrevu.getText().isEmpty() ||
-                        numeroSequentiel.getText().isEmpty() ||
-                        (urgentTrue.isSelected() == false && urgentFalse.isSelected() == false))){
-                    StringBuilder affichage = new StringBuilder();
-                    affichage.append("Voici un récapitulatif de l'insertion:\n\n");
-                    affichage.append("Date :" + dateCreation.getValue()+"\n");
-                    affichage.append("Numéro séquentiel :" + numeroSequentiel.getText()+"\n");
-                    affichage.append("Quantité prévue :" + quantitePrevu.getText()+"\n");
-                    affichage.append("Quantité produite :");
-                    if(quantiteProduite.getText().isEmpty())
-                        affichage.append("0\n");
-                    else
-                        affichage.append(quantiteProduite.getText()+"\n");
-                    affichage.append("Date de vente :" + dateVente.getValue()+"\n");
-                    affichage.append("Date de préparation :" + datePrepa.getValue() + "\n");
-                    affichage.append("Remarque :");
-                    if(!remarque.getText().isEmpty())
-                        affichage.append(remarque.getText());
-                    affichage.append("\n");
-                    if(urgentTrue.isSelected())
-                        affichage.append("Ordre urgent\n");
-                    else
-                        affichage.append("Ordre non urgent\n");
-                    affichage.append("Nom de la recette :" + nomRecette.getSelectedItem().toString() + "\n");
-                    affichage.append("Code barre :" + libelle.getSelectedItem().toString() + "\n");
-                    affichage.append("Matricule du cuisinier :" + matriculeCuisinier.getSelectedItem().toString()+"\n");
-                    affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.getSelectedItem().toString()+"\n");
+                if(dateVenteModel.getDate().compareTo(datePrepaModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected() && !dateVenteCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de préparation !");
+                    nbErreurs++;
+                }
 
-                    JOptionPane.showMessageDialog(panneauBoutons, affichage.toString());
+                if(datePrepaModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de préparation doit être plus grande ou égale à la date de création de l'ordre !");
+                    nbErreurs++;
+                }
 
+                if(nbErreurs == 0)
+                {
+                    try {
+                        StringBuilder affichage = new StringBuilder();
+                        affichage.append("Voici un récapitulatif de l'insertion:\n\n");
+                        affichage.append("Date :" + dateCreation.getValue() + "\n");
+                        affichage.append("Numéro séquentiel :" + numeroSequentiel.getText() + "\n");
+                        affichage.append("Quantité prévue :" + quantitePrevu.getText() + "\n");
+                        affichage.append("Quantité produite :");
+                        if (quantiteProduite.getText().isEmpty())
+                            affichage.append("0\n");
+                        else
+                            affichage.append(quantiteProduite.getText() + "\n");
+                        affichage.append("Date de vente :" + dateVente.getValue() + "\n");
+                        affichage.append("Date de préparation :" + datePrepa.getValue() + "\n");
+                        affichage.append("Remarque :");
+                        if (!remarque.getText().isEmpty())
+                            affichage.append(remarque.getText());
+                        affichage.append("\n");
+                        if (urgentTrue.isSelected())
+                            affichage.append("Ordre urgent\n");
+                        else
+                            affichage.append("Ordre non urgent\n");
+                        affichage.append("Nom de la recette :" + nomRecette.getSelectedItem().toString() + "\n");
+                        affichage.append("Code barre :" + libelle.getSelectedItem().toString() + "\n");
+                        affichage.append("Matricule du cuisinier :" + matriculeCuisinier.getSelectedItem().toString() + "\n");
+                        affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.getSelectedItem().toString() + "\n");
 
-                    ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                    ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantiteProduite.getText()));
-                    ordrePreparation.setNumeroSequentiel(Integer.parseInt(numeroSequentiel.getText()));
-                    ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
-                    ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
-                    ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()));
-                    ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
-                    ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
+                        JOptionPane.showMessageDialog(panneauInsertion, affichage.toString());
 
+                        ordrePreparation.setNumeroSequentiel(Integer.valueOf(numeroSequentiel.getText()));
+                        ordrePreparation.setQuantitePrevue(Integer.valueOf(quantitePrevu.getText()));
 
-                    GregorianCalendar dateC = new GregorianCalendar();
-                    dateC.setTime(dateCreationModel.getDate());
-                    ordrePreparation.setDate(dateC);
+                        if (quantiteProduite.getText().isEmpty())
+                            ordrePreparation.setQuantiteProduite(null);
+                        else
+                            ordrePreparation.setQuantiteProduite(Integer.valueOf(quantiteProduite.getText()));
 
-                    GregorianCalendar dateP = new GregorianCalendar();
-                    dateP.setTime(datePrepaModel.getDate());
-                    ordrePreparation.setDatePreparation(dateP);
+                        ordrePreparation.setRemarque(remarque.getText().isEmpty() ? null : remarque.getText());
+                        ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
 
-                    GregorianCalendar dateV = new GregorianCalendar();
-                    dateV.setTime(dateVenteModel.getDate());
-                    ordrePreparation.setDateVente(dateV);
+                        if (libelle.getSelectedIndex() == 0)
+                            ordrePreparation.setCodeBarre(null);
+                        else
+                            ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()-1));
 
-                    ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+                        if (matriculeCuisinier.getSelectedIndex() == 0)
+                            ordrePreparation.setMatriculeCui(null);
+                        else
+                            ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()-1));
 
-                    /*OrdrePreparation ordre = ordrePreparation;
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  hh:mm");
-                    java.util.Date dateD = dateC.getGregorianChange();
+                        ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
 
-                    StringBuilder affiche = new StringBuilder();
-                    affiche.append("date :"+ dateFormat.format(dateD) + "\n");
-                    affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
-                    affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
-                    affiche.append("Q prod :" + ordre.getQuantiteProduite()+"\n");
+                        GregorianCalendar dateC = new GregorianCalendar();
+                        dateC.setTime(dateCreationModel.getDate());
+                        ordrePreparation.setDate(dateC);
 
+                        GregorianCalendar dateP = new GregorianCalendar();
+                        dateP.setTime(datePrepaModel.getDate());
+                        if(datePrepaCheckbox.isSelected())
+                            ordrePreparation.setDatePreparation(null);
+                        else
+                            ordrePreparation.setDatePreparation(dateP);
 
-                    dateD = dateV.getGregorianChange();
-                    affiche.append("date v :" + dateFormat.format(dateD) + "\n");
-                    dateD = dateV.getGregorianChange();
-                    affiche.append("Date p :" + dateFormat.format(dateD) + "\n");
-                    affiche.append("Remarque :"+ ordre.getRemarque() + "\n");
-                    affiche.append("Urgent :" + ordre.getEstUrgent() + "\n");
-                    affiche.append("recette :" + ordre.getNom().getNom() + "\n");
-                    affiche.append("Code barre :" + ordre.getCodeBarre().getCodeBarre() + "\n");
-                    affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
-                    affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
+                        GregorianCalendar dateV = new GregorianCalendar();
+                        dateV.setTime(dateVenteModel.getDate());
+                        if(dateVenteCheckbox.isSelected())
+                            ordrePreparation.setDateVente(null);
+                        else
+                            ordrePreparation.setDateVente(dateV);
 
-                    JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
+                        ordrePreparation.setEstUrgent(urgentTrue.isSelected());
 
-                    applicationController.setOrdrePreparation(applicationController, ordrePreparation);
+                        applicationController.setOrdrePreparation(applicationController, ordrePreparation);
 
-                    JOptionPane.showMessageDialog(panneauBoutons, "L'ordre à bien été créé.");
+                        JOptionPane.showMessageDialog(panneauInsertion, "L'ordre a bien été créé.");
 
-                    dateCreation = new JSpinner(dateCreationModel);
-                    numeroSequentiel.setText(null);
-                    quantitePrevu.setText(null);
-                    quantiteProduite.setText(null);
-                    dateVente = new JSpinner(dateVenteModel);
-                    datePrepa = new JSpinner(datePrepaModel);
-                    remarque.setText(null);
-                    urgentButton.clearSelection();
-
-                    listeOrdrePreparation.add(ordrePreparation);
-                    Collections.sort(listeOrdrePreparation);
+                        dateCreation = new JSpinner(dateCreationModel);
+                        numeroSequentiel.setText(null);
+                        quantitePrevu.setText(null);
+                        quantiteProduite.setText(null);
+                        dateVente = new JSpinner(dateVenteModel);
+                        datePrepa = new JSpinner(datePrepaModel);
+                        remarque.setText(null);
+                        urgentButton.clearSelection();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de la création de l'ordre de préparation !");
+                    }
                 }
             }
-            catch (Exception e)
-            {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
-            }
-
         }
     }
 

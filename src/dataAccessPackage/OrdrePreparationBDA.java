@@ -26,13 +26,23 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
             ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
 
-            ordrePreparation.setQuantiteProduite(donnees.getInt("quantiteproduite"));
+            int quantiteProduite = donnees.getInt("quantiteProduite");
+            if(!donnees.wasNull())
+                ordrePreparation.setQuantiteProduite(quantiteProduite);
 
-            date.setTime(donnees.getDate("datevente"));
-            ordrePreparation.setDateVente(date);
+            java.sql.Date dateBD = donnees.getDate("datevente");
+            if(!donnees.wasNull())
+            {
+                date = new GregorianCalendar();
+                date.setTime(dateBD);
+                ordrePreparation.setDateVente(date);
+            }
 
-            if(donnees.getDate("datepreparation") != null) {
-                date.setTime(donnees.getDate("datepreparation"));
+            dateBD = donnees.getDate("datepreparation");
+            if(!donnees.wasNull())
+            {
+                date = new GregorianCalendar();
+                date.setTime(dateBD);
                 ordrePreparation.setDatePreparation(date);
             }
 
@@ -42,30 +52,23 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
             ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
-
-            // C'EST JUSTE !!! MAIS BUG ICI A CAUSE DE RECETTE !!!! TOUT LES CLES ETRANGERE ????
-            // BUG POUR LE LISTING JE PENSE A CAUSE DES METHODES COMPLETER##### !!!!! OU PAS
-            // J'AI MODIFIER COMPLETERRECETTE EN METTANT EN COMMENTAIRE CE QU'IL NE ME FALLAIT PAS, PAS SUR QUE C'EST BON
             Recette recette = RecetteBDA.completerRecette(donnees);
             ordrePreparation.setNom(recette);
 
-            // FONCTIONNE AVEC MATRICULE
-            /*int codeBarre = donnees.getInt("codeBarre");
+            int codeBarre = donnees.getInt("codeBarre");
             if(!donnees.wasNull())
             {
-                TypeArticle ta = new TypeArticle();
-                ta.setCodeBarre(codeBarre);
-                ta.setLibelle(donnees.getString("libelle"));
+                TypeArticle ta = TypeArticleBDA.completerTypeArticle(donnees);
                 ordrePreparation.setCodeBarre(ta);
-            }*/
-            TypeArticle ta = TypeArticleBDA.completerTypeArticle(donnees);
-            ordrePreparation.setCodeBarre(ta);
+            }
 
-            // FONCTIONNE AVEC MATRICULE
-            Cuisinier cuisinier = CuisinierBDA.completerCuisinier(donnees);
-            ordrePreparation.setMatriculeCui(cuisinier);
+            int matriculeCui = donnees.getInt("matricule_cui");
+            if(!donnees.wasNull())
+            {
+                Cuisinier cuisinier = CuisinierBDA.completerCuisinier(donnees);
+                ordrePreparation.setMatriculeCui(cuisinier);
+            }
 
-            // FONCTIONNE AVEC MATRICULE
             ResponsableDesVentes rdv = ResponsableDesVentesBDA.completerResponsableDesVentes(donnees);
             ordrePreparation.setMatriculeRes(rdv);
 
@@ -143,8 +146,15 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             else
                 preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
 
-            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
-            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+            if(ordrePreparation.getDateVente() == null)
+                preparedStatement.setNull(5, Types.TIMESTAMP);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+
+            if(ordrePreparation.getDatePreparation() == null)
+                preparedStatement.setNull(6, Types.TIMESTAMP);
+            else
+                preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
 
             if(ordrePreparation.getRemarque() == null)
                 preparedStatement.setNull(7, Types.VARCHAR);
@@ -156,29 +166,35 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
             String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
             ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
-            int matriculeTypeArticle = 0;
+            Integer matriculeTypeArticle = null;
             for(TypeArticle ta : listeTypeArticle)
             {
                 if (typeArticle.equals(ta.getLibelle()))
                     matriculeTypeArticle = ta.getCodeBarre();
             }
-            preparedStatement.setInt(10, matriculeTypeArticle);
+            if(ordrePreparation.getCodeBarre() == null)
+                preparedStatement.setNull(10, Types.INTEGER);
+            else
+                preparedStatement.setInt(10, matriculeTypeArticle);
 
             //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
             String cuisinier = ordrePreparation.getMatriculeCui().getNom();
             ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
-            int matriculeCuisinier = 0;
+            Integer matriculeCuisinier = null;
             for(Cuisinier c : listeCuisinier)
             {
                 if(cuisinier.equals(c.getNom()))
                     matriculeCuisinier = c.getMatricule();
             }
-            preparedStatement.setInt(11, matriculeCuisinier);
+            if(ordrePreparation.getMatriculeCui() == null)
+                preparedStatement.setNull(11, Types.INTEGER);
+            else
+                preparedStatement.setInt(11, matriculeCuisinier);
 
             //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
             String respVente = ordrePreparation.getMatriculeRes().getNom();
             ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
-            int matriculeRespVente = 0;
+            Integer matriculeRespVente = null;
             for(ResponsableDesVentes rdv : listeResponsableDesVentes)
             {
                 if(respVente.equals(rdv.getNom()))
@@ -205,8 +221,15 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             else
                 preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
 
-            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
-            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+            if(ordrePreparation.getDateVente() == null)
+                preparedStatement.setNull(5, Types.TIME);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+
+            if(ordrePreparation.getDatePreparation() == null)
+                preparedStatement.setNull(6, Types.TIME);
+            else
+                preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
 
             if(ordrePreparation.getRemarque() == null)
                 preparedStatement.setNull(7, Types.VARCHAR);
@@ -215,32 +238,46 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
             preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
             preparedStatement.setString(9, ordrePreparation.getNom().getNom());
 
-            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
-            String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
-            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
-            int matriculeTypeArticle = 0;
-            for(TypeArticle ta : listeTypeArticle)
+            if(ordrePreparation.getCodeBarre() == null)
             {
-                if (typeArticle.equals(ta.getLibelle()))
-                    matriculeTypeArticle = ta.getCodeBarre();
+                preparedStatement.setNull(10, Types.INTEGER);
             }
-            preparedStatement.setInt(10, matriculeTypeArticle);
+            else
+            {
+                //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+                String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
+                ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+                Integer matriculeTypeArticle = null;
+                for(TypeArticle ta : listeTypeArticle)
+                {
+                    if (typeArticle.equals(ta.getLibelle()))
+                        matriculeTypeArticle = ta.getCodeBarre();
+                }
+                preparedStatement.setInt(10, matriculeTypeArticle);
+            }
 
-            //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
-            String cuisinier = ordrePreparation.getMatriculeCui().getNom();
-            ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
-            int matriculeCuisinier = 0;
-            for(Cuisinier c : listeCuisinier)
+            if(ordrePreparation.getMatriculeCui() == null)
             {
-                if(cuisinier.equals(c.getNom()))
-                    matriculeCuisinier = c.getMatricule();
+                preparedStatement.setNull(11, Types.INTEGER);
             }
-            preparedStatement.setInt(11, matriculeCuisinier);
+            else
+            {
+                //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
+                String cuisinier = ordrePreparation.getMatriculeCui().getNom();
+                ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
+                Integer matriculeCuisinier = null;
+                for(Cuisinier c : listeCuisinier)
+                {
+                    if(cuisinier.equals(c.getNom()))
+                        matriculeCuisinier = c.getMatricule();
+                }
+                preparedStatement.setInt(11, matriculeCuisinier);
+            }
 
             //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
             String respVente = ordrePreparation.getMatriculeRes().getNom();
             ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
-            int matriculeRespVente = 0;
+            Integer matriculeRespVente = null;
             for(ResponsableDesVentes rdv : listeResponsableDesVentes)
             {
                 if(respVente.equals(rdv.getNom()))

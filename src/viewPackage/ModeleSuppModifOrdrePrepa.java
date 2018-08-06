@@ -46,26 +46,38 @@ public class ModeleSuppModifOrdrePrepa extends AbstractTableModel {
         {
             case 0 : return ligneop.getNumeroSequentiel();
             case 1 : return ligneop.getQuantitePrevue();
-            case 2 : return ligneop.getQuantiteProduite();
-            case 3 : {if((ligneop).getDateVente() != null)
+            case 2 : {if(ligneop.getQuantiteProduite() != null)
+                        return ligneop.getQuantiteProduite();
+                      else
+                         return null;
+                      }
+            case 3 : {if(ligneop.getDateVente() != null)
                         return ligneop.getDateVente().getTime();
                       else
                         return null;
                       }
-            case 4 : {if((ligneop).getDatePreparation() != null)
+            case 4 : {if(ligneop.getDatePreparation() != null)
                         return ligneop.getDatePreparation().getTime();
                       else
                         return null;
                       }
-            case 5 : {if((ligneop).getRemarque() != null)
+            case 5 : {if(ligneop.getRemarque() != null)
                         return ligneop.getRemarque();
                       else
                         return null;
                       }
             case 6 : return ligneop.getEstUrgent();
             case 7 : return ligneop.getNom().getNom();
-            case 8 : return ligneop.getCodeBarre().getCodeBarre();
-            case 9 : return ligneop.getMatriculeCui().getMatricule();
+            case 8 : {if(ligneop.getCodeBarre() != null)
+                        return ligneop.getCodeBarre().getCodeBarre();
+                      else
+                        return null;
+                      }
+            case 9 : {if(ligneop.getMatriculeCui() != null)
+                        return ligneop.getMatriculeCui().getMatricule();
+                      else
+                        return null;
+                      }
             case 10 : return ligneop.getMatriculeRes().getMatricule();
             default : return null;
         }

@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -16,13 +18,15 @@ public class ModificationOrdrePrepa extends JPanel {
     //POUR LE FORMULAIRE
     private JLabel dateCreationLabel, numeroSequentielLabel, quantitePrevueLabel, quantiteProduiteLabel,
             dateVenteLabel, datePrepaLabel, remarqueLabel, nomRecetteLabel,
-            typeArticleLabel, matriculeCuisinierLabel, matriculeResponsableLabel;
+            typeArticleLabel, matriculeCuisinierLabel, matriculeResponsableLabel,
+            dateVenteCheckboxLabel, datePrepaCheckboxLabel;
     private JTextField quantitePrevu, quantiteProduite, remarque;
     private JSpinner dateCreation, dateVente, datePrepa;
     private SpinnerDateModel dateCreationModel, datePrepaModel, dateVenteModel;
     private JRadioButton urgentTrue, urgentFalse;
     private ButtonGroup urgentButton;
     private JComboBox nomRecette, libelle, matriculeCuisinier, matriculeResponsable, numeroSequentiel;
+    private JCheckBox dateVenteCheckbox, datePrepaCheckbox;
     //POUR LES BOUTONS
     private JButton retour, validation, reinitialiser;
     private ApplicationController applicationController;
@@ -47,7 +51,7 @@ public class ModificationOrdrePrepa extends JPanel {
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(12, 2, 5, 5));
+            panneauInsertion.setLayout(new GridLayout(14, 2, 5, 5));
 
             //DATE DE CREATION DE L'ORDRE DE PREPA OBLIGATOIRE
             dateCreationLabel = new JLabel("Date : ");
@@ -65,25 +69,6 @@ public class ModificationOrdrePrepa extends JPanel {
             numeroSequentielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(numeroSequentielLabel);
             listeOrdrePreparation = applicationController.getAllOrdrePreparation();
-
-            /*OrdrePreparation ordre = listeOrdrePreparation.get(0);
-            StringBuilder affiche = new StringBuilder();
-            affiche.append("date :"+ ordre.getDate() + "\n");
-            affiche.append("Num seq :"+ordre.getNumeroSequentiel()+"\n");
-            affiche.append("Q prévue :"+ ordre.getQuantitePrevue()+"\n");
-            affiche.append("Q prod :" + ordre.getQuantiteProduite()+"\n");
-            affiche.append("date v :" + ordre.getDateVente() + "\n");
-            affiche.append("Date p :" + ordre.getDatePreparation() + "\n");
-            affiche.append("Remarque :"+ ordre.getRemarque() + "\n");
-            affiche.append("Urgent :" + ordre.getEstUrgent() + "\n");
-            affiche.append("recette :" + ordre.getNom().getNom() + "\n");
-            affiche.append("Code barre :" + ordre.getCodeBarre().getCodeBarre() + "\n");
-            affiche.append("matr cui :" + ordre.getMatriculeCui().getMatricule() + "\n");
-            affiche.append("matr ven :" + ordre.getMatriculeRes().getMatricule() + "\n");
-
-            JOptionPane.showMessageDialog(panneauInsertion, affiche.toString());*/
-
-
             valuesNumeroSequentiel = new ArrayList<>();
             for(OrdrePreparation op : listeOrdrePreparation)
             {
@@ -94,7 +79,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
-            quantitePrevueLabel = new JLabel("Quantité prévue : ");
+            quantitePrevueLabel = new JLabel("Quantité prévue * : ");
             quantitePrevueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantitePrevueLabel);
             quantitePrevu = new JTextField();
@@ -115,6 +100,15 @@ public class ModificationOrdrePrepa extends JPanel {
             dateVente = new JSpinner(dateVenteModel);
             panneauInsertion.add(dateVente);
 
+            //DATE DE VENTE CHECKBOX POUR DESACTIVER LA DATE
+            dateVenteCheckboxLabel = new JLabel("Activer/Désactiver la date de vente : ");
+            dateVenteCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateVenteCheckboxLabel);
+            dateVenteCheckbox = new JCheckBox();
+            ModificationOrdrePrepa.CheckBoxListenerDateVente listenerDateVente = new ModificationOrdrePrepa.CheckBoxListenerDateVente();
+            dateVenteCheckbox.addItemListener(listenerDateVente);
+            panneauInsertion.add(dateVenteCheckbox);
+
             //DATE DE PREPARATION
             datePrepaLabel = new JLabel("Date de préparation : ");
             datePrepaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -122,6 +116,15 @@ public class ModificationOrdrePrepa extends JPanel {
             datePrepaModel = new SpinnerDateModel();
             datePrepa = new JSpinner(datePrepaModel);
             panneauInsertion.add(datePrepa);
+
+            //DATE DE PREPARATION CHECKBOX POUR DESACTIVER LA DATE
+            datePrepaCheckboxLabel = new JLabel("Activer/Désactiver la date de préparation : ");
+            datePrepaCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(datePrepaCheckboxLabel);
+            datePrepaCheckbox = new JCheckBox();
+            ModificationOrdrePrepa.CheckBoxListenerDatePrepa listenerDatePrepa = new ModificationOrdrePrepa.CheckBoxListenerDatePrepa();
+            datePrepaCheckbox.addItemListener(listenerDatePrepa);
+            panneauInsertion.add(datePrepaCheckbox);
 
             //REMARQUE
             remarqueLabel = new JLabel("Remarque : ");
@@ -131,7 +134,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(remarque);
 
             //URGENT ? OBLIGATOIRE
-            urgentTrue = new JRadioButton("Urgent", false);
+            urgentTrue = new JRadioButton("* Urgent", false);
             panneauInsertion.add(urgentTrue);
             urgentFalse = new JRadioButton("Pas urgent", false);
             panneauInsertion.add(urgentFalse);
@@ -140,7 +143,7 @@ public class ModificationOrdrePrepa extends JPanel {
             urgentButton.add(urgentFalse);
 
             //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
-            nomRecetteLabel = new JLabel("Nom de la recette : ");
+            nomRecetteLabel = new JLabel("Nom de la recette * : ");
             nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomRecetteLabel);
             listeRecette = applicationController.getAllRecette();
@@ -150,7 +153,7 @@ public class ModificationOrdrePrepa extends JPanel {
                 valuesRecette.add(r.getNom());
             }
             nomRecette = new JComboBox(valuesRecette.toArray(new String[0]));
-            nomRecette.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            nomRecette.setEnabled(true);
             panneauInsertion.add(nomRecette);
 
             //LIBELLE <- CODE BARRE (FK TYPEARTICLE)
@@ -160,26 +163,28 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(typeArticleLabel);
             listeTypeArticle = applicationController.getAllTypeArticle();
             ArrayList <String> valuesTypeArticle = new ArrayList<>();
+            valuesTypeArticle.add(" ");
             for(TypeArticle t : listeTypeArticle)
             {
                 valuesTypeArticle.add(t.getLibelle());
             }
             libelle = new JComboBox(valuesTypeArticle.toArray(new String[0]));
-            libelle.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            libelle.setEnabled(true);
             panneauInsertion.add(libelle);
 
             //CUISINIER (FK CUISINIER)
-            matriculeCuisinierLabel = new JLabel("Matricule cuisinier * : ");
+            matriculeCuisinierLabel = new JLabel("Matricule cuisinier : ");
             matriculeCuisinierLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(matriculeCuisinierLabel);
             listeCuisinier = applicationController.getAllCuisinier();
             ArrayList<String> valuesCuisinier = new ArrayList<>();
+            valuesCuisinier.add(" ");
             for(Cuisinier c : listeCuisinier)
             {
                 valuesCuisinier.add(c.getNom());
             }
             matriculeCuisinier = new JComboBox(valuesCuisinier.toArray(new String[0]));
-            matriculeCuisinier.setEnabled(true);  // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            matriculeCuisinier.setEnabled(true);
             panneauInsertion.add(matriculeCuisinier);
 
             //RESPONSABLE DE VENTE OBLIGATOIRE (FK RESPONSABLE VENTE)
@@ -203,15 +208,15 @@ public class ModificationOrdrePrepa extends JPanel {
 
             retour = new JButton("<- Retour");
             panneauBoutons.add(retour);
-            ButtonListenerRetour listenerRetour = new ButtonListenerRetour();
+            ModificationOrdrePrepa.ButtonListenerRetour listenerRetour = new ModificationOrdrePrepa.ButtonListenerRetour();
             retour.addActionListener(listenerRetour);
             validation = new JButton("Modifier");
             panneauBoutons.add(validation);
-            ButtonListenerValidation listenerValidation = new ButtonListenerValidation();
+            ModificationOrdrePrepa.ButtonListenerValidation listenerValidation = new ModificationOrdrePrepa.ButtonListenerValidation();
             validation.addActionListener(listenerValidation);
             reinitialiser = new JButton("Réinitialiser");
             panneauBoutons.add(reinitialiser);
-            ButtonListenerReinitialiser listenerReinitialiser = new ButtonListenerReinitialiser();
+            ModificationOrdrePrepa.ButtonListenerReinitialiser listenerReinitialiser = new ModificationOrdrePrepa.ButtonListenerReinitialiser();
             reinitialiser.addActionListener(listenerReinitialiser);
 
             add(panneauInsertion, BorderLayout.NORTH);
@@ -223,7 +228,28 @@ public class ModificationOrdrePrepa extends JPanel {
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
+    private class CheckBoxListenerDateVente implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                dateVente.setEnabled(false);
+            else
+                dateVente.setEnabled(true);
+        }
+    }
+
+    private class CheckBoxListenerDatePrepa implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                datePrepa.setEnabled(false);
+            else
+                datePrepa.setEnabled(true);
+        }
     }
 
     //CLASSES PRIVEES POUR LES BOUTONS
@@ -234,8 +260,7 @@ public class ModificationOrdrePrepa extends JPanel {
             removeAll();
             validate();
 
-            MessageAccueil messageAccueil = new MessageAccueil();
-            add(messageAccueil, BorderLayout.CENTER);
+            add(new MessageAccueil(), BorderLayout.CENTER);
 
             revalidate();
             repaint();
@@ -246,45 +271,115 @@ public class ModificationOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            try
+            int nbErreurs = 0;
+            if(quantitePrevu.getText().isEmpty() || urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
             {
-                ordrePreparation.setQuantitePrevue(Integer.parseInt(quantitePrevu.getText()));
-                ordrePreparation.setQuantiteProduite(Integer.parseInt(quantiteProduite.getText()==null?"0":quantiteProduite.getText()));
-                ordrePreparation.setNumeroSequentiel(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
-                ordrePreparation.setRemarque(remarque.getText()==null?"":remarque.getText());
-                ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
-                ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()));
-                ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()));
-                ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
-
-
-                GregorianCalendar dateC = new GregorianCalendar();
-                dateC.setTime(dateCreationModel.getDate());
-                ordrePreparation.setDate(dateC);
-
-                GregorianCalendar dateP = new GregorianCalendar();
-                dateP.setTime(datePrepaModel.getDate());
-                ordrePreparation.setDatePreparation(dateP);
-
-                GregorianCalendar dateV = new GregorianCalendar();
-                dateV.setTime(dateVenteModel.getDate());
-                ordrePreparation.setDateVente(dateV);
-
-                ordrePreparation.setEstUrgent(urgentTrue.isSelected());
-
-                applicationController.modifierOrdrePreparation(applicationController, ordrePreparation);
-
-                dateCreation = new JSpinner(dateCreationModel);
-                quantitePrevu.setText(null);
-                quantiteProduite.setText(null);
-                dateVente = new JSpinner(dateVenteModel);
-                datePrepa = new JSpinner(datePrepaModel);
-                remarque.setText(null);
-                urgentButton.clearSelection();
+                JOptionPane.showMessageDialog(panneauInsertion, "Les champs obligatoire sont : date, numéro séquentiel, quantité prévue, urgent, recette et responsable de vente !");
             }
-            catch (Exception e)
+            else
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de la modification d'un ordre de prépration", JOptionPane.ERROR_MESSAGE);
+                try
+                {
+                    int quantPrevu = Integer.parseInt(quantitePrevu.getText());
+                    if(quantPrevu < 0)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre positif !");
+                        nbErreurs++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre !");
+                    nbErreurs++;
+                }
+                try
+                {
+                    if(!quantiteProduite.getText().isEmpty() && (Integer.parseInt(quantiteProduite.getText()) < 0))
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre positif !");
+                        nbErreurs++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre !");
+                    nbErreurs++;
+                }
+
+                if(dateVenteModel.getDate().compareTo(datePrepaModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected() && !dateVenteCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de préparation !");
+                    nbErreurs++;
+                }
+
+                if(datePrepaModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de préparation doit être plus grande ou égale à la date de création de l'ordre !");
+                    nbErreurs++;
+                }
+
+                if(nbErreurs == 0)
+                {
+                    try {
+                        ordrePreparation.setNumeroSequentiel(valuesNumeroSequentiel.get(numeroSequentiel.getSelectedIndex()));
+                        ordrePreparation.setQuantitePrevue(Integer.valueOf(quantitePrevu.getText()));
+
+                        if (quantiteProduite.getText().isEmpty())
+                            ordrePreparation.setQuantiteProduite(null);
+                        else
+                            ordrePreparation.setQuantiteProduite(Integer.valueOf(quantiteProduite.getText()));
+
+                        ordrePreparation.setRemarque(remarque.getText().isEmpty() ? null : remarque.getText());
+                        ordrePreparation.setNom(listeRecette.get(nomRecette.getSelectedIndex()));
+
+                        if (libelle.getSelectedIndex() == 0)
+                            ordrePreparation.setCodeBarre(null);
+                        else
+                            ordrePreparation.setCodeBarre(listeTypeArticle.get(libelle.getSelectedIndex()-1));
+
+                        if (matriculeCuisinier.getSelectedIndex() == 0)
+                            ordrePreparation.setMatriculeCui(null);
+                        else
+                            ordrePreparation.setMatriculeCui(listeCuisinier.get(matriculeCuisinier.getSelectedIndex()-1));
+
+                        ordrePreparation.setMatriculeRes(listeResponsableVente.get(matriculeResponsable.getSelectedIndex()));
+
+                        GregorianCalendar dateC = new GregorianCalendar();
+                        dateC.setTime(dateCreationModel.getDate());
+                        ordrePreparation.setDate(dateC);
+
+                        GregorianCalendar dateP = new GregorianCalendar();
+                        dateP.setTime(datePrepaModel.getDate());
+                        if(datePrepaCheckbox.isSelected())
+                            ordrePreparation.setDatePreparation(null);
+                        else
+                            ordrePreparation.setDatePreparation(dateP);
+
+                        GregorianCalendar dateV = new GregorianCalendar();
+                        dateV.setTime(dateVenteModel.getDate());
+                        if(dateVenteCheckbox.isSelected())
+                            ordrePreparation.setDateVente(null);
+                        else
+                            ordrePreparation.setDateVente(dateV);
+
+                        ordrePreparation.setEstUrgent(urgentTrue.isSelected());
+
+                        applicationController.modifierOrdrePreparation(applicationController, ordrePreparation);
+
+                        JOptionPane.showMessageDialog(panneauInsertion, "L'ordre a bien été modifié.");
+
+                        dateCreation = new JSpinner(dateCreationModel);
+                        quantitePrevu.setText(null);
+                        quantiteProduite.setText(null);
+                        dateVente = new JSpinner(dateVenteModel);
+                        datePrepa = new JSpinner(datePrepaModel);
+                        remarque.setText(null);
+                        urgentButton.clearSelection();
+                    }
+                    catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de la modification d'un ordre de préparation !");
+                    }
+                }
             }
         }
     }
@@ -300,7 +395,6 @@ public class ModificationOrdrePrepa extends JPanel {
             datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();
-
         }
     }
 }
