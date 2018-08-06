@@ -417,7 +417,7 @@ public class InsertionOrdrePrepa extends JPanel {
                         remarque.setText(null);
                         urgentButton.clearSelection();
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel existe déjà !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "La date de création et le numéro séquentiel existe déjà !");
                     }
                 }
             }

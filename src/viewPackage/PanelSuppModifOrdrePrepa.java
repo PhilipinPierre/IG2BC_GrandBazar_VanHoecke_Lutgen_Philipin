@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import modelPackage.*;
 import controllerPackage.*;
 
@@ -13,7 +15,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
     private JLabel titre;
     private ListSelectionModel listSelect;
     private ApplicationController applicationController;
-    private ArrayList<OrdrePreparation> op;
+    private ArrayList<OrdrePreparation> ordrePreparations;
     private ModeleSuppModifOrdrePrepa modeleSuppModifOrdrePrepa;
     private JButton suppression;
     private JPanel panneauJList;
@@ -23,7 +25,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
     public PanelSuppModifOrdrePrepa(ApplicationController applicationController, ArrayList<OrdrePreparation> op, ArrayList<Reservation> listeReservation)
     {
         this.applicationController = applicationController;
-        this.op = op;
+        this.ordrePreparations = op;
         this.listeReservation = listeReservation;
         panneauJList = new JPanel();
         panneauBoutons = new JPanel();
@@ -59,11 +61,18 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
             try
             {
                 Integer numSeq = (Integer) table.getValueAt(numeroSequentiel, 0);
+                GregorianCalendar date = new GregorianCalendar();
+
+                for(OrdrePreparation o : ordrePreparations)
+                {
+                    if (numSeq.equals(o.getNumeroSequentiel()))
+                        date = o.getDate();
+                }
 
                 boolean estReserve = false;
                 for(Reservation r : listeReservation)
                 {
-                    if(numSeq.equals(r.getNumeroSequentiel()))
+                    if(numSeq.equals(r.getNumeroSequentiel()) && (date.compareTo(r.getDate())) == 0)
                     {
                         int reponse = JOptionPane.showConfirmDialog(panneauBoutons, "L'ordre est lié à une réservation. Voulez-vous supprimer la réservation ?",
                                 "Réservation détectée ", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);

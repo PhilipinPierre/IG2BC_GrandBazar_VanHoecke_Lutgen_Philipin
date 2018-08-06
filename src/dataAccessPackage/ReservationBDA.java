@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class ReservationBDA implements ReservationDA {
     public ArrayList<Reservation> getAllReservation() throws ExceptionsBD {
@@ -21,6 +22,10 @@ public class ReservationBDA implements ReservationDA {
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 Reservation reservation = new Reservation();
+
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(donnees.getDate("date"));
+                reservation.setDate(date);
 
                 reservation.setNumeroSequentiel(donnees.getInt("numeroSequentiel"));
 

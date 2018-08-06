@@ -1473,7 +1473,7 @@ NumeroSequentiel</ColNames>
     </column>
     <column id="339" parent="240" name="Descriptif">
       <Position>3</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(90)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
