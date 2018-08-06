@@ -101,7 +101,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(dateVente);
 
             //DATE DE VENTE CHECKBOX POUR DESACTIVER LA DATE
-            dateVenteCheckboxLabel = new JLabel("Activer/Désactiver la date de vente : ");
+            dateVenteCheckboxLabel = new JLabel("Désactiver la date de vente : ");
             dateVenteCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateVenteCheckboxLabel);
             dateVenteCheckbox = new JCheckBox();
@@ -118,7 +118,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(datePrepa);
 
             //DATE DE PREPARATION CHECKBOX POUR DESACTIVER LA DATE
-            datePrepaCheckboxLabel = new JLabel("Activer/Désactiver la date de préparation : ");
+            datePrepaCheckboxLabel = new JLabel("Désactiver la date de préparation : ");
             datePrepaCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(datePrepaCheckboxLabel);
             datePrepaCheckbox = new JCheckBox();
