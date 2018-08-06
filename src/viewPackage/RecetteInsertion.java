@@ -148,23 +148,29 @@ public class RecetteInsertion extends JPanel {
         {
             try
             {
-                //AJOUT RECETTE
-                Recette recette = new Recette();
-                recette.setNom(nomRecette.getText());
-                recette.setDLC(Integer.valueOf(dlc.getText()));
-                recette.setDescriptif(descriptif.getText());
-                applicationController.ajouterRecette(applicationController, recette);
-
-                //AJOUT INGREDIENTS
-                //POUR LES MULTIPLES INGREDIENTS !!!
-                int[] tab = nomIngredients.getSelectedIndices();
-                for(int j=0 ; j<=tab.length-1 ; j++)
+                if(nomRecette.getText().isEmpty() || dlc.getText().isEmpty() || descriptif.getText().isEmpty() || nomIngredients.isSelectionEmpty() || quantitePortion.getText().isEmpty())
                 {
-                    Ingredient ingredient = new Ingredient();
-                    ingredient.setNom(recette);
-                    ingredient.setCodeBarre(listeIngredients.get(tab[j]));
-                    ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
-                    applicationController.ajouterIngredient(applicationController, ingredient);
+                    JOptionPane.showMessageDialog(panneauBoutons, "Tout les champs sont obligatoire ! ");
+                }
+                else
+                {
+                    //AJOUT RECETTE
+                    Recette recette = new Recette();
+                    recette.setNom(nomRecette.getText());
+                    recette.setDLC(Integer.valueOf(dlc.getText()));
+                    recette.setDescriptif(descriptif.getText());
+                    applicationController.ajouterRecette(applicationController, recette);
+
+                    //AJOUT INGREDIENTS
+                    //POUR LES MULTIPLES INGREDIENTS !!!
+                    int[] tab = nomIngredients.getSelectedIndices();
+                    for (int j = 0; j <= tab.length - 1; j++) {
+                        Ingredient ingredient = new Ingredient();
+                        ingredient.setNom(recette);
+                        ingredient.setCodeBarre(listeIngredients.get(tab[j]));
+                        ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
+                        applicationController.ajouterIngredient(applicationController, ingredient);
+                    }
                 }
             }
             catch (Exception e)
