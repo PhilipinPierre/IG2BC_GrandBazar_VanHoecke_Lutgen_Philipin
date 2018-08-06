@@ -93,7 +93,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(dateVente);
 
             //DATE DE VENTE CHECKBOX POUR DESACTIVER LA DATE
-            dateVenteCheckboxLabel = new JLabel("Activer/Désactiver la date de vente : ");
+            dateVenteCheckboxLabel = new JLabel("Désactiver la date de vente : ");
             dateVenteCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateVenteCheckboxLabel);
             dateVenteCheckbox = new JCheckBox();
@@ -110,7 +110,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(datePrepa);
 
             //DATE DE PREPARATION CHECKBOX POUR DESACTIVER LA DATE
-            datePrepaCheckboxLabel = new JLabel("Activer/Désactiver la date de préparation : ");
+            datePrepaCheckboxLabel = new JLabel("Désactiver la date de préparation : ");
             datePrepaCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(datePrepaCheckboxLabel);
             datePrepaCheckbox = new JCheckBox();
@@ -244,62 +244,6 @@ public class InsertionOrdrePrepa extends JPanel {
                 datePrepa.setEnabled(true);
         }
     }
-
-
-    /*private class NumeroSequentielListener implements java.awt.event.FocusListener{
-        @Override
-        public void focusGained(FocusEvent e) {}
-        @Override
-        public void focusLost(FocusEvent e) {
-            if(numeroSequentiel.getText() != null) {
-                boolean numSeqIncorrect = testNumeroSequentielIncorrect(numeroSequentiel.getText().trim());
-
-                if (numSeqIncorrect) {
-                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
-                    numeroSequentiel.setText(null);
-                } else if (NumeroSequentielDejaPresent()) {
-                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utilisé.\nVeuillez vous référez au listing pour connaitre tout les numéros séquentiels déjà utilisés.");
-                    numeroSequentiel.setText(null);
-                }
-            }
-        }
-    }
-
-    private boolean NumeroSequentielDejaPresent(){
-        for(OrdrePreparation ordre : listeOrdrePreparation)
-            if(ordre.getNumeroSequentiel() == Integer.valueOf(numeroSequentiel.getText().trim()))
-                return true;
-        return false;
-    }
-
-    private boolean testNumeroSequentielIncorrect(String numSeq) {
-        //Permet de gere l'overflow
-        Integer.valueOf(numSeq);
-
-        char[] upper = numSeq.toCharArray();
-            StringBuilder resultat = new StringBuilder();
-            for (int i = 0; i < upper.length; i++) {
-                switch (upper[i]) {
-                    case '0':
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                    case '6':
-                    case '7':
-                    case '8':
-                    case '9':
-                        resultat.append(upper[i]);
-                        break;
-                    default:
-                        return true;
-                }
-            }
-            numeroSequentiel.setText(resultat.toString());
-
-            return false;
-    }*/
 
     //CLASSES PRIVEES POUR LES BOUTONS
     private class ButtonListenerRetour implements ActionListener
@@ -489,6 +433,8 @@ public class InsertionOrdrePrepa extends JPanel {
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
             dateVente = new JSpinner(dateVenteModel);
+            dateVente.setEnabled(true);
+
             datePrepa = new JSpinner(datePrepaModel);
             remarque.setText(null);
             urgentButton.clearSelection();

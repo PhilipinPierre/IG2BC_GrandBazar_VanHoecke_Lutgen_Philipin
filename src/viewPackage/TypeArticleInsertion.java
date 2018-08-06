@@ -185,7 +185,7 @@ public class TypeArticleInsertion extends JPanel {
 
                 typeArticle.setID(listeId.get(id.getSelectedIndex()));
 
-                applicationController.ajouterTypeArticle(applicationController, typeArticle);
+                applicationController.ajouterTypeArticle(typeArticle);
             }
             catch (Exception e)
             {

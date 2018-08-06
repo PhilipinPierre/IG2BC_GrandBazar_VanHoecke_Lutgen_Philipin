@@ -4,12 +4,18 @@ import controllerPackage.ApplicationController;
 import dataAccessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.OrdrePreparation;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrdrePreparationManager {
     private OrdrePreparationDA ordrePreparationBDA;
 
     public OrdrePreparationManager() {ordrePreparationBDA = new OrdrePreparationBDA();}
+
+    public OrdrePreparation getOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        return ordrePreparationBDA.getOrdrePreparation(numeroSequentiel);
+    }
 
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
     {

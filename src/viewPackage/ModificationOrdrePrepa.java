@@ -76,6 +76,7 @@ public class ModificationOrdrePrepa extends JPanel {
             }
             numeroSequentiel = new JComboBox(valuesNumeroSequentiel.toArray(new Integer[0]));
             numeroSequentiel.setEnabled(true);
+            numeroSequentiel.addActionListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -101,7 +102,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(dateVente);
 
             //DATE DE VENTE CHECKBOX POUR DESACTIVER LA DATE
-            dateVenteCheckboxLabel = new JLabel("Activer/Désactiver la date de vente : ");
+            dateVenteCheckboxLabel = new JLabel("Désactiver la date de vente : ");
             dateVenteCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateVenteCheckboxLabel);
             dateVenteCheckbox = new JCheckBox();
@@ -118,7 +119,7 @@ public class ModificationOrdrePrepa extends JPanel {
             panneauInsertion.add(datePrepa);
 
             //DATE DE PREPARATION CHECKBOX POUR DESACTIVER LA DATE
-            datePrepaCheckboxLabel = new JLabel("Activer/Désactiver la date de préparation : ");
+            datePrepaCheckboxLabel = new JLabel("Désactiver la date de préparation : ");
             datePrepaCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(datePrepaCheckboxLabel);
             datePrepaCheckbox = new JCheckBox();
@@ -229,6 +230,19 @@ public class ModificationOrdrePrepa extends JPanel {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private class NumeroSequentielListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            System.out.println(listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex()).getMatriculeRes().getNom());
+            OrdrePreparation ordrePreparation= listeOrdrePreparation.get(numeroSequentiel.getSelectedIndex());
+            dateCreationModel.setValue(ordrePreparation.getDate());
+            dateCreation = new JSpinner(dateCreationModel);
+            quantitePrevu.setText(ordrePreparation.getQuantitePrevue().toString());
+
+
+        }
+    }
+
 
     private class CheckBoxListenerDateVente implements ItemListener
     {
@@ -394,6 +408,7 @@ public class ModificationOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            numeroSequentiel.setSelectedIndex(0);
             dateCreation = new JSpinner(dateCreationModel);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
