@@ -105,37 +105,28 @@ public class TypeArticleBDA implements TypeArticleDA{
         TypeArticle typeArticle = new TypeArticle();
         try {
             int codeBarre = donnees.getInt("codeBarre");
-            System.out.println(codeBarre);
             typeArticle.setCodeBarre(codeBarre);
             String libelle = donnees.getString("libelle");
-            System.out.println(libelle);
             typeArticle.setLibelle(libelle);
             double prix = Double.valueOf(donnees.getString("prix"));
             typeArticle.setPrix(prix);
-            System.out.println(prix);
             int quantiteEnStock = donnees.getInt("quantiteEnStock");
             typeArticle.setQuantiteeEnStock(quantiteEnStock);
-            System.out.println(quantiteEnStock);
             if (donnees.getDate("datepromotiondebut") != null) {
                 GregorianCalendar datePromoDbt = new GregorianCalendar();
                 datePromoDbt.setTime(donnees.getDate("datepromotiondebut"));
                 typeArticle.setDatePromotionDebut(datePromoDbt);
-                System.out.println(datePromoDbt.toString());
             }
             if (donnees.getDate("datepromotionfin") != null) {
                 GregorianCalendar datePromoFin = new GregorianCalendar();
                 datePromoFin.setTime(donnees.getDate("datepromotionfin"));
                 typeArticle.setDatePromotionFin(datePromoFin);
-                System.out.println(datePromoFin.toString());
             }
             Boolean estPerissable = donnees.getBoolean("estPerissable");
             typeArticle.setEstPerissable(estPerissable);
-            System.out.println(estPerissable);
             int quantiteMinimal = donnees.getInt("quantiteMinimal");
             typeArticle.setQuantiteeMinimal(quantiteMinimal);
-            System.out.println(quantiteMinimal);
             String id = donnees.getString("id");
-            System.out.println(id);
             //CategorieArticle categorieArticle = CategorieArcticleBDA.getCategorieArticle(id);
 
         } catch (Exception e){
