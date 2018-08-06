@@ -18,11 +18,13 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
     private JButton suppression;
     private JPanel panneauJList;
     private JPanel panneauBoutons;
+    private ArrayList<Reservation> listeReservation;
 
-    public PanelSuppModifOrdrePrepa(ApplicationController applicationController, ArrayList<OrdrePreparation> op)
+    public PanelSuppModifOrdrePrepa(ApplicationController applicationController, ArrayList<OrdrePreparation> op, ArrayList<Reservation> listeReservation)
     {
         this.applicationController = applicationController;
         this.op = op;
+        this.listeReservation = listeReservation;
         panneauJList = new JPanel();
         panneauBoutons = new JPanel();
         setLayout(new BorderLayout());
@@ -58,7 +60,32 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
             {
                 Integer numSeq = (Integer) table.getValueAt(numeroSequentiel, 0);
 
-                applicationController.supprimerOrdrePreparation(numSeq);
+                boolean estReserve = false;
+                for(Reservation r : listeReservation)
+                {
+                    if(numSeq.equals(r.getNumeroSequentiel()))
+                    {
+                        int reponse = JOptionPane.showConfirmDialog(panneauBoutons, "L'ordre est lié à une réservation. Voulez-vous supprimer la réservation ?",
+                                "Réservation détectée ", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if (reponse == 0)
+                        {
+                            applicationController.supprimerReservation(numSeq);
+                            applicationController.supprimerOrdrePreparation(numSeq);
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(panneauBoutons, "Ordre non supprimé !");
+                        }
+                        estReserve = true;
+                    }
+                }
+
+                if(estReserve == false)
+                {
+                    applicationController.supprimerOrdrePreparation(numSeq);
+
+                    JOptionPane.showMessageDialog(panneauBoutons, "Ordre supprimé !");
+                }
 
                 removeAll();
                 validate();

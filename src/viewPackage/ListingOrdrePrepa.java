@@ -3,14 +3,16 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
+
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class ListingOrdrePrepa extends JPanel {
     private OrdrePreparation ordrePreparation;
     private ApplicationController applicationController;
     private ArrayList<OrdrePreparation> listeOrdrePrepa;
+    private ArrayList<Reservation> listeReservation;
 
     public ListingOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
     {
@@ -20,10 +22,11 @@ public class ListingOrdrePrepa extends JPanel {
             this.ordrePreparation = ordrePreparation;
 
             listeOrdrePrepa = applicationController.getAllOrdrePreparation();
+            listeReservation = applicationController.getAllReservation();
 
             removeAll();
             validate();
-            PanelSuppModifOrdrePrepa panelSuppModifOrdrePrepa = new PanelSuppModifOrdrePrepa(applicationController, listeOrdrePrepa);
+            PanelSuppModifOrdrePrepa panelSuppModifOrdrePrepa = new PanelSuppModifOrdrePrepa(applicationController, listeOrdrePrepa, listeReservation);
             add(panelSuppModifOrdrePrepa);
             revalidate();
             repaint();

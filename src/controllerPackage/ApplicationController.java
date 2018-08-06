@@ -21,6 +21,7 @@ public class ApplicationController {
     private ArticlePerimeManager articlePerime;
     private IngredientManager ingredient;
     private CategorieArticleManager categorieArticle;
+    private ReservationManager reservation;
 
     public ApplicationController()
     {
@@ -38,6 +39,7 @@ public class ApplicationController {
         articlePerime = new ArticlePerimeManager();
         ingredient = new IngredientManager();
         categorieArticle = new CategorieArticleManager();
+        reservation = new ReservationManager();
     }
 
     public ArrayList<Client> getAllClient() throws ExceptionsBD
@@ -58,6 +60,11 @@ public class ApplicationController {
     public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD
     {
         return ligneTicket.getAllLigneTicket();
+    }
+
+    public ArrayList<Reservation> getAllReservation() throws ExceptionsBD
+    {
+        return reservation.getAllReservation();
     }
 
     public ArrayList<Lot> getAllLot() throws ExceptionsBD
@@ -136,12 +143,19 @@ public class ApplicationController {
         fournisseur.ajouterFournisseur(applicationController, f);
     }
 
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD
+    {
         return ordrePreparation.getNumSeqOrdrePreparation();
     }
 
-    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD
+    {
         ordrePreparation.supprimerOrdrePreparation(numeroSequentiel);
+    }
+
+    public void supprimerReservation(Integer numeroSequentiel) throws ExceptionsBD
+    {
+        reservation.supprimerReservation(numeroSequentiel);
     }
 
     /*public MembreDuPersonnel getUtilisateur(String utilisateur, String motDePasse) throws ExceptionsBD

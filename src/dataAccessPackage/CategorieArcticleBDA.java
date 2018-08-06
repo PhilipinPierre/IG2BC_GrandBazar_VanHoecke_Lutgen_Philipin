@@ -31,7 +31,8 @@ public class CategorieArcticleBDA implements CategorieArticleDA {
 
     }
 
-    private void completerCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException{
+    private void completerCategorieArticle(ResultSet donnees, CategorieArticle categorieArticle) throws SQLException
+    {
         categorieArticle.setId(donnees.getString("id"));
         categorieArticle.setLibelle(donnees.getString("libelle"));
     }

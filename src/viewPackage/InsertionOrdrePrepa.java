@@ -415,8 +415,6 @@ public class InsertionOrdrePrepa extends JPanel {
                         affichage.append("Matricule du cuisinier :" + matriculeCuisinier.getSelectedItem().toString() + "\n");
                         affichage.append("Matricule du responsable des ventes :" + matriculeResponsable.getSelectedItem().toString() + "\n");
 
-                        JOptionPane.showMessageDialog(panneauInsertion, affichage.toString());
-
                         ordrePreparation.setNumeroSequentiel(Integer.valueOf(numeroSequentiel.getText()));
                         ordrePreparation.setQuantitePrevue(Integer.valueOf(quantitePrevu.getText()));
 
@@ -462,6 +460,8 @@ public class InsertionOrdrePrepa extends JPanel {
 
                         applicationController.setOrdrePreparation(applicationController, ordrePreparation);
 
+                        JOptionPane.showMessageDialog(panneauInsertion, affichage.toString());
+
                         JOptionPane.showMessageDialog(panneauInsertion, "L'ordre a bien été créé.");
 
                         dateCreation = new JSpinner(dateCreationModel);
@@ -473,7 +473,7 @@ public class InsertionOrdrePrepa extends JPanel {
                         remarque.setText(null);
                         urgentButton.clearSelection();
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de la création de l'ordre de préparation !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel existe déjà !");
                     }
                 }
             }

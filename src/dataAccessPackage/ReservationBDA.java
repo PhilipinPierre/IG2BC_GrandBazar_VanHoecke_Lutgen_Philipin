@@ -16,12 +16,14 @@ public class ReservationBDA implements ReservationDA {
         {
             ArrayList<Reservation> liste = new ArrayList<>();
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from reservation";
+            String requeteSQL = "select * from reservation order by NumeroSequentiel";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             ResultSet donnees = preparedStatement.executeQuery();
             while(donnees.next()){
                 Reservation reservation = new Reservation();
-                CompleterReservation(donnees, reservation);
+
+                reservation.setNumeroSequentiel(donnees.getInt("numeroSequentiel"));
+
                 liste.add(reservation);
             }
             return liste;
@@ -32,11 +34,24 @@ public class ReservationBDA implements ReservationDA {
         }
     }
 
-    private void CompleterReservation(ResultSet donnees, Reservation reservation) throws SQLException{
-        Integer qunatiteReserve = new Integer(donnees.getInt("quantitereserve"));
-        reservation.setQuantiteReservee(qunatiteReserve);
-        OrdrePreparation op = new OrdrePreparation();
-        reservation.setOrdrePreparation(op);
+    public void supprimerReservation(Integer numeroSequentiel) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "delete from reservation where numerosequentiel = " + numeroSequentiel;
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw new ExceptionsBD("Impossible de supprimer cet réservation : " + numeroSequentiel);
+        }
+    }
+
+    private void completerReservation(ResultSet donnees, Reservation reservation) throws SQLException{
+
+        OrdrePreparation ordrePreparation = new OrdrePreparation();
+        reservation.setOrdrePreparation(ordrePreparation);
+
+        reservation.setQuantiteReservee(donnees.getInt("quantiteReserve"));
+
         TypeArticle t = new TypeArticle();
         reservation.setCodeBarre(t);
     }
