@@ -2,14 +2,12 @@ package dataAccessPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.CategorieArticle;
 import modelPackage.TypeArticle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
     public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD{
@@ -21,7 +19,9 @@ public class TypeArticleBDA implements TypeArticleDA{
             ResultSet donnees = preparedStatement.executeQuery();
 
             while (donnees.next()) {
-                TypeArticle typeArticle = completerTypeArticle(donnees);
+                TypeArticle typeArticle = new TypeArticle();
+                typeArticle.setLibelle(donnees.getString("libelle"));
+                typeArticle.setCodeBarre(donnees.getInt("codeBarre"));
                 liste.add(typeArticle);
             }
             return liste;
@@ -30,42 +30,36 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
     }
 
-    public static TypeArticle getTypeArticle(int codeBarre) throws ExceptionsBD{
+    public TypeArticle getTypeArticle(int codeBarre) throws ExceptionsBD{
         TypeArticle typeArticle = new TypeArticle();
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle where codebarre = ?";
+            String requeteSQL = "select * from typearticle where codebarre = " + codeBarre;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            preparedStatement.setInt(1,codeBarre);
             ResultSet donnees = preparedStatement.executeQuery();
-
-            typeArticle = completerTypeArticle(donnees);
+            completerTypeArticle(donnees);
         } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche de type d'article via leur code barre");
+            throw new ExceptionsBD("Erreur lors de la recherche de type d'article vie leur code barra");
         }
         return typeArticle;
     }
 
-    public TypeArticle rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
-        TypeArticle typeArticle = new TypeArticle();
+    public Integer rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
+        Integer codeBarre;
         try {
             Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle where libelle = ?";
+            String requeteSQL = "select * from typearticle where libelle = " + libelle;
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            preparedStatement.setString(1,libelle);
             ResultSet donnees = preparedStatement.executeQuery();
-            if(!donnees.wasNull()) {
-                System.out.println("donnée non null");
-                typeArticle = completerTypeArticle(donnees);
-            }
+            codeBarre =  donnees.getInt("codebarre");
         } catch (Exception e){
             throw new ExceptionsBD("Erreur lors de la recherche d'une type d'article via son libellé");
         }
-        return typeArticle;
+        return codeBarre;
     }
 
 
-    public void ajouterTypeArticle(TypeArticle typeArticle) throws ExceptionsBD{
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD{
         try{
             Connection connection = SingletonConnexion.getInstance();
             String requeteSQL = "insert into typearticle values (?,?,?,?,?,?,?,?,?) ";
@@ -74,7 +68,7 @@ public class TypeArticleBDA implements TypeArticleDA{
 
 
             //POUR SAVOIR LE CODE BARRE
-            ArrayList <TypeArticle> listeTypeArticle = getAllTypeArticle();
+            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
             int codeBarre = 1;
             for(TypeArticle ta : listeTypeArticle)
             {
@@ -100,38 +94,27 @@ public class TypeArticleBDA implements TypeArticleDA{
         }
     }
 
-    protected static TypeArticle completerTypeArticle(ResultSet donnees) throws ExceptionsBD
+    protected static TypeArticle completerTypeArticle(ResultSet donnees) throws SQLException
     {
         TypeArticle typeArticle = new TypeArticle();
-        try {
-            int codeBarre = donnees.getInt("codeBarre");
-            typeArticle.setCodeBarre(codeBarre);
-            String libelle = donnees.getString("libelle");
-            typeArticle.setLibelle(libelle);
-            double prix = Double.valueOf(donnees.getString("prix"));
-            typeArticle.setPrix(prix);
-            int quantiteEnStock = donnees.getInt("quantiteEnStock");
-            typeArticle.setQuantiteeEnStock(quantiteEnStock);
-            if (donnees.getDate("datepromotiondebut") != null) {
-                GregorianCalendar datePromoDbt = new GregorianCalendar();
-                datePromoDbt.setTime(donnees.getDate("datepromotiondebut"));
-                typeArticle.setDatePromotionDebut(datePromoDbt);
-            }
-            if (donnees.getDate("datepromotionfin") != null) {
-                GregorianCalendar datePromoFin = new GregorianCalendar();
-                datePromoFin.setTime(donnees.getDate("datepromotionfin"));
-                typeArticle.setDatePromotionFin(datePromoFin);
-            }
-            Boolean estPerissable = donnees.getBoolean("estPerissable");
-            typeArticle.setEstPerissable(estPerissable);
-            int quantiteMinimal = donnees.getInt("quantiteMinimal");
-            typeArticle.setQuantiteeMinimal(quantiteMinimal);
-            String id = donnees.getString("id");
-            //CategorieArticle categorieArticle = CategorieArcticleBDA.getCategorieArticle(id);
 
-        } catch (Exception e){
-            throw new ExceptionsBD("erreur lors de l'allocation des information au programme");
+        typeArticle.setCodeBarre(donnees.getInt("codebarre"));
+        /*typeArticle.setLibelle(donnees.getString("libelle"));
+        typeArticle.setPrix(donnees.getDouble("prix"));
+        typeArticle.setQuantiteeEnStock(donnees.getInt("quantiteenstock"));
+        if(donnees.getDate("datepromotiondebut") != null){
+            GregorianCalendar datePromoDbt = new GregorianCalendar();
+            datePromoDbt.setTime(donnees.getDate("datepromotiondebut"));
+            typeArticle.setDatePromotionDebut(datePromoDbt);
         }
+        if(donnees.getDate("datepromotionfin") != null){
+            GregorianCalendar datePromoFin = new GregorianCalendar();
+            datePromoFin.setTime(donnees.getDate("datepromotionfin"));
+            typeArticle.setDatePromotionFin(datePromoFin);
+        }
+        typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
+        typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));*/
+
         return typeArticle;
     }
 }

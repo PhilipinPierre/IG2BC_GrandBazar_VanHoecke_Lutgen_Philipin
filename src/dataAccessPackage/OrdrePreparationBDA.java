@@ -9,85 +9,73 @@ import java.util.GregorianCalendar;
 
 public class OrdrePreparationBDA implements OrdrePreparationDA {
 
-    private ArrayList<OrdrePreparation> getOrdrePrepa(Connection connection, PreparedStatement preparedStatement) throws ExceptionsBD
+    private ArrayList<OrdrePreparation> getOrdrePrepa(Connection connection, PreparedStatement preparedStatement) throws SQLException
     {
         ArrayList<OrdrePreparation> listeOrdrePreparation = new ArrayList<>();
-        try {
-            ApplicationController applicationController = new ApplicationController();
-            ResultSet donnees = preparedStatement.executeQuery();
+        ApplicationController applicationController = new ApplicationController();
+        ResultSet donnees = preparedStatement.executeQuery();
 
-            while (donnees.next()) {
-                OrdrePreparation ordrePreparation = new OrdrePreparation();
+        while (donnees.next()) {
+            OrdrePreparation ordrePreparation = new OrdrePreparation();
 
-                GregorianCalendar date = new GregorianCalendar();
-                date.setTime(donnees.getDate("date"));
-                ordrePreparation.setDate(date);
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTime(donnees.getDate("date"));
+            ordrePreparation.setDate(date);
 
-                ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
+            ordrePreparation.setNumeroSequentiel(donnees.getInt("numerosequentiel"));
 
-                ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
+            ordrePreparation.setQuantitePrevue(donnees.getInt("quantiteprevue"));
 
-                int quantiteProduite = donnees.getInt("quantiteProduite");
-                if (!donnees.wasNull())
-                    ordrePreparation.setQuantiteProduite(quantiteProduite);
+            int quantiteProduite = donnees.getInt("quantiteProduite");
+            if(!donnees.wasNull())
+                ordrePreparation.setQuantiteProduite(quantiteProduite);
 
-                java.sql.Date dateBD = donnees.getDate("datevente");
-                if (!donnees.wasNull()) {
-                    date = new GregorianCalendar();
-                    date.setTime(dateBD);
-                    ordrePreparation.setDateVente(date);
-                }
-
-                dateBD = donnees.getDate("datepreparation");
-                if (!donnees.wasNull()) {
-                    date = new GregorianCalendar();
-                    date.setTime(dateBD);
-                    ordrePreparation.setDatePreparation(date);
-                }
-
-                String remarque = donnees.getString("remarque");
-                if (!donnees.wasNull())
-                    ordrePreparation.setRemarque(remarque);
-
-                ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
-
-                Recette recette = RecetteBDA.completerRecette(donnees);
-                ordrePreparation.setNom(recette);
-                System.out.println("all");
-                int codeBarre = donnees.getInt("codeBarre");
-                if (!donnees.wasNull()) {
-                    TypeArticle ta = TypeArticleBDA.getTypeArticle(codeBarre);
-                    ordrePreparation.setCodeBarre(ta);
-                }
-                System.out.println("all");
-                int matriculeCui = donnees.getInt("matricule_cui");
-                if (!donnees.wasNull()) {
-                    Cuisinier cuisinier = CuisinierBDA.completerCuisinier(donnees);
-                    ordrePreparation.setMatriculeCui(cuisinier);
-                }
-
-                ResponsableDesVentes rdv = ResponsableDesVentesBDA.completerResponsableDesVentes(donnees);
-                ordrePreparation.setMatriculeRes(rdv);
-
-                listeOrdrePreparation.add(ordrePreparation);
+            java.sql.Date dateBD = donnees.getDate("datevente");
+            if(!donnees.wasNull())
+            {
+                date = new GregorianCalendar();
+                date.setTime(dateBD);
+                ordrePreparation.setDateVente(date);
             }
-        } catch (Exception e){
-            throw new ExceptionsBD("accès a une ordre de préparation impossible");
+
+            dateBD = donnees.getDate("datepreparation");
+            if(!donnees.wasNull())
+            {
+                date = new GregorianCalendar();
+                date.setTime(dateBD);
+                ordrePreparation.setDatePreparation(date);
+            }
+
+            String remarque = donnees.getString("remarque");
+            if(!donnees.wasNull())
+                ordrePreparation.setRemarque(remarque);
+
+            ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
+
+            Recette recette = RecetteBDA.completerRecette(donnees);
+            ordrePreparation.setNom(recette);
+
+            int codeBarre = donnees.getInt("codeBarre");
+            if(!donnees.wasNull())
+            {
+                TypeArticle ta = TypeArticleBDA.completerTypeArticle(donnees);
+                ordrePreparation.setCodeBarre(ta);
+            }
+
+            int matriculeCui = donnees.getInt("matricule_cui");
+            if(!donnees.wasNull())
+            {
+                Cuisinier cuisinier = CuisinierBDA.completerCuisinier(donnees);
+                ordrePreparation.setMatriculeCui(cuisinier);
+            }
+
+            ResponsableDesVentes rdv = ResponsableDesVentesBDA.completerResponsableDesVentes(donnees);
+            ordrePreparation.setMatriculeRes(rdv);
+
+            listeOrdrePreparation.add(ordrePreparation);
         }
 
         return listeOrdrePreparation;
-    }
-
-    public OrdrePreparation getOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
-        try{
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from ordrepreparation where numerosequentiel =?";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            preparedStatement.setInt(1,numeroSequentiel);
-            return getOrdrePrepa(connection, preparedStatement).get(0);
-        } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche d'un ordre de préparation");
-        }
     }
 
     public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD {

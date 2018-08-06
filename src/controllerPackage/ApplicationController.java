@@ -62,11 +62,6 @@ public class ApplicationController {
         return ligneTicket.getAllLigneTicket();
     }
 
-    public ArrayList<Reservation> getAllReservation() throws ExceptionsBD
-    {
-        return reservation.getAllReservation();
-    }
-
     public ArrayList<Lot> getAllLot() throws ExceptionsBD
     {
         return lot.getAllLot();
@@ -102,22 +97,20 @@ public class ApplicationController {
     {
         return ordrePreparation.getAllOrdrePreparation();
     }
-    public OrdrePreparation getOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
-        return ordrePreparation.getOrdrePreparation(numeroSequentiel);
-    }
 
     public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD
     {
         return typeArticle.getAllTypeArticle();
     }
 
-    public TypeArticle rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
-        return typeArticle.rechercheTypeArticleViaLibelle(libelle);
-    }
-
     public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
         return recette.getAllRecette();
+    }
+
+    public ArrayList<Reservation> getAllReservation() throws ExceptionsBD
+    {
+        return reservation.getAllReservation();
     }
 
     public Recette getRecette(String nom) throws ExceptionsBD
@@ -130,9 +123,9 @@ public class ApplicationController {
         recette.ajouterRecette(applicationController, r);
     }
 
-    public void ajouterTypeArticle(TypeArticle t) throws ExceptionsBD
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle t) throws ExceptionsBD
     {
-        typeArticle.ajouterTypeArticle(t);
+        typeArticle.ajouterTypeArticle(applicationController, t);
     }
 
     public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD

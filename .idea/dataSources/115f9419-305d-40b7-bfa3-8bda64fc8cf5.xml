@@ -16,7 +16,7 @@
       <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="5" parent="1" name="mysql">
-      <Collation>utf8_general_ci</Collation>
+      <Collation>latin1_swedish_ci</Collation>
     </schema>
     <schema id="6" parent="1" name="performance_schema">
       <Collation>utf8_general_ci</Collation>
@@ -1404,13 +1404,11 @@ LigneTicketcol</ColNames>
     <column id="325" parent="239" name="CodeBarre">
       <Position>10</Position>
       <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="326" parent="239" name="Matricule_Cui">
       <Position>11</Position>
       <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="327" parent="239" name="Matricule_Res">
@@ -1475,7 +1473,7 @@ NumeroSequentiel</ColNames>
     </column>
     <column id="339" parent="240" name="Descriptif">
       <Position>3</Position>
-      <DataType>varchar(90)|0</DataType>
+      <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>

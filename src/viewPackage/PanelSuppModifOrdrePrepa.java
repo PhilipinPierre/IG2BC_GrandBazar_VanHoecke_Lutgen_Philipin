@@ -71,6 +71,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
                         {
                             applicationController.supprimerReservation(numSeq);
                             applicationController.supprimerOrdrePreparation(numSeq);
+                            JOptionPane.showMessageDialog(panneauBoutons, "Ordre supprimé !");
                         }
                         else
                         {
