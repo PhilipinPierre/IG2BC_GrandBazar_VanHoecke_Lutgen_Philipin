@@ -17,7 +17,7 @@ public class TypeArticleInsertion extends JPanel {
     //POUR LE FORMULAIRE
     private JLabel typeArticleLabel,
             prixLabel, quantiteStockLabel, dateDebutLabel, dateFinLabel, quantiteMinimalLabel, idLabel,
-            dateDebutCheckboxLabel, dateFinCheckboxLabel;
+            dateCheckboxLabel;
     private JTextField prix, quantiteStock, quantiteMinimal, libelle;
     private JComboBox id;
     private JRadioButton estPerissableTrue, estPerissableFalse;
@@ -25,7 +25,7 @@ public class TypeArticleInsertion extends JPanel {
     private SpinnerDateModel dateDebutModel, dateFinModel;
     private JSpinner dateDebutSpinner, dateFinSpinner;
     private ArrayList<CategorieArticle> listeId;
-    private JCheckBox dateDebutCheckbox, dateFinCheckbox;
+    private JCheckBox dateCheckbox;
     //POUR LES BOUTONS
     private JButton retour, ajoutIngredient, reinitialiser, ajoutTypeArticle;
     private ApplicationController applicationController;
@@ -40,7 +40,7 @@ public class TypeArticleInsertion extends JPanel {
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(11, 2, 5, 5));
+            panneauInsertion.setLayout(new GridLayout(10, 2, 5, 5));
 
             //TYPE ARTICLE
             //LIBELLE <- CODE BARRE (FK TYPEARTICLE)
@@ -73,15 +73,6 @@ public class TypeArticleInsertion extends JPanel {
             dateDebutSpinner = new JSpinner(dateDebutModel);
             panneauInsertion.add(dateDebutSpinner);
 
-            //DATE DE PROMOTION DEBUT CHECKBOX POUR DESACTIVER LA DATE
-            dateDebutCheckboxLabel = new JLabel("Désactiver la date de promotion début : ");
-            dateDebutCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            panneauInsertion.add(dateDebutCheckboxLabel);
-            dateDebutCheckbox = new JCheckBox();
-            TypeArticleInsertion.CheckBoxListenerDateDebut listenerDateDebut = new TypeArticleInsertion.CheckBoxListenerDateDebut();
-            dateDebutCheckbox.addItemListener(listenerDateDebut);
-            panneauInsertion.add(dateDebutCheckbox);
-
             //DATE PROMOTION FIN
             dateFinLabel = new JLabel("Fin promotion : ");
             dateFinLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -91,13 +82,13 @@ public class TypeArticleInsertion extends JPanel {
             panneauInsertion.add(dateFinSpinner);
 
             //DATE DE PROMOTION FIN CHECKBOX POUR DESACTIVER LA DATE
-            dateFinCheckboxLabel = new JLabel("Désactiver la date de promotion début : ");
-            dateFinCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            panneauInsertion.add(dateFinCheckboxLabel);
-            dateFinCheckbox = new JCheckBox();
-            TypeArticleInsertion.CheckBoxListenerDateFin listenerDateFin = new TypeArticleInsertion.CheckBoxListenerDateFin();
-            dateFinCheckbox.addItemListener(listenerDateFin);
-            panneauInsertion.add(dateFinCheckbox);
+            dateCheckboxLabel = new JLabel("Désactiver les dates de promotion : ");
+            dateCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateCheckboxLabel);
+            dateCheckbox = new JCheckBox();
+            TypeArticleInsertion.CheckBoxListenerDate listenerDate = new TypeArticleInsertion.CheckBoxListenerDate();
+            dateCheckbox.addItemListener(listenerDate);
+            panneauInsertion.add(dateCheckbox);
 
             //EST PERISSABLE
             estPerissableTrue = new JRadioButton("* Périssable", false);
@@ -165,25 +156,20 @@ public class TypeArticleInsertion extends JPanel {
         }
     }
 
-    private class CheckBoxListenerDateDebut implements ItemListener
+    private class CheckBoxListenerDate implements ItemListener
     {
         public void itemStateChanged(ItemEvent event)
         {
             if (event.getStateChange() == ItemEvent.SELECTED)
+            {
                 dateDebutSpinner.setEnabled(false);
-            else
-                dateDebutSpinner.setEnabled(true);
-        }
-    }
-
-    private class CheckBoxListenerDateFin implements ItemListener
-    {
-        public void itemStateChanged(ItemEvent event)
-        {
-            if (event.getStateChange() == ItemEvent.SELECTED)
                 dateFinSpinner.setEnabled(false);
+            }
             else
+            {
+                dateDebutSpinner.setEnabled(true);
                 dateFinSpinner.setEnabled(true);
+            }
         }
     }
 
@@ -247,6 +233,12 @@ public class TypeArticleInsertion extends JPanel {
                         nbErreurs++;
                     }
 
+                    if(dateFinModel.getDate().compareTo(dateDebutModel.getDate()) <= 0 && !dateCheckbox.isSelected())
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La date de fin doit être plus grande que la date de début !");
+                        nbErreurs++;
+                    }
+
                     if (nbErreurs == 0)
                     {
                         //AJOUT TYPE ARTICLE
@@ -255,18 +247,19 @@ public class TypeArticleInsertion extends JPanel {
                         typeArticle.setPrix(Double.valueOf(prix.getText()));
                         typeArticle.setQuantiteeEnStock(Integer.valueOf(quantiteStock.getText()));
 
-                        GregorianCalendar date = new GregorianCalendar();
-                        date.setTime(dateDebutModel.getDate());
-                        if(dateDebutCheckbox.isSelected())
+                        GregorianCalendar dateD = new GregorianCalendar();
+                        dateD.setTime(dateDebutModel.getDate());
+                        if(dateCheckbox.isSelected())
                             typeArticle.setDatePromotionDebut(null);
                         else
-                            typeArticle.setDatePromotionDebut(date);
+                            typeArticle.setDatePromotionDebut(dateD);
 
-                        date.setTime(dateFinModel.getDate());
-                        if(dateFinCheckbox.isSelected())
+                        GregorianCalendar dateF = new GregorianCalendar();
+                        dateF.setTime(dateFinModel.getDate());
+                        if(dateCheckbox.isSelected())
                             typeArticle.setDatePromotionFin(null);
                         else
-                            typeArticle.setDatePromotionFin(date);
+                            typeArticle.setDatePromotionFin(dateF);
 
                         typeArticle.setEstPerissable(estPerissableTrue.isSelected());
 
@@ -278,12 +271,13 @@ public class TypeArticleInsertion extends JPanel {
                         typeArticle.setID(listeId.get(id.getSelectedIndex()));
 
                         applicationController.ajouterTypeArticle(applicationController, typeArticle);
+                        JOptionPane.showMessageDialog(panneauInsertion, "L'article a bien été ajouté !");
                     }
                 }
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un type d'article", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauInsertion, e.getMessage(), "Erreur lors de l'ajout d'un type d'article", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -297,6 +291,7 @@ public class TypeArticleInsertion extends JPanel {
             quantiteMinimal.setText(null);
             quantiteStock.setText(null);
             estPerissable.clearSelection();
+            id.setSelectedIndex(0);
         }
     }
 

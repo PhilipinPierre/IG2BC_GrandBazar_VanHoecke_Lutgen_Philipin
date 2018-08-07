@@ -3,10 +3,8 @@ package dataAccessPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -151,10 +149,23 @@ public class LotBDA implements LotDA {
             }
             preparedStatement.setString(1, id);
 
-            preparedStatement.setDate(2, new java.sql.Date(lot.getDatePeremption().getTimeInMillis()));
+            if(lot.getDatePeremption() == null)
+                preparedStatement.setNull(2, Types.TIME);
+            else
+                preparedStatement.setDate(2, new java.sql.Date(lot.getDatePeremption().getTimeInMillis()));
+
             preparedStatement.setInt(3, lot.getQuantite());
-            preparedStatement.setInt(4, lot.getCodeLot());
-            preparedStatement.setDate(5, new java.sql.Date(lot.getDateFourniturePrevue().getTimeInMillis()));
+
+            if(lot.getCodeLot() == null)
+                preparedStatement.setNull(4, Types.INTEGER);
+            else
+                preparedStatement.setInt(4, lot.getCodeLot());
+
+            if(lot.getDateFourniturePrevue() == null)
+                preparedStatement.setNull(5, Types.TIME);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(lot.getDateFourniturePrevue().getTimeInMillis()));
+
             preparedStatement.setDate(6, new java.sql.Date(lot.getDateCommande().getTimeInMillis()));
 
             //POUR CONVERTIR LE LIBELLE DE TYPE ARTICLE EN CODE BARRE

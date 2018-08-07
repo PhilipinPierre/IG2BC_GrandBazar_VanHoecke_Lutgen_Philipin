@@ -206,6 +206,7 @@ public class RecetteInsertion extends JPanel {
                             ingredient.setQuantitePortion(Integer.valueOf(quantitePortion.getText()));
                             applicationController.ajouterIngredient(applicationController, ingredient);
                         }
+                        JOptionPane.showMessageDialog(panneauInsertion, "La recette a bien été ajouté !");
                     }
                 }
             }

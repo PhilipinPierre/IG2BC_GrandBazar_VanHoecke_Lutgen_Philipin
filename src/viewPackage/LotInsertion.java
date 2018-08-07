@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -14,11 +16,13 @@ public class LotInsertion extends JPanel {
     private JPanel panneauBoutons;
     //POUR LE FORMULAIRE
     private JLabel datePeremptionLabel, quantiteLabel, codeLotLabel, dateFourniturePrevueLabel, dateCommandeLabel,
-                fournisseurLabel, typeArticleLabel, membreDuPersonnelLabel;
+                fournisseurLabel, typeArticleLabel, membreDuPersonnelLabel, datePeremptionCheckboxLabel,
+            dateFourniturePrevueCheckboxLabel;
     private JTextField quantite, codeLot;
     private JComboBox fournisseur, typeArticle, membreDuPersonnel;
     private SpinnerDateModel datePeremptionModel, dateFourniturePrevueModel, dateCommandeModel;
     private JSpinner datePeremptionSpinner, dateFourniturePrevueSpinner, dateCommandeSpinner;
+    private JCheckBox datePeremptionCheckbox, dateFourniturePrevueCheckbox;
     //POUR LES BOUTONS
     private JButton retour, ajoutFournisseur, reinitialiser, ajoutLot;
     private ApplicationController applicationController;
@@ -36,7 +40,7 @@ public class LotInsertion extends JPanel {
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(9, 2, 5, 5));
+            panneauInsertion.setLayout(new GridLayout(11, 2, 5, 5));
 
             //LOT
             //DATE PEREMPTION
@@ -47,8 +51,17 @@ public class LotInsertion extends JPanel {
             datePeremptionSpinner = new JSpinner(datePeremptionModel);
             panneauInsertion.add(datePeremptionSpinner);
 
+            //DATE DE PEREMPTION CHECKBOX POUR DESACTIVER LA DATE
+            datePeremptionCheckboxLabel = new JLabel("Désactiver la date de péremption : ");
+            datePeremptionCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(datePeremptionCheckboxLabel);
+            datePeremptionCheckbox = new JCheckBox();
+            LotInsertion.CheckBoxListenerDatePeremption listenerDatePeremption = new LotInsertion.CheckBoxListenerDatePeremption();
+            datePeremptionCheckbox.addItemListener(listenerDatePeremption);
+            panneauInsertion.add(datePeremptionCheckbox);
+
             //QUANTITE
-            quantiteLabel = new JLabel("Quantité : ");
+            quantiteLabel = new JLabel("Quantité * : ");
             quantiteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantiteLabel);
             quantite = new JTextField();
@@ -69,8 +82,17 @@ public class LotInsertion extends JPanel {
             dateFourniturePrevueSpinner = new JSpinner(dateFourniturePrevueModel);
             panneauInsertion.add(dateFourniturePrevueSpinner);
 
+            //DATE FOURNITURE PREVUE CHECKBOX POUR DESACTIVER LA DATE
+            dateFourniturePrevueCheckboxLabel = new JLabel("Désactiver la date de fourniture prévue : ");
+            dateFourniturePrevueCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateFourniturePrevueCheckboxLabel);
+            dateFourniturePrevueCheckbox = new JCheckBox();
+            LotInsertion.CheckBoxListenerDateFourniturePrevue listenerDateFourniturePrevue = new LotInsertion.CheckBoxListenerDateFourniturePrevue();
+            dateFourniturePrevueCheckbox.addItemListener(listenerDateFourniturePrevue);
+            panneauInsertion.add(dateFourniturePrevueCheckbox);
+
             //DATE COMMANDE
-            dateCommandeLabel = new JLabel("Début de commande : ");
+            dateCommandeLabel = new JLabel("Début de commande * : ");
             dateCommandeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dateCommandeLabel);
             dateCommandeModel = new SpinnerDateModel();
@@ -78,7 +100,7 @@ public class LotInsertion extends JPanel {
             panneauInsertion.add(dateCommandeSpinner);
 
             //FOURNISSEUR
-            fournisseurLabel = new JLabel("Fournisseur");
+            fournisseurLabel = new JLabel("Fournisseur * : ");
             fournisseurLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(fournisseurLabel);
             ArrayList<String> valuesFournisseur = new ArrayList<>();
@@ -92,7 +114,7 @@ public class LotInsertion extends JPanel {
             panneauInsertion.add(fournisseur);
 
             //TYPE ARTICLE LIBELLE -> CODE BARRE
-            typeArticleLabel = new JLabel("Type article : ");
+            typeArticleLabel = new JLabel("Type article * : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(typeArticleLabel);
@@ -107,7 +129,7 @@ public class LotInsertion extends JPanel {
             panneauInsertion.add(typeArticle);
 
             //MEMBRE DU PERSONNEL
-            membreDuPersonnelLabel = new JLabel("Memmbre du personnel : ");
+            membreDuPersonnelLabel = new JLabel("Membre du personnel * : ");
             membreDuPersonnelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(membreDuPersonnelLabel);
             listeMembreDuPersonnel = applicationController.getAllMembreDuPersonnel();
@@ -157,6 +179,27 @@ public class LotInsertion extends JPanel {
         }
     }
 
+    private class CheckBoxListenerDatePeremption implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                datePeremptionSpinner.setEnabled(false);
+            else
+                datePeremptionSpinner.setEnabled(true);
+        }
+    }
+    private class CheckBoxListenerDateFourniturePrevue implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                dateFourniturePrevueSpinner.setEnabled(false);
+            else
+                dateFourniturePrevueSpinner.setEnabled(true);
+        }
+    }
+
     //CLASSES PRIVEES POUR LES BOUTONS
     private class ButtonListenerRetour implements ActionListener
     {
@@ -177,33 +220,99 @@ public class LotInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            int nbErreurs = 0;
             try
             {
-                //AJOUT LOT
-                Lot lot = new Lot();
+                if(quantite.getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "Tous les champs sont obligatoire sauf le code lot, la date de peremption et la date de fourniture prévue");
+                }
+                else
+                {
+                    try
+                    {
+                        int quantLot = Integer.parseInt(quantite.getText());
+                        if (quantLot < 0) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité doit être un nombre entier positif !");
+                            nbErreurs++;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité doit être un nombre entier !");
+                        nbErreurs++;
+                    }
 
-                GregorianCalendar date = new GregorianCalendar();
-                date.setTime(datePeremptionModel.getDate());
-                lot.setDatePeremption(date);
+                    try {
+                        if (!codeLot.getText().isEmpty() && Integer.parseInt(codeLot.getText()) < 0) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "Le code lot doit être un nombre entier positif !");
+                            nbErreurs++;
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La code lot doit être un nombre entier !");
+                        nbErreurs++;
+                    }
 
-                lot.setQuantite(Integer.valueOf(quantite.getText()));
-                lot.setCodeLot(Integer.valueOf(codeLot.getText()));
+                    if(datePeremptionModel.getDate().compareTo(dateFourniturePrevueModel.getDate()) <= 0 && !datePeremptionCheckbox.isSelected() && !dateFourniturePrevueCheckbox.isSelected())
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La date de péremption doit être plus grande que la date de fourniture prévue !");
+                        nbErreurs++;
+                    }
 
-                date.setTime(dateFourniturePrevueModel.getDate());
-                lot.setDateFourniturePrevue(date);
+                    if(datePeremptionModel.getDate().compareTo(dateCommandeModel.getDate()) <= 0 && !datePeremptionCheckbox.isSelected())
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La date de péremption doit être plus grande que la date de commande !");
+                        nbErreurs++;
+                    }
 
-                date.setTime(dateCommandeModel.getDate());
-                lot.setDateCommande(date);
+                    if(dateFourniturePrevueModel.getDate().compareTo(dateCommandeModel.getDate()) <= 0 && !dateFourniturePrevueCheckbox.isSelected())
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La date de fourniture prévue doit être plus grande que la date de commande !");
+                        nbErreurs++;
+                    }
 
-                lot.setCodeBarre(listeTypeArticle.get(typeArticle.getSelectedIndex()));
-                lot.setMatricule(listeMembreDuPersonnel.get(membreDuPersonnel.getSelectedIndex()));
-                lot.setNumeroTVA(listeFournisseur.get(fournisseur.getSelectedIndex()));
+                    if(nbErreurs == 0) {
+                        //AJOUT LOT
+                        Lot lot = new Lot();
 
-                applicationController.ajouterLot(applicationController, lot);
+                        GregorianCalendar dateP = new GregorianCalendar();
+                        dateP.setTime(datePeremptionModel.getDate());
+                        if(datePeremptionCheckbox.isSelected())
+                            lot.setDatePeremption(null);
+                        else
+                            lot.setDatePeremption(dateP);
+
+                        lot.setQuantite(Integer.valueOf(quantite.getText()));
+
+                        if(codeLot.getText().isEmpty())
+                            lot.setCodeLot(null);
+                        else
+                            lot.setCodeLot(Integer.valueOf(codeLot.getText()));
+
+                        GregorianCalendar dateF = new GregorianCalendar();
+                        dateF.setTime(dateFourniturePrevueModel.getDate());
+                        if(dateFourniturePrevueCheckbox.isSelected())
+                            lot.setDateFourniturePrevue(null);
+                        else
+                            lot.setDateFourniturePrevue(dateF);
+
+                        GregorianCalendar dateC = new GregorianCalendar();
+                        dateC.setTime(dateCommandeModel.getDate());
+                        lot.setDateCommande(dateC);
+
+                        lot.setCodeBarre(listeTypeArticle.get(typeArticle.getSelectedIndex()));
+                        lot.setMatricule(listeMembreDuPersonnel.get(membreDuPersonnel.getSelectedIndex()));
+                        lot.setNumeroTVA(listeFournisseur.get(fournisseur.getSelectedIndex()));
+
+                        applicationController.ajouterLot(applicationController, lot);
+
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le lot a bien été ajouté !");
+                    }
+                }
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, "Erreur lors de l'ajout d'un nouveau lot");
+                JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de l'ajout d'un nouveau lot");
             }
         }
     }
@@ -212,11 +321,11 @@ public class LotInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            datePeremptionSpinner = new JSpinner(datePeremptionModel);
             quantite.setText(null);
             codeLot.setText(null);
-            dateFourniturePrevueSpinner = new JSpinner(dateFourniturePrevueModel);
-            dateCommandeSpinner = new JSpinner(dateCommandeModel);
+            typeArticle.setSelectedIndex(0);
+            membreDuPersonnel.setSelectedIndex(0);
+            fournisseur.setSelectedIndex(0);
         }
     }
 

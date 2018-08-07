@@ -425,7 +425,6 @@ public class InsertionOrdrePrepa extends JPanel {
 
                         JOptionPane.showMessageDialog(panneauInsertion, "L'ordre a bien été créé.");
 
-                        dateCreation = new JSpinner(dateCreationModel);
                         numeroSequentiel.setText(null);
                         quantitePrevu.setText(null);
                         quantiteProduite.setText(null);
@@ -447,7 +446,6 @@ public class InsertionOrdrePrepa extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
-            dateCreation = new JSpinner(dateCreationModel);
             numeroSequentiel.setText(null);
             quantitePrevu.setText(null);
             quantiteProduite.setText(null);
