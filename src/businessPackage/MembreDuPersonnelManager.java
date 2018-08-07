@@ -4,6 +4,7 @@ import dataAccessPackage.MembreDuPersonnelBDA;
 import dataAccessPackage.MembreDuPersonnelDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.MembreDuPersonnel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MembreDuPersonnelManager {
@@ -11,7 +12,7 @@ public class MembreDuPersonnelManager {
 
     public MembreDuPersonnelManager() {membreDuPersonnelBDA = new MembreDuPersonnelBDA();}
 
-    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD
+    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD, SQLException
     {
         ArrayList<MembreDuPersonnel> membreDuPersonnelList = membreDuPersonnelBDA.getAllMembreDuPersonnel();
         return membreDuPersonnelList;

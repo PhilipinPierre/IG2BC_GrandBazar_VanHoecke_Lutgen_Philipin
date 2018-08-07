@@ -1,7 +1,6 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
@@ -224,7 +223,7 @@ public class ModificationOrdrePrepa extends JPanel {
 
             setVisible(true);
         }
-        catch (ExceptionsBD ebd)
+        catch (Exception ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
         }

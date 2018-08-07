@@ -1,10 +1,8 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 import modelPackage.Reservation;
-
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -32,7 +30,7 @@ public class ListingOrdrePrepa extends JPanel {
             repaint();
 
         }
-        catch (ExceptionsBD ebd)
+        catch (Exception ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors du listing des ordres de préparation", JOptionPane.ERROR_MESSAGE);
         }

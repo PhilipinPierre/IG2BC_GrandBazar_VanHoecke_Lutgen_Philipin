@@ -24,6 +24,5 @@ public class SingletonConnexion {
         {
             throw new ExceptionsBD("Probleme lors de la connexion à la base de données !");
         }
-
     }
 }
