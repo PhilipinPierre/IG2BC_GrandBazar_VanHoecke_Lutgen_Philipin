@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class RecetteInsertion extends JPanel {
     private JPanel panneauBoutons;
     //POUR LE FORMULAIRE
     private JLabel dlcLabel, nomRecetteLabel, descriptifLabel,
-             quantitePortionLabel, nomIngredientLabel;
+            quantitePortionLabel, nomIngredientLabel;
     private JTextField dlc, descriptif, quantitePortion, nomRecette;
     private JList nomIngredients;
     //POUR LES BOUTONS
@@ -120,7 +121,7 @@ public class RecetteInsertion extends JPanel {
 
             setVisible(true);
         }
-        catch (Exception ebd)
+        catch (ExceptionsBD ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
         }
@@ -257,7 +258,7 @@ public class RecetteInsertion extends JPanel {
                 revalidate();
                 repaint();
             }
-            catch (Exception e)
+            catch (ExceptionsBD e)
             {
                 JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors du listing des recettes");
             }

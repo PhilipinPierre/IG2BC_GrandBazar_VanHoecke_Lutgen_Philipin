@@ -16,7 +16,7 @@ public class LotInsertion extends JPanel {
     private JPanel panneauBoutons;
     //POUR LE FORMULAIRE
     private JLabel datePeremptionLabel, quantiteLabel, codeLotLabel, dateFourniturePrevueLabel, dateCommandeLabel,
-                fournisseurLabel, typeArticleLabel, membreDuPersonnelLabel, datePeremptionCheckboxLabel,
+            fournisseurLabel, typeArticleLabel, membreDuPersonnelLabel, datePeremptionCheckboxLabel,
             dateFourniturePrevueCheckboxLabel;
     private JTextField quantite, codeLot;
     private JComboBox fournisseur, typeArticle, membreDuPersonnel;

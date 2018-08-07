@@ -5,7 +5,6 @@ import dataAccessPackage.RecetteBDA;
 import dataAccessPackage.RecetteDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Recette;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RecetteManager {
@@ -13,17 +12,16 @@ public class RecetteManager {
 
     public RecetteManager() {recetteDA = new RecetteBDA();}
 
-    public ArrayList<Recette> getAllRecette() throws ExceptionsBD, SQLException
+    public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
         return recetteDA.getAllRecette();
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD, SQLException
-    {
+    public Recette getRecette(String nom) throws ExceptionsBD{
         return recetteDA.getRecette(nom);
     }
 
-    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD, SQLException
+    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
     {
         recetteDA.ajouterRecette(applicationController, r);
     }

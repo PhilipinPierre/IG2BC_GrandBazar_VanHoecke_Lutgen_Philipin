@@ -9,19 +9,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CuisinierBDA extends MembreDuPersonnelBDA implements CuisinierDA {
-    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD, SQLException
-    {
+    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD{
         ArrayList<Cuisinier> liste = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from membredupersonnel m, cuisinier c where m.matricule = c.matricule_cui";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        ResultSet donnees = preparedStatement.executeQuery();
-        while (donnees.next())
-        {
-            Cuisinier cuisinier = new Cuisinier();
-            cuisinier.setNom(donnees.getString("nom"));
-            cuisinier.setMatricule(donnees.getInt("matricule_cui"));
-            liste.add(cuisinier);
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from membredupersonnel m, cuisinier c where m.matricule = c.matricule_cui";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            ResultSet donnees = preparedStatement.executeQuery();
+            while (donnees.next()) {
+                Cuisinier cuisinier = new Cuisinier();
+                cuisinier.setNom(donnees.getString("nom"));
+                cuisinier.setMatricule(donnees.getInt("matricule_cui"));
+                liste.add(cuisinier);
+            }
+
+        } catch (Exception e){
+            throw new ExceptionsBD("Erreur lors de la recherche de tout les cuisiniers");
         }
         return liste;
     }

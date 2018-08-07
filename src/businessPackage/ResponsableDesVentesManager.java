@@ -4,7 +4,6 @@ import dataAccessPackage.ResponsableDesVentesBDA;
 import dataAccessPackage.ResponsableDesVentesDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.ResponsableDesVentes;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ResponsableDesVentesManager {
@@ -14,8 +13,7 @@ public class ResponsableDesVentesManager {
         responsableDesVentes = new ResponsableDesVentesBDA();
     }
 
-    public ArrayList<ResponsableDesVentes> getAllResponsableDesVentes() throws ExceptionsBD, SQLException
-    {
+    public ArrayList<ResponsableDesVentes> getAllResponsableDesVentes() throws ExceptionsBD{
         return responsableDesVentes.getAllResponsableDesVentes();
     }
 }

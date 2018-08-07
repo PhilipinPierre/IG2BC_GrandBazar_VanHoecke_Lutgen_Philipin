@@ -8,24 +8,26 @@ import java.util.*;
 public class ClientBDA implements ClientDA {
 
     @Override
-    public ArrayList<Client> getAllClient() throws ExceptionsBD, SQLException
-    {
-        ArrayList<Client> listeClient = new ArrayList<>();
-        Connection connection = SingletonConnexion.getInstance();
-        PreparedStatement preparedStatement = connection.prepareStatement("select * from Client");
-        ResultSet donnees = preparedStatement.executeQuery();
+    public ArrayList<Client> getAllClient() throws ExceptionsBD{
+        try{
+            ArrayList<Client> listeClient = new ArrayList<>();
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from Client");
+            ResultSet donnees = preparedStatement.executeQuery();
 
-        while(donnees.next())
-        {
-            Client client = new Client();
-            completerClient(donnees,client);
-            listeClient.add(client);
+            while(donnees.next()){
+                Client client = new Client();
+                completerClient(donnees,client);
+                listeClient.add(client);
+            }
+            return listeClient;
         }
-        return listeClient;
+        catch (Exception e){
+            throw new ExceptionsBD("la recherche des clients dans la base de donnée");
+        }
     }
 
-    private void completerClient(ResultSet donnees, Client client) throws SQLException
-    {
+    private void completerClient(ResultSet donnees, Client client) throws SQLException{
         client.setNumClient(donnees.getInt("numClient"));
         client.setNom(donnees.getString("nom"));
         client.setPrenom(donnees.getString("prenom"));

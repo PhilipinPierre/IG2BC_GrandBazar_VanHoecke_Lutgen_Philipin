@@ -4,7 +4,6 @@ import controllerPackage.ApplicationController;
 import dataAccessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.OrdrePreparation;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrdrePreparationManager {
@@ -12,28 +11,24 @@ public class OrdrePreparationManager {
 
     public OrdrePreparationManager() {ordrePreparationBDA = new OrdrePreparationBDA();}
 
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD, SQLException
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
     {
         return ordrePreparationBDA.getAllOrdrePreparation();
     }
 
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD, SQLException
-    {
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
         return ordrePreparationBDA.getNumSeqOrdrePreparation();
     }
 
-    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD, SQLException
-    {
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         ordrePreparationBDA.supprimerOrdrePreparation(numeroSequentiel);
     }
 
-    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD, SQLException
-    {
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
         ordrePreparationBDA.setOrdrePreparation(applicationController, ordrePreparation);
     }
 
-    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD, SQLException
-    {
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
         ordrePreparationBDA.modifierOrdrePreparation(applicationController, ordrePreparation);
     }
 

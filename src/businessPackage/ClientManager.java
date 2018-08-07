@@ -4,7 +4,6 @@ import dataAccessPackage.ClientBDA;
 import dataAccessPackage.ClientDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Client;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClientManager {
@@ -15,7 +14,7 @@ public class ClientManager {
         clientBDA = new ClientBDA();
     }
 
-    public ArrayList<Client> getAllClient() throws ExceptionsBD, SQLException
+    public ArrayList<Client> getAllClient() throws ExceptionsBD
     {
         ArrayList<Client> clientList = clientBDA.getAllClient();
         return clientList;

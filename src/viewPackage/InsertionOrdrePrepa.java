@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
@@ -214,7 +215,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
             setVisible(true);
         }
-        catch (Exception ebd)
+        catch (ExceptionsBD ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'insertion d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
         }

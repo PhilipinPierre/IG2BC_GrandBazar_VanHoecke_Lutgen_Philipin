@@ -3,7 +3,6 @@ package controllerPackage;
 import businessPackage.*;
 import exceptionsPackage.*;
 import modelPackage.*;
-import java.sql.SQLException;
 import java.util.*;
 
 public class ApplicationController {
@@ -43,122 +42,118 @@ public class ApplicationController {
         reservation = new ReservationManager();
     }
 
-    public ArrayList<Client> getAllClient() throws ExceptionsBD, SQLException
+    public ArrayList<Client> getAllClient() throws ExceptionsBD
     {
         return client.getAllClient();
     }
 
-    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD, SQLException
+    public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD
     {
         return fournisseur.getAllFournisseur();
     }
 
-    public ArrayList<Ingredient> getAllIngredient() throws ExceptionsBD, SQLException
+    public ArrayList<Ingredient> getAllIngredient() throws ExceptionsBD
     {
         return ingredient.getAllIngredient();
     }
 
-    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD, SQLException
+    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD
     {
         return ligneTicket.getAllLigneTicket();
     }
 
-    public ArrayList<Lot> getAllLot() throws ExceptionsBD, SQLException
+    public ArrayList<Lot> getAllLot() throws ExceptionsBD
     {
         return lot.getAllLot();
     }
 
-    public ArrayList<Lot> rechercheLotViaTypeArticle(String libelle) throws ExceptionsBD, SQLException
-    {
+    public ArrayList<Lot> rechercheLotViaTypeArticle(String libelle) throws ExceptionsBD{
         return lot.rechercheLotViaTypeArticle(libelle);
     }
 
-    public ArrayList<Lot> rechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD, SQLException
-    {
+    public ArrayList<Lot> rechercheLotViaLocaliteFournisseur(String localite) throws ExceptionsBD{
         return lot.rechercheLotViaLocaliteFournisseur(localite);
     }
 
-    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD, SQLException
+    public ArrayList<MembreDuPersonnel> getAllMembreDuPersonnel() throws ExceptionsBD
     {
         return membreDuPersonnel.getAllMembreDuPersonnel();
     }
 
-    public ArrayList<ResponsableDesVentes> getAllResponsableDesVentes() throws ExceptionsBD, SQLException
-    {
+    public ArrayList<ResponsableDesVentes> getAllResponsableDesVentes() throws ExceptionsBD{
         return responsableDesVentes.getAllResponsableDesVentes();
     }
 
-    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD, SQLException
-    {
+    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD{
         return cuisinier.getAllCuisinier();
     }
 
-    public ArrayList<CategorieArticle> getAllCategorieArticle()throws ExceptionsBD, SQLException
+    public ArrayList<CategorieArticle> getAllCategorieArticle()throws ExceptionsBD
     {
         return categorieArticle.getAllCategorieArticle();
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD, SQLException
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD
     {
         return ordrePreparation.getAllOrdrePreparation();
     }
 
-    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD, SQLException
+    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD
     {
         return typeArticle.getAllTypeArticle();
     }
 
-    public ArrayList<Recette> getAllRecette() throws ExceptionsBD, SQLException
+    public ArrayList<Recette> getAllRecette() throws ExceptionsBD
     {
         return recette.getAllRecette();
     }
 
-    public ArrayList<Reservation> getAllReservation() throws ExceptionsBD, SQLException
+    public ArrayList<Reservation> getAllReservation() throws ExceptionsBD
     {
         return reservation.getAllReservation();
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD, SQLException
+    public Recette getRecette(String nom) throws ExceptionsBD
     {
         return recette.getRecette(nom);
     }
 
-    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD, SQLException
+    public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
     {
         recette.ajouterRecette(applicationController, r);
     }
 
-    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle t) throws ExceptionsBD, SQLException
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle t) throws ExceptionsBD
     {
         typeArticle.ajouterTypeArticle(applicationController, t);
     }
 
-    public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD, SQLException
+    public void ajouterIngredient(ApplicationController applicationController, Ingredient i) throws ExceptionsBD
     {
         ingredient.ajouterIngredient(applicationController, i);
     }
 
-    public void ajouterLot(ApplicationController applicationController, Lot l) throws ExceptionsBD, SQLException
+    public void ajouterLot(ApplicationController applicationController, Lot l) throws ExceptionsBD
     {
         lot.ajouterLot(applicationController, l);
     }
 
-    public void ajouterFournisseur(ApplicationController applicationController, Fournisseur f) throws ExceptionsBD, SQLException
+    public void ajouterFournisseur(ApplicationController applicationController, Fournisseur f) throws ExceptionsBD
     {
         fournisseur.ajouterFournisseur(applicationController, f);
     }
 
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD, SQLException
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD
     {
         return ordrePreparation.getNumSeqOrdrePreparation();
     }
 
-    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD, SQLException
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD
     {
         ordrePreparation.supprimerOrdrePreparation(numeroSequentiel);
     }
 
-    public void supprimerReservation(Integer numeroSequentiel) throws ExceptionsBD, SQLException
+    public void supprimerReservation(Integer numeroSequentiel) throws ExceptionsBD
     {
         reservation.supprimerReservation(numeroSequentiel);
     }
@@ -168,27 +163,27 @@ public class ApplicationController {
         return membreDuPersonnel.getUtilisateur(utilisateur, motDePasse);
     }*/
 
-    public void fermetureConnection() throws ExceptionsBD, SQLException
+    public void fermetureConnection() throws ExceptionsBD
     {
         connection.fermetureConnection();
     }
 
-    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD, SQLException
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePrep) throws ExceptionsBD
     {
         ordrePreparation.setOrdrePreparation(applicationController, ordrePrep);
     }
 
-    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD, SQLException
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparat) throws ExceptionsBD
     {
         ordrePreparation.modifierOrdrePreparation(applicationController, ordrePreparat);
     }
 
-    public void modifierReservation(Reservation reservat) throws ExceptionsBD, SQLException
+    public void modifierReservation(Reservation reservat) throws ExceptionsBD
     {
         reservation.modifierReservation(reservat);
     }
 
-    public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD, SQLException
+    public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD
     {
         return articlePerime.rechercheArticlePerimeEntre2Date(date1, date2);
     }

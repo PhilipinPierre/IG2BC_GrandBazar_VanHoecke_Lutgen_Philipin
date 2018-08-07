@@ -79,202 +79,225 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
         return listeOrdrePreparation;
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD, SQLException
-    {
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel ";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        return getOrdrePrepa(connection, preparedStatement);
+    public ArrayList<OrdrePreparation> getAllOrdrePreparation() throws ExceptionsBD {
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel ";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            return getOrdrePrepa(connection, preparedStatement);
+        }
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("Erreur lors de l'accès à la base de données");
+        }
     }
 
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws ExceptionsBD, SQLException
-    {
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel ";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+    public ArrayList<Integer> getNumSeqOrdrePreparation() throws ExceptionsBD {
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "select * from ordrepreparation order by NumeroSequentiel ";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
 
-        ArrayList<Integer> liste = new ArrayList<>();
-        for(OrdrePreparation ordre : getOrdrePrepa(connection, preparedStatement))
-            liste.add(ordre.getNumeroSequentiel());
-        return liste;
+            ArrayList<Integer> liste = new ArrayList<>();
+            for(OrdrePreparation ordre : getOrdrePrepa(connection, preparedStatement))
+                liste.add(ordre.getNumeroSequentiel());
+            return liste;
+        }
+        catch (Exception e)
+        {
+            throw new ExceptionsBD("Erreur lors de l'accès à la base de données");
+        }
     }
 
-    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD, SQLException
-    {
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        preparedStatement.executeUpdate();
+    public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "delete from ordrepreparation where numerosequentiel = " + numeroSequentiel;
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw new ExceptionsBD("Impossible de supprimer cet ordre de préparation : " + numeroSequentiel);
+        }
     }
 
-    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD, SQLException
-    {
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "update ordrepreparation " +
-                "set Date = ?"+
-                ", NumeroSequentiel = ?"+
-                ", QuantitePrevue = ?"+
-                ", QuantiteProduite = ?"+
-                ", DateVente = ?"+
-                ", DatePreparation = ?"+
-                ", Remarque = ?"+
-                ", EstUrgent = ?"+
-                ", Nom = ?"+
-                ", CodeBarre = ?"+
-                ", Matricule_Cui = ?"+
-                ", Matricule_Res = ?"+
-                " where NumeroSequentiel = " + ordrePreparation.getNumeroSequentiel();
+    public void modifierOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "update ordrepreparation " +
+                    "set Date = ?"+
+                    ", NumeroSequentiel = ?"+
+                    ", QuantitePrevue = ?"+
+                    ", QuantiteProduite = ?"+
+                    ", DateVente = ?"+
+                    ", DatePreparation = ?"+
+                    ", Remarque = ?"+
+                    ", EstUrgent = ?"+
+                    ", Nom = ?"+
+                    ", CodeBarre = ?"+
+                    ", Matricule_Cui = ?"+
+                    ", Matricule_Res = ?"+
+                    " where NumeroSequentiel = " + ordrePreparation.getNumeroSequentiel();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
-        preparedStatement.setInt(2, ordrePreparation.getNumeroSequentiel());
-        preparedStatement.setInt(3,ordrePreparation.getQuantitePrevue());
-        if(ordrePreparation.getQuantiteProduite() == null)
-            preparedStatement.setNull(4, Types.INTEGER);
-        else
-            preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
+            preparedStatement.setInt(2, ordrePreparation.getNumeroSequentiel());
+            preparedStatement.setInt(3,ordrePreparation.getQuantitePrevue());
+            if(ordrePreparation.getQuantiteProduite() == null)
+                preparedStatement.setNull(4, Types.INTEGER);
+            else
+                preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
 
-        if(ordrePreparation.getDateVente() == null)
-            preparedStatement.setNull(5, Types.TIME);
-        else
-            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+            if(ordrePreparation.getDateVente() == null)
+                preparedStatement.setNull(5, Types.TIME);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
 
-        if(ordrePreparation.getDatePreparation() == null)
-            preparedStatement.setNull(6, Types.TIME);
-        else
-            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+            if(ordrePreparation.getDatePreparation() == null)
+                preparedStatement.setNull(6, Types.TIME);
+            else
+                preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
 
-        if(ordrePreparation.getRemarque() == null)
-            preparedStatement.setNull(7, Types.VARCHAR);
-        else
-            preparedStatement.setString(7, ordrePreparation.getRemarque());
-        preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
-        preparedStatement.setString(9, ordrePreparation.getNom().getNom());
+            if(ordrePreparation.getRemarque() == null)
+                preparedStatement.setNull(7, Types.VARCHAR);
+            else
+                preparedStatement.setString(7, ordrePreparation.getRemarque());
+            preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
+            preparedStatement.setString(9, ordrePreparation.getNom().getNom());
 
-        if(ordrePreparation.getCodeBarre() == null)
-        {
-            preparedStatement.setNull(10, Types.INTEGER);
-        }
-        else {
-            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
-            String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
-            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
-            Integer matriculeTypeArticle = null;
-            for(TypeArticle ta : listeTypeArticle)
+            if(ordrePreparation.getCodeBarre() == null)
             {
-                if (typeArticle.equals(ta.getLibelle()))
-                    matriculeTypeArticle = ta.getCodeBarre();
+                preparedStatement.setNull(10, Types.INTEGER);
             }
-            preparedStatement.setInt(10, matriculeTypeArticle);
-        }
-
-        if(ordrePreparation.getMatriculeCui() == null)
-        {
-            preparedStatement.setNull(11, Types.INTEGER);
-        }
-        else {
-            //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
-            String cuisinier = ordrePreparation.getMatriculeCui().getNom();
-            ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
-            Integer matriculeCuisinier = null;
-            for(Cuisinier c : listeCuisinier)
+            else
             {
-                if(cuisinier.equals(c.getNom()))
-                    matriculeCuisinier = c.getMatricule();
+                //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+                String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
+                ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+                Integer matriculeTypeArticle = null;
+                for(TypeArticle ta : listeTypeArticle)
+                {
+                    if (typeArticle.equals(ta.getLibelle()))
+                        matriculeTypeArticle = ta.getCodeBarre();
+                }
+                preparedStatement.setInt(10, matriculeTypeArticle);
             }
-            preparedStatement.setInt(11, matriculeCuisinier);
-        }
 
-        //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
-        String respVente = ordrePreparation.getMatriculeRes().getNom();
-        ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
-        Integer matriculeRespVente = null;
-        for(ResponsableDesVentes rdv : listeResponsableDesVentes)
-        {
-            if(respVente.equals(rdv.getNom()))
-                matriculeRespVente = rdv.getMatricule();
-        }
-        preparedStatement.setInt(12, matriculeRespVente);
+            if(ordrePreparation.getMatriculeCui() == null)
+            {
+                preparedStatement.setNull(11, Types.INTEGER);
+            }
+            else
+            {
+                //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
+                String cuisinier = ordrePreparation.getMatriculeCui().getNom();
+                ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
+                Integer matriculeCuisinier = null;
+                for(Cuisinier c : listeCuisinier)
+                {
+                    if(cuisinier.equals(c.getNom()))
+                        matriculeCuisinier = c.getMatricule();
+                }
+                preparedStatement.setInt(11, matriculeCuisinier);
+            }
 
-        preparedStatement.executeUpdate();
+            //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
+            String respVente = ordrePreparation.getMatriculeRes().getNom();
+            ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
+            Integer matriculeRespVente = null;
+            for(ResponsableDesVentes rdv : listeResponsableDesVentes)
+            {
+                if(respVente.equals(rdv.getNom()))
+                    matriculeRespVente = rdv.getMatricule();
+            }
+            preparedStatement.setInt(12, matriculeRespVente);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw new ExceptionsBD("Erreur lors de modification d'un ordre de préparation");
+        }
     }
 
-    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD, SQLException
-    {
-        Connection connection = SingletonConnexion.getInstance();
-        String requeteSQL = "insert into ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-        preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
-        preparedStatement.setInt(2,ordrePreparation.getNumeroSequentiel());
-        preparedStatement.setInt(3,ordrePreparation.getQuantitePrevue());
-        if(ordrePreparation.getQuantiteProduite() == null)
-            preparedStatement.setNull(4, Types.INTEGER);
-        else
-            preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
+    public void setOrdrePreparation(ApplicationController applicationController, OrdrePreparation ordrePreparation) throws ExceptionsBD{
+        try{
+            Connection connection = SingletonConnexion.getInstance();
+            String requeteSQL = "insert into ordrepreparation values(?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
+            preparedStatement.setDate(1, new java.sql.Date(ordrePreparation.getDate().getTimeInMillis()));
+            preparedStatement.setInt(2,ordrePreparation.getNumeroSequentiel());
+            preparedStatement.setInt(3,ordrePreparation.getQuantitePrevue());
+            if(ordrePreparation.getQuantiteProduite() == null)
+                preparedStatement.setNull(4, Types.INTEGER);
+            else
+                preparedStatement.setInt(4, ordrePreparation.getQuantiteProduite());
 
-        if(ordrePreparation.getDateVente() == null)
-            preparedStatement.setNull(5, Types.TIME);
-        else
-            preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
+            if(ordrePreparation.getDateVente() == null)
+                preparedStatement.setNull(5, Types.TIME);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(ordrePreparation.getDateVente().getTimeInMillis()));
 
-        if(ordrePreparation.getDatePreparation() == null)
-            preparedStatement.setNull(6, Types.TIME);
-        else
-            preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
+            if(ordrePreparation.getDatePreparation() == null)
+                preparedStatement.setNull(6, Types.TIME);
+            else
+                preparedStatement.setDate(6, new java.sql.Date(ordrePreparation.getDatePreparation().getTimeInMillis()));
 
-        if(ordrePreparation.getRemarque() == null)
-            preparedStatement.setNull(7, Types.VARCHAR);
-        else
-            preparedStatement.setString(7, ordrePreparation.getRemarque());
-        preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
-        preparedStatement.setString(9, ordrePreparation.getNom().getNom());
+            if(ordrePreparation.getRemarque() == null)
+                preparedStatement.setNull(7, Types.VARCHAR);
+            else
+                preparedStatement.setString(7, ordrePreparation.getRemarque());
+            preparedStatement.setBoolean(8, ordrePreparation.getEstUrgent());
+            preparedStatement.setString(9, ordrePreparation.getNom().getNom());
 
-        if(ordrePreparation.getCodeBarre() == null)
-        {
-            preparedStatement.setNull(10, Types.INTEGER);
-        }
-        else {
-            //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
-            String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
-            ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
-            Integer matriculeTypeArticle = null;
-            for(TypeArticle ta : listeTypeArticle)
+            if(ordrePreparation.getCodeBarre() == null)
             {
-                if (typeArticle.equals(ta.getLibelle()))
-                    matriculeTypeArticle = ta.getCodeBarre();
+                preparedStatement.setNull(10, Types.INTEGER);
             }
-            preparedStatement.setInt(10, matriculeTypeArticle);
-        }
-
-        if(ordrePreparation.getMatriculeCui() == null)
-        {
-            preparedStatement.setNull(11, Types.INTEGER);
-        }
-        else {
-            //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
-            String cuisinier = ordrePreparation.getMatriculeCui().getNom();
-            ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
-            Integer matriculeCuisinier = null;
-            for(Cuisinier c : listeCuisinier)
+            else
             {
-                if(cuisinier.equals(c.getNom()))
-                    matriculeCuisinier = c.getMatricule();
+                //POUR CONVERTIR LE LIBELLE DU TYPE D'ARTICLE EN MATRICULE
+                String typeArticle = ordrePreparation.getCodeBarre().getLibelle();
+                ArrayList <TypeArticle> listeTypeArticle = applicationController.getAllTypeArticle();
+                Integer matriculeTypeArticle = null;
+                for(TypeArticle ta : listeTypeArticle)
+                {
+                    if (typeArticle.equals(ta.getLibelle()))
+                        matriculeTypeArticle = ta.getCodeBarre();
+                }
+                preparedStatement.setInt(10, matriculeTypeArticle);
             }
-            preparedStatement.setInt(11, matriculeCuisinier);
-        }
 
-        //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
-        String respVente = ordrePreparation.getMatriculeRes().getNom();
-        ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
-        Integer matriculeRespVente = null;
-        for(ResponsableDesVentes rdv : listeResponsableDesVentes)
-        {
-            if(respVente.equals(rdv.getNom()))
-                matriculeRespVente = rdv.getMatricule();
-        }
-        preparedStatement.setInt(12, matriculeRespVente);
+            if(ordrePreparation.getMatriculeCui() == null)
+            {
+                preparedStatement.setNull(11, Types.INTEGER);
+            }
+            else
+            {
+                //POUR CONVERTIR LE NOM DU CUISINIER EN MATRICULE
+                String cuisinier = ordrePreparation.getMatriculeCui().getNom();
+                ArrayList <Cuisinier> listeCuisinier = applicationController.getAllCuisinier();
+                Integer matriculeCuisinier = null;
+                for(Cuisinier c : listeCuisinier)
+                {
+                    if(cuisinier.equals(c.getNom()))
+                        matriculeCuisinier = c.getMatricule();
+                }
+                preparedStatement.setInt(11, matriculeCuisinier);
+            }
 
-        preparedStatement.executeUpdate();
+            //POUR CONVERTIR LE NOM DU RESPONSABLE DE VENTE EN MATRICULE
+            String respVente = ordrePreparation.getMatriculeRes().getNom();
+            ArrayList <ResponsableDesVentes> listeResponsableDesVentes = applicationController.getAllResponsableDesVentes();
+            Integer matriculeRespVente = null;
+            for(ResponsableDesVentes rdv : listeResponsableDesVentes)
+            {
+                if(respVente.equals(rdv.getNom()))
+                    matriculeRespVente = rdv.getMatricule();
+            }
+            preparedStatement.setInt(12, matriculeRespVente);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e){
+            throw  new ExceptionsBD("Erreur lors de l'ajout d'un ordre de préparation");
+        }
     }
 
     /*public void completerOrdrePreparation(ResultSet donnees, OrdrePreparation ordrePreparation)throws SQLException{
