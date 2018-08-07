@@ -39,7 +39,7 @@ public class RechercheTypeArticle extends JPanel{
                 valuesTypeArticle.add(t.getLibelle());
             }
             libelle = new JComboBox(valuesTypeArticle.toArray(new String[0]));
-            libelle.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            libelle.setEnabled(true);
             panneauRecherche.add(libelle);
 
             //BOUTONS

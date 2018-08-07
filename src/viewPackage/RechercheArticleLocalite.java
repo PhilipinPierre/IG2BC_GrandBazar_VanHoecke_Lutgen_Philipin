@@ -35,13 +35,23 @@ public class RechercheArticleLocalite extends JPanel{
 
             listeFournisseur = applicationController.getAllFournisseur();
             ArrayList<String> valuesLocalite = new ArrayList<>();
+            String localiteCodePostal;
+            Boolean estPresent = false;
             for(Fournisseur f : listeFournisseur)
             {
-                valuesLocalite.add(f.getLocalite()+ " " + f.getCodePostal());
+                for(int i = 0; i < valuesLocalite.size(); i++)
+                {
+                    localiteCodePostal = f.getLocalite() + " " + f.getCodePostal();
+                    if(valuesLocalite.get(i).equals(localiteCodePostal))
+                        estPresent = true;
+                }
+                if(!estPresent)
+                    valuesLocalite.add(f.getLocalite() + " " + f.getCodePostal());
+                estPresent = false;
             }
 
             localite = new JComboBox(valuesLocalite.toArray(new String[0]));
-            localite.setEnabled(true);   // BOOLEAN ESTADMIN !!!!!!!!!!!!!!!!!
+            localite.setEnabled(true);
             panneauRecherche.add(localite);
 
             //BOUTONS
@@ -60,7 +70,7 @@ public class RechercheArticleLocalite extends JPanel{
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur d'accès à la base de données (lot)", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -86,7 +96,7 @@ public class RechercheArticleLocalite extends JPanel{
             }
             catch (Exception e)
             {
-                JOptionPane.showInputDialog("Erreur d'accès lors de la recherche des lots par localité", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauRecherche,"Erreur d'accès lors de la recherche des lots par localité");
             }
 
         }

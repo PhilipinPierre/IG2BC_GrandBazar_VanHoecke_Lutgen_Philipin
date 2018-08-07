@@ -231,7 +231,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 boolean numSeqIncorrect = testNumeroSequentielIncorrect(numeroSequentiel.getText().trim());
 
                 if (numSeqIncorrect) {
-                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 1 et 2.147.483.647");
                     numeroSequentiel.setText(null);
                 } else if (NumeroSequentielDejaPresent()) {
                     JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utilisé.\nVeuillez vous référez au listing pour connaitre tout les numéros séquentiels déjà utilisés.");
@@ -341,7 +341,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier compris entre 1 et 2 000 000!");
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier compris entre 1 et et 2.147.483.647!");
                     nbErreurs++;
                 }
 

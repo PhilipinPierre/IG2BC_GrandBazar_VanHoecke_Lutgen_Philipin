@@ -2,10 +2,12 @@ package dataAccessPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
+import modelPackage.CategorieArticle;
 import modelPackage.TypeArticle;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
     public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD{
@@ -105,21 +107,6 @@ public class TypeArticleBDA implements TypeArticleDA{
         TypeArticle typeArticle = new TypeArticle();
 
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
-        /*typeArticle.setLibelle(donnees.getString("libelle"));
-        typeArticle.setPrix(donnees.getDouble("prix")); //L'ERREUR EST LA C'EST UN VARCHAR DANS LA BD !
-        typeArticle.setQuantiteeEnStock(donnees.getInt("quantiteenstock"));
-        if(donnees.getDate("datepromotiondebut") != null){
-            GregorianCalendar datePromoDbt = new GregorianCalendar();
-            datePromoDbt.setTime(donnees.getDate("datepromotiondebut"));
-            typeArticle.setDatePromotionDebut(datePromoDbt);
-        }
-        if(donnees.getDate("datepromotionfin") != null){
-            GregorianCalendar datePromoFin = new GregorianCalendar();
-            datePromoFin.setTime(donnees.getDate("datepromotionfin"));
-            typeArticle.setDatePromotionFin(datePromoFin);
-        }
-        typeArticle.setEstPerissable(donnees.getBoolean("estperissable"));
-        typeArticle.setQuantiteeMinimal(donnees.getInt("quantiteminimale"));*/
 
         return typeArticle;
     }

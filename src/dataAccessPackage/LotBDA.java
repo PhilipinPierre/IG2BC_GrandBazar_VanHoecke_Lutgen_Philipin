@@ -39,6 +39,7 @@ public class LotBDA implements LotDA {
                     "and f.NumeroTVA = lot.NumeroTVA " +
                     "and t.ID = c.ID " +
                     "and f.localite = ? ";
+
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setString(1, localite);
             ResultSet donnees = preparedStatement.executeQuery();
