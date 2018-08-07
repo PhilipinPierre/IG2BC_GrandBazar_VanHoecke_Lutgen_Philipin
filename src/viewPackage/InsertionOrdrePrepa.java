@@ -32,7 +32,7 @@ public class InsertionOrdrePrepa extends JPanel {
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Cuisinier> listeCuisinier;
     private ArrayList<ResponsableDesVentes> listeResponsableVente;
-    private ArrayList<OrdrePreparation> listeOrdrePreparation;
+    //private ArrayList<OrdrePreparation> listeOrdrePreparation;
 
 
     public InsertionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
@@ -41,7 +41,7 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             this.applicationController = applicationController;
             this.ordrePreparation = ordrePreparation;
-            this.listeOrdrePreparation = applicationController.getAllOrdrePreparation();
+            //listeOrdrePreparation = applicationController.getAllOrdrePreparation();
             setLayout(new BorderLayout());
 
             //FORMULAIRE
@@ -66,7 +66,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
-            numeroSequentiel.addFocusListener(new NumeroSequentielListener());
+            //numeroSequentiel.addFocusListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -222,7 +222,7 @@ public class InsertionOrdrePrepa extends JPanel {
 
     }
 
-    private class NumeroSequentielListener implements java.awt.event.FocusListener{
+    /*private class NumeroSequentielListener implements java.awt.event.FocusListener{
         @Override
         public void focusGained(FocusEvent e) {}
         @Override
@@ -237,7 +237,7 @@ public class InsertionOrdrePrepa extends JPanel {
                     JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utilisé.\nVeuillez vous référez au listing pour connaitre tout les numéros séquentiels déjà utilisés.");
                     numeroSequentiel.setText(null);
                 }
-            }*/
+            }
         }
     }
 
@@ -271,7 +271,7 @@ public class InsertionOrdrePrepa extends JPanel {
             return true;
         }
 
-    }
+    }*/
 
     private class CheckBoxListenerDateVente implements ItemListener
     {
@@ -323,22 +323,15 @@ public class InsertionOrdrePrepa extends JPanel {
             {
                 try
                 {
-                    int numSeq = Integer.parseInt(numeroSequentiel.getText());
-                    if(numSeq < 0)
+                    Integer numSeq = Integer.parseInt(numeroSequentiel.getText());
+                    if(numSeq <= 0)
                     {
-                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier positif !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier positif non nul !");
                         nbErreurs++;
                     }
-                }
-                catch (Exception e)
-                {
-                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier !");
-                    nbErreurs++;
-                }
-                try {
+
                     ArrayList<OrdrePreparation> listeOrdrePreparation = new ArrayList<>();
                     listeOrdrePreparation = applicationController.getAllOrdrePreparation();
-                    int numSeq = Integer.parseInt(numeroSequentiel.getText());
                     for (OrdrePreparation o : listeOrdrePreparation) {
                         if (numSeq == o.getNumeroSequentiel()) {
                             JOptionPane.showMessageDialog(panneauInsertion, "Ce numéro séquentiel est déjà utilisé !");
@@ -348,7 +341,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être différent des autres et doit être un nombre entier positif !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier compris entre 1 et 2 000 000!");
                     nbErreurs++;
                 }
 
