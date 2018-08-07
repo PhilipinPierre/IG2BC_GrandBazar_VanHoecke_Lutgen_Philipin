@@ -3,10 +3,8 @@ package dataAccessPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TypeArticleBDA implements TypeArticleDA{
@@ -78,12 +76,22 @@ public class TypeArticleBDA implements TypeArticleDA{
             preparedStatement.setDouble(3, typeArticle.getPrix());
             preparedStatement.setInt(4, typeArticle.getQuantiteeEnStock());
 
-            preparedStatement.setDate(5, new java.sql.Date(typeArticle.getDatePromotionDebut().getTimeInMillis()));
+            if(typeArticle.getDatePromotionDebut() == null)
+                preparedStatement.setNull(5, Types.TIME);
+            else
+                preparedStatement.setDate(5, new java.sql.Date(typeArticle.getDatePromotionDebut().getTimeInMillis()));
 
-            preparedStatement.setDate(6, new java.sql.Date(typeArticle.getDatePromotionFin().getTimeInMillis()));
+            if(typeArticle.getDatePromotionFin() == null)
+                preparedStatement.setNull(6, Types.TIME);
+            else
+                preparedStatement.setDate(6, new java.sql.Date(typeArticle.getDatePromotionFin().getTimeInMillis()));
 
             preparedStatement.setBoolean(7, typeArticle.getEstPerissable());
-            preparedStatement.setInt(8, typeArticle.getQuantiteeMinimal());
+
+            if(typeArticle.getQuantiteeMinimal() == null)
+                preparedStatement.setNull(8, Types.INTEGER);
+            else
+                preparedStatement.setInt(8, typeArticle.getQuantiteeMinimal());
             preparedStatement.setString(9, typeArticle.getId().getId());
 
             preparedStatement.executeUpdate();

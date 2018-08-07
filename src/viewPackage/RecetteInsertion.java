@@ -39,21 +39,21 @@ public class RecetteInsertion extends JPanel {
 
             //RECETTE
             //NOM DE LA RECETTE OBLIGATOIRE (FK RECETTE)
-            nomRecetteLabel = new JLabel("Nom de la recette : ");
+            nomRecetteLabel = new JLabel("Nom de la recette * : ");
             nomRecetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomRecetteLabel);
             nomRecette = new JTextField();
             panneauInsertion.add(nomRecette);
 
             //DLC
-            dlcLabel = new JLabel("Durée limite de consommation : ");
+            dlcLabel = new JLabel("Durée limite de consommation * : ");
             dlcLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(dlcLabel);
             dlc = new JTextField();
             panneauInsertion.add(dlc);
 
             //DESCRIPTIF
-            descriptifLabel = new JLabel("Descriptf : ");
+            descriptifLabel = new JLabel("Descriptf * : ");
             descriptifLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(descriptifLabel);
             descriptif = new JTextField();
@@ -61,7 +61,7 @@ public class RecetteInsertion extends JPanel {
 
             //INGREDIENTS
             //LIBELLE -> CODE BARRE
-            nomIngredientLabel = new JLabel("Type article : ");
+            nomIngredientLabel = new JLabel("Type article * : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             nomIngredientLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(nomIngredientLabel);
@@ -79,7 +79,7 @@ public class RecetteInsertion extends JPanel {
             panneauInsertion.add(new JScrollPane(nomIngredients));
 
             //QUANTITE PORTION
-            quantitePortionLabel = new JLabel("Quantité portion : ");
+            quantitePortionLabel = new JLabel("Quantité portion * : ");
             quantitePortionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantitePortionLabel);
             quantitePortion = new JTextField();
@@ -161,13 +161,13 @@ public class RecetteInsertion extends JPanel {
                         int dureeLimCons = Integer.parseInt(dlc.getText());
                         if(dureeLimCons < 0)
                         {
-                            JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre positif !");
+                            JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre positif entier !");
                             nbErreurs++;
                         }
                     }
                     catch (Exception e)
                     {
-                        JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "La durée limite de consommation doit être un nombre entier !");
                         nbErreurs++;
                     }
 
@@ -176,13 +176,13 @@ public class RecetteInsertion extends JPanel {
                         int quantPortion = Integer.parseInt(quantitePortion.getText());
                         if(quantPortion < 0)
                         {
-                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre positif !");
+                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre entier positif !");
                             nbErreurs++;
                         }
                     }
                     catch (Exception e)
                     {
-                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité portion doit être un nombre entier !");
                         nbErreurs++;
                     }
 

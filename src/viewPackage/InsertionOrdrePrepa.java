@@ -265,7 +265,7 @@ public class InsertionOrdrePrepa extends JPanel {
         public void actionPerformed(ActionEvent event)
         {
             int nbErreurs = 0;
-            if(quantitePrevu.getText().isEmpty() || numeroSequentiel.getText().isEmpty() || urgentTrue.isSelected() == false && urgentFalse.isSelected() == false)
+            if(quantitePrevu.getText().isEmpty() || numeroSequentiel.getText().isEmpty() || !urgentTrue.isSelected() && !urgentFalse.isSelected())
             {
                 JOptionPane.showMessageDialog(panneauInsertion, "Les champs obligatoire sont : date, numéro séquentiel, quantité prévue, urgent, recette et responsable de vente !");
             }
@@ -276,13 +276,13 @@ public class InsertionOrdrePrepa extends JPanel {
                     int numSeq = Integer.parseInt(numeroSequentiel.getText());
                     if(numSeq < 0)
                     {
-                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre positif !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier positif !");
                         nbErreurs++;
                     }
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier !");
                     nbErreurs++;
                 }
                 try {
@@ -307,13 +307,13 @@ public class InsertionOrdrePrepa extends JPanel {
                     int quantPrevu = Integer.parseInt(quantitePrevu.getText());
                     if(quantPrevu < 0)
                     {
-                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre positif !");
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre entier positif !");
                         nbErreurs++;
                     }
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité prévue doit être un nombre entier!");
                     nbErreurs++;
                 }
                 try
@@ -326,25 +326,25 @@ public class InsertionOrdrePrepa extends JPanel {
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "La quantité produite doit être un nombre entier !");
                     nbErreurs++;
                 }
 
                 if(dateVenteModel.getDate().compareTo(datePrepaModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected() && !dateVenteCheckbox.isSelected())
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de préparation !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande à la date de préparation !");
                     nbErreurs++;
                 }
 
                 if(datePrepaModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !datePrepaCheckbox.isSelected())
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "La date de préparation doit être plus grande ou égale à la date de création de l'ordre !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de préparation doit être plus grande à la date de création de l'ordre !");
                     nbErreurs++;
                 }
 
                 if(dateVenteModel.getDate().compareTo(dateCreationModel.getDate()) <= 0 && !dateVenteCheckbox.isSelected())
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande ou égale à la date de création de l'ordre !");
+                    JOptionPane.showMessageDialog(panneauInsertion, "La date de vente doit être plus grande à la date de création de l'ordre !");
                     nbErreurs++;
                 }
 
@@ -429,10 +429,12 @@ public class InsertionOrdrePrepa extends JPanel {
                         numeroSequentiel.setText(null);
                         quantitePrevu.setText(null);
                         quantiteProduite.setText(null);
-                        dateVente = new JSpinner(dateVenteModel);
-                        datePrepa = new JSpinner(datePrepaModel);
                         remarque.setText(null);
                         urgentButton.clearSelection();
+                        nomRecette.setSelectedIndex(0);
+                        libelle.setSelectedIndex(0);
+                        matriculeCuisinier.setSelectedIndex(0);
+                        matriculeResponsable.setSelectedIndex(0);
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors de l'insertion d'un nouvel ordre de préparation !");
                     }

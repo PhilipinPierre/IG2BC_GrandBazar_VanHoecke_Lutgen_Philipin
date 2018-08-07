@@ -2,11 +2,12 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import modelPackage.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -15,7 +16,8 @@ public class TypeArticleInsertion extends JPanel {
     private JPanel panneauBoutons;
     //POUR LE FORMULAIRE
     private JLabel typeArticleLabel,
-            prixLabel, quantiteStockLabel, dateDebutLabel, dateFinLabel, quantiteMinimalLabel, idLabel;
+            prixLabel, quantiteStockLabel, dateDebutLabel, dateFinLabel, quantiteMinimalLabel, idLabel,
+            dateDebutCheckboxLabel, dateFinCheckboxLabel;
     private JTextField prix, quantiteStock, quantiteMinimal, libelle;
     private JComboBox id;
     private JRadioButton estPerissableTrue, estPerissableFalse;
@@ -23,6 +25,7 @@ public class TypeArticleInsertion extends JPanel {
     private SpinnerDateModel dateDebutModel, dateFinModel;
     private JSpinner dateDebutSpinner, dateFinSpinner;
     private ArrayList<CategorieArticle> listeId;
+    private JCheckBox dateDebutCheckbox, dateFinCheckbox;
     //POUR LES BOUTONS
     private JButton retour, ajoutIngredient, reinitialiser, ajoutTypeArticle;
     private ApplicationController applicationController;
@@ -37,11 +40,11 @@ public class TypeArticleInsertion extends JPanel {
             //FORMULAIRE
             panneauInsertion = new JPanel();
 
-            panneauInsertion.setLayout(new GridLayout(9, 2, 5, 5));
+            panneauInsertion.setLayout(new GridLayout(11, 2, 5, 5));
 
             //TYPE ARTICLE
             //LIBELLE <- CODE BARRE (FK TYPEARTICLE)
-            typeArticleLabel = new JLabel("Libellé article : ");
+            typeArticleLabel = new JLabel("Libellé article * : ");
             //ALIGNEMENT A DROITE DU JLABEL PAR DEFAUT A GAUCHE
             typeArticleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(typeArticleLabel);
@@ -49,14 +52,14 @@ public class TypeArticleInsertion extends JPanel {
             panneauInsertion.add(libelle);
 
             //PRIX
-            prixLabel = new JLabel("Prix : ");
+            prixLabel = new JLabel("Prix * : ");
             prixLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(prixLabel);
             prix = new JTextField();
             panneauInsertion.add(prix);
 
             //QUANTITE EN STOCK
-            quantiteStockLabel = new JLabel("Quantité en stock : ");
+            quantiteStockLabel = new JLabel("Quantité en stock * : ");
             quantiteStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantiteStockLabel);
             quantiteStock = new JTextField();
@@ -70,6 +73,15 @@ public class TypeArticleInsertion extends JPanel {
             dateDebutSpinner = new JSpinner(dateDebutModel);
             panneauInsertion.add(dateDebutSpinner);
 
+            //DATE DE PROMOTION DEBUT CHECKBOX POUR DESACTIVER LA DATE
+            dateDebutCheckboxLabel = new JLabel("Désactiver la date de promotion début : ");
+            dateDebutCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateDebutCheckboxLabel);
+            dateDebutCheckbox = new JCheckBox();
+            TypeArticleInsertion.CheckBoxListenerDateDebut listenerDateDebut = new TypeArticleInsertion.CheckBoxListenerDateDebut();
+            dateDebutCheckbox.addItemListener(listenerDateDebut);
+            panneauInsertion.add(dateDebutCheckbox);
+
             //DATE PROMOTION FIN
             dateFinLabel = new JLabel("Fin promotion : ");
             dateFinLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -78,8 +90,17 @@ public class TypeArticleInsertion extends JPanel {
             dateFinSpinner = new JSpinner(dateFinModel);
             panneauInsertion.add(dateFinSpinner);
 
+            //DATE DE PROMOTION FIN CHECKBOX POUR DESACTIVER LA DATE
+            dateFinCheckboxLabel = new JLabel("Désactiver la date de promotion début : ");
+            dateFinCheckboxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            panneauInsertion.add(dateFinCheckboxLabel);
+            dateFinCheckbox = new JCheckBox();
+            TypeArticleInsertion.CheckBoxListenerDateFin listenerDateFin = new TypeArticleInsertion.CheckBoxListenerDateFin();
+            dateFinCheckbox.addItemListener(listenerDateFin);
+            panneauInsertion.add(dateFinCheckbox);
+
             //EST PERISSABLE
-            estPerissableTrue = new JRadioButton("Périssable", false);
+            estPerissableTrue = new JRadioButton("* Périssable", false);
             panneauInsertion.add(estPerissableTrue);
             estPerissableFalse = new JRadioButton("Non périssable", false);
             panneauInsertion.add(estPerissableFalse);
@@ -88,14 +109,14 @@ public class TypeArticleInsertion extends JPanel {
             estPerissable.add(estPerissableFalse);
 
             //QUANTITE MINIMAL
-            quantiteMinimalLabel = new JLabel("Quantité minimale: ");
+            quantiteMinimalLabel = new JLabel("Quantité minimale : ");
             quantiteMinimalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(quantiteMinimalLabel);
             quantiteMinimal = new JTextField();
             panneauInsertion.add(quantiteMinimal);
 
             //ID DE CATEGORIE ARTICLE
-            idLabel = new JLabel("Catégorie article : ");
+            idLabel = new JLabel("Catégorie article * : ");
             idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             panneauInsertion.add(idLabel);
             listeId = applicationController.getAllCategorieArticle();
@@ -144,6 +165,28 @@ public class TypeArticleInsertion extends JPanel {
         }
     }
 
+    private class CheckBoxListenerDateDebut implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                dateDebutSpinner.setEnabled(false);
+            else
+                dateDebutSpinner.setEnabled(true);
+        }
+    }
+
+    private class CheckBoxListenerDateFin implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+                dateFinSpinner.setEnabled(false);
+            else
+                dateFinSpinner.setEnabled(true);
+        }
+    }
+
     //CLASSES PRIVEES POUR LES BOUTONS
     private class ButtonListenerRetour implements ActionListener
     {
@@ -164,28 +207,79 @@ public class TypeArticleInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            int nbErreurs = 0;
             try
             {
-                //AJOUT TYPE ARTICLE
-                TypeArticle typeArticle = new TypeArticle();
-                typeArticle.setLibelle(libelle.getText());
-                typeArticle.setPrix(Double.valueOf(prix.getText()));
-                typeArticle.setQuantiteeEnStock(Integer.valueOf(quantiteStock.getText()));
+                if(libelle.getText().isEmpty() || prix.getText().isEmpty() || quantiteStock.getText().isEmpty()  || !estPerissableFalse.isSelected() && !estPerissableTrue.isSelected())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "Tout les champs sont obligatoire sauf la quantité minimale, la date de promotion début et de fin ! ");
+                }
+                else {
+                    try {
+                        double prixTypeArticle = Double.parseDouble(prix.getText());
+                        if (prixTypeArticle < 0) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "Le prix doit être un nombre réel ou entier positif !");
+                            nbErreurs++;
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La prix doit être un nombre réel ou entier (exemple : 4.5) ");
+                        nbErreurs++;
+                    }
 
-                GregorianCalendar date = new GregorianCalendar();
-                date.setTime(dateDebutModel.getDate());
-                typeArticle.setDatePromotionDebut(date);
+                    try {
+                        int quantStock = Integer.parseInt(quantiteStock.getText());
+                        if (quantStock < 0) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité en stock doit être un nombre entier positif !");
+                            nbErreurs++;
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité en stock doit être un nombre entier !");
+                        nbErreurs++;
+                    }
 
-                date.setTime(dateFinModel.getDate());
-                typeArticle.setDatePromotionFin(date);
+                    try {
+                        if (!quantiteMinimal.getText().isEmpty() && Integer.parseInt(quantiteMinimal.getText()) < 0) {
+                            JOptionPane.showMessageDialog(panneauInsertion, "La quantité minimal doit être un nombre entier positif !");
+                            nbErreurs++;
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panneauInsertion, "La quantité minimal doit être un nombre entier !");
+                        nbErreurs++;
+                    }
 
-                typeArticle.setEstPerissable(estPerissableTrue.isSelected());
+                    if (nbErreurs == 0)
+                    {
+                        //AJOUT TYPE ARTICLE
+                        TypeArticle typeArticle = new TypeArticle();
+                        typeArticle.setLibelle(libelle.getText());
+                        typeArticle.setPrix(Double.valueOf(prix.getText()));
+                        typeArticle.setQuantiteeEnStock(Integer.valueOf(quantiteStock.getText()));
 
-                typeArticle.setQuantiteeMinimal(Integer.valueOf(quantiteMinimal.getText()));
+                        GregorianCalendar date = new GregorianCalendar();
+                        date.setTime(dateDebutModel.getDate());
+                        if(dateDebutCheckbox.isSelected())
+                            typeArticle.setDatePromotionDebut(null);
+                        else
+                            typeArticle.setDatePromotionDebut(date);
 
-                typeArticle.setID(listeId.get(id.getSelectedIndex()));
+                        date.setTime(dateFinModel.getDate());
+                        if(dateFinCheckbox.isSelected())
+                            typeArticle.setDatePromotionFin(null);
+                        else
+                            typeArticle.setDatePromotionFin(date);
 
-                applicationController.ajouterTypeArticle(applicationController, typeArticle);
+                        typeArticle.setEstPerissable(estPerissableTrue.isSelected());
+
+                        if(quantiteMinimal.getText().isEmpty())
+                            typeArticle.setQuantiteeMinimal(null);
+                        else
+                            typeArticle.setQuantiteeMinimal(Integer.valueOf(quantiteMinimal.getText()));
+
+                        typeArticle.setID(listeId.get(id.getSelectedIndex()));
+
+                        applicationController.ajouterTypeArticle(applicationController, typeArticle);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -202,8 +296,6 @@ public class TypeArticleInsertion extends JPanel {
             prix.setText(null);
             quantiteMinimal.setText(null);
             quantiteStock.setText(null);
-            dateDebutSpinner = new JSpinner(dateDebutModel);
-            dateFinSpinner = new JSpinner(dateFinModel);
             estPerissable.clearSelection();
         }
     }

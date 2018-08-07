@@ -74,17 +74,17 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
                 {
                     if(numSeq.equals(r.getNumeroSequentiel()) && (date.compareTo(r.getDate())) == 0)
                     {
-                        int reponse = JOptionPane.showConfirmDialog(panneauBoutons, "L'ordre est lié à une réservation. Voulez-vous supprimer la réservation ?",
+                        int reponse = JOptionPane.showConfirmDialog(panneauJList, "L'ordre est lié à une réservation. Voulez-vous supprimer la réservation ?",
                                 "Réservation détectée ", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                         if (reponse == 0)
                         {
                             applicationController.supprimerReservation(numSeq);
                             applicationController.supprimerOrdrePreparation(numSeq);
-                            JOptionPane.showMessageDialog(panneauBoutons, "Ordre supprimé !");
+                            JOptionPane.showMessageDialog(panneauJList, "Ordre supprimé !");
                         }
                         else
                         {
-                            JOptionPane.showMessageDialog(panneauBoutons, "Ordre non supprimé !");
+                            JOptionPane.showMessageDialog(panneauJList, "Ordre non supprimé !");
                         }
                         estReserve = true;
                     }
@@ -94,7 +94,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
                 {
                     applicationController.supprimerOrdrePreparation(numSeq);
 
-                    JOptionPane.showMessageDialog(panneauBoutons, "Ordre supprimé !");
+                    JOptionPane.showMessageDialog(panneauJList, "Ordre supprimé !");
                 }
 
                 removeAll();
@@ -107,7 +107,7 @@ public class PanelSuppModifOrdrePrepa extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, "Aucun ordre de préparation selectionné ! ");
+                JOptionPane.showMessageDialog(panneauJList, "Aucun ordre de préparation selectionné ! ");
             }
         }
     }
