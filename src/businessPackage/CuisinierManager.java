@@ -4,7 +4,7 @@ import dataAccessPackage.CuisinierBDA;
 import dataAccessPackage.CuisinierDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Cuisinier;
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CuisinierManager {
@@ -14,7 +14,8 @@ public class CuisinierManager {
         cuisinier = new CuisinierBDA();
     }
 
-    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD{
+    public ArrayList<Cuisinier> getAllCuisinier() throws ExceptionsBD, SQLException
+    {
         return cuisinier.getAllCuisinier();
     }
 }

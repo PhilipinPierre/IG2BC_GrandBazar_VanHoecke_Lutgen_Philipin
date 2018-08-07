@@ -4,6 +4,7 @@ import dataAccessPackage.LigneTicketBDA;
 import dataAccessPackage.LigneTicketDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.LigneTicket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LigneTicketManager {
@@ -12,7 +13,7 @@ public class LigneTicketManager {
 
     public LigneTicketManager() {ligneTicketBDA = new LigneTicketBDA();}
 
-    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD
+    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD, SQLException
     {
         ArrayList<LigneTicket> ligneTicketList = ligneTicketBDA.getAllLigneTicket();
         return ligneTicketList;

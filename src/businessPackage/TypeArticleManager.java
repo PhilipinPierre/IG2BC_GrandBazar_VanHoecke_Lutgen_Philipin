@@ -5,6 +5,7 @@ import dataAccessPackage.TypeArticleBDA;
 import dataAccessPackage.TypeArticleDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.TypeArticle;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TypeArticleManager {
@@ -12,12 +13,12 @@ public class TypeArticleManager {
 
     public TypeArticleManager() {typeArticleBDA = new TypeArticleBDA();}
 
-    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD
+    public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD, SQLException
     {
         ArrayList<TypeArticle> typeArticleList = typeArticleBDA.getAllTypeArticle();
         return typeArticleList;
     }
-    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD
+    public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD, SQLException
     {
         typeArticleBDA.ajouterTypeArticle(applicationController, typeArticle);
     }

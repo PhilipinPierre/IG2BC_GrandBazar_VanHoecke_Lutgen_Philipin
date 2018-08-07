@@ -1,7 +1,6 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
@@ -121,7 +120,7 @@ public class RecetteInsertion extends JPanel {
 
             setVisible(true);
         }
-        catch (ExceptionsBD ebd)
+        catch (Exception ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
         }
@@ -258,7 +257,7 @@ public class RecetteInsertion extends JPanel {
                 revalidate();
                 repaint();
             }
-            catch (ExceptionsBD e)
+            catch (Exception e)
             {
                 JOptionPane.showMessageDialog(panneauInsertion, "Erreur lors du listing des recettes");
             }

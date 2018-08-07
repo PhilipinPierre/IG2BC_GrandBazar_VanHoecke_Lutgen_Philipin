@@ -60,7 +60,6 @@ public class RechercheTypeArticle extends JPanel{
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur d'accès", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private class ButtonListenerValidation implements ActionListener
@@ -69,22 +68,6 @@ public class RechercheTypeArticle extends JPanel{
         {
             try
             {
-                /*ArrayList<Lot> listeLot;
-                listeLot = applicationController.RechercheLotViaTypeArticle(libelle.getSelectedIndex());
-
-                Object[][] data = new Object[listeLot.size()][3];
-                int i = 0;
-                for(Lot lot : listeLot){
-                    data[0][i] = lot.getNumeroTVA().getNumeroTVA();
-                    data[1][i] = lot.getMatricule().getMatricule();
-                    data[2][i] = lot.getId();
-                    i++;
-                }
-                String titre[] = {"Numéro de TVA du fournisseur", "Matricule du membre du personnel", "Identifiant du lot"};
-                JTable tableau = new JTable(data, titre);
-                add(tableau);*/
-
-
                 removeAll();
                 validate();
                 PanelRechercheTypeArticle panelRechercheTypeArticle = new PanelRechercheTypeArticle(applicationController, applicationController.rechercheLotViaTypeArticle(libelle.getSelectedItem().toString()));

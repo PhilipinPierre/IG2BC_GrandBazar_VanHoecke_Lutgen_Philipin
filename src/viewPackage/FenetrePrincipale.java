@@ -1,7 +1,6 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionsPackage.ExceptionsBD;
 import modelPackage.OrdrePreparation;
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +39,7 @@ public class FenetrePrincipale extends JFrame {
                     applicationController.fermetureConnection();
                     System.exit(0);
                 }
-                catch (ExceptionsBD ebd)
+                catch (Exception ebd)
                 {
                     JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
                 }
@@ -197,7 +196,7 @@ public class FenetrePrincipale extends JFrame {
                 applicationController.fermetureConnection();
                 System.exit(0);
             }
-            catch (ExceptionsBD ebd)
+            catch (Exception ebd)
             {
                 JOptionPane.showMessageDialog(FenetrePrincipale.this, ebd.getMessage(), "Erreur d'accès ", JOptionPane.ERROR_MESSAGE);
             }
