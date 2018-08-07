@@ -52,6 +52,7 @@ public class OrdrePreparationBDA implements OrdrePreparationDA {
 
             ordrePreparation.setEstUrgent(donnees.getBoolean("esturgent"));
 
+            //C'EST JUSTE, PAS D'ERREURS !
             Recette recette = RecetteBDA.completerRecette(donnees);
             ordrePreparation.setNom(recette);
 

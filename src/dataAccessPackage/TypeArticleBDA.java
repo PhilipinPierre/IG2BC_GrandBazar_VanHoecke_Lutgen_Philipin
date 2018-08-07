@@ -106,7 +106,7 @@ public class TypeArticleBDA implements TypeArticleDA{
 
         typeArticle.setCodeBarre(donnees.getInt("codebarre"));
         /*typeArticle.setLibelle(donnees.getString("libelle"));
-        typeArticle.setPrix(donnees.getDouble("prix"));
+        typeArticle.setPrix(donnees.getDouble("prix")); //L'ERREUR EST LA C'EST UN VARCHAR DANS LA BD !
         typeArticle.setQuantiteeEnStock(donnees.getInt("quantiteenstock"));
         if(donnees.getDate("datepromotiondebut") != null){
             GregorianCalendar datePromoDbt = new GregorianCalendar();
