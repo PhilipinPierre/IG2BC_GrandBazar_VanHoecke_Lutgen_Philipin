@@ -5,10 +5,7 @@ import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -35,6 +32,7 @@ public class InsertionOrdrePrepa extends JPanel {
     private ArrayList<TypeArticle> listeTypeArticle;
     private ArrayList<Cuisinier> listeCuisinier;
     private ArrayList<ResponsableDesVentes> listeResponsableVente;
+    private ArrayList<OrdrePreparation> listeOrdrePreparation;
 
 
     public InsertionOrdrePrepa(ApplicationController applicationController, OrdrePreparation ordrePreparation)
@@ -43,7 +41,7 @@ public class InsertionOrdrePrepa extends JPanel {
         {
             this.applicationController = applicationController;
             this.ordrePreparation = ordrePreparation;
-
+            this.listeOrdrePreparation = applicationController.getAllOrdrePreparation();
             setLayout(new BorderLayout());
 
             //FORMULAIRE
@@ -68,6 +66,7 @@ public class InsertionOrdrePrepa extends JPanel {
             panneauInsertion.add(numeroSequentielLabel);
             numeroSequentiel = new JTextField();
             numeroSequentiel.setToolTipText("Suite de 11 chiffres maximums");
+            numeroSequentiel.addFocusListener(new NumeroSequentielListener());
             panneauInsertion.add(numeroSequentiel);
 
             //QUANTITE PREVUE A LA CREATION DE L'ORDRE OBLIGATOIRE
@@ -219,6 +218,57 @@ public class InsertionOrdrePrepa extends JPanel {
         catch (ExceptionsBD ebd)
         {
             JOptionPane.showMessageDialog(this, ebd.getMessage(), "Erreur lors de l'insertion d'un ordre de préparation", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private class NumeroSequentielListener implements java.awt.event.FocusListener{
+        @Override
+        public void focusGained(FocusEvent e) {}
+        @Override
+        public void focusLost(FocusEvent e) {
+            /*if(numeroSequentiel.getText() != null) {
+                boolean numSeqIncorrect = testNumeroSequentielIncorrect(numeroSequentiel.getText().trim());
+
+                if (numSeqIncorrect) {
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel doit être compris entre 0 et 2.147.483.647");
+                    numeroSequentiel.setText(null);
+                } else if (NumeroSequentielDejaPresent()) {
+                    JOptionPane.showMessageDialog(panneauBoutons, "Le numéro séquentiel est déjà utilisé.\nVeuillez vous référez au listing pour connaitre tout les numéros séquentiels déjà utilisés.");
+                    numeroSequentiel.setText(null);
+                }
+            }*/
+        }
+    }
+
+    private boolean NumeroSequentielDejaPresent() {
+        for(OrdrePreparation ordre : listeOrdrePreparation)
+            if(ordre.getNumeroSequentiel() == Integer.valueOf(numeroSequentiel.getText().trim()))
+                return true;
+        return false;
+    }
+
+    private boolean testNumeroSequentielIncorrect(String numSeq){
+        try{
+            //Permet de gere l'overflow
+            Integer.valueOf(numSeq);
+
+            char[] upper = numSeq.toCharArray();
+            StringBuilder resultat = new StringBuilder();
+            for(int i = 0; i<upper.length; i++) {
+                switch (upper[i]) {
+                    case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+                        resultat.append(upper[i]);
+                        break;
+                    default:
+                        return true;
+                }
+            }
+            numeroSequentiel.setText(resultat.toString());
+
+            return false;
+        } catch (Exception e){
+            return true;
         }
 
     }

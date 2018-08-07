@@ -16,7 +16,7 @@
       <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="5" parent="1" name="mysql">
-      <Collation>latin1_swedish_ci</Collation>
+      <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="6" parent="1" name="performance_schema">
       <Collation>utf8_general_ci</Collation>
@@ -1613,7 +1613,7 @@ NumeroSequentiel</RefColNames>
     </column>
     <column id="364" parent="244" name="Prix">
       <Position>3</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>double(9,2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
