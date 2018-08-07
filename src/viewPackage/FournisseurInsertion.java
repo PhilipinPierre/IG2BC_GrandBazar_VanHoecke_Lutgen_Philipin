@@ -106,23 +106,67 @@ public class FournisseurInsertion extends JPanel {
     {
         public void actionPerformed(ActionEvent event)
         {
+            int nbErreurs = 0;
             try
             {
-                //AJOUT FOURNISSEUR
-                Fournisseur fournisseur = new Fournisseur();
+                if(numeroTva.getText().isEmpty() || nom.getText().isEmpty() || localite.getText().isEmpty() || codePostal.getText().isEmpty() || rue.getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(panneauInsertion, "Tout les champs sont obligatoire ! ");
+                }
+                else
+                {
+                    try
+                    {
+                        int numTva = Integer.parseInt(numeroTva.getText());
+                        if(numTva <= 0)
+                        {
+                            JOptionPane.showMessageDialog(panneauInsertion, "Le numéro de tva doit être un nombre positif entier non nul !");
+                            nbErreurs++;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le numéro de tva doit être un nombre entier entre 1 et 2.147.483.647 !");
+                        nbErreurs++;
+                    }
 
-                fournisseur.setNumeroTVA(Integer.valueOf(numeroTva.getText()));
-                fournisseur.setNom(nom.getText());
-                fournisseur.setLocalite(localite.getText());
-                fournisseur.setCodePostal(Integer.valueOf(codePostal.getText()));
-                fournisseur.setRue(rue.getText());
+                    try
+                    {
+                        int cp = Integer.parseInt(codePostal.getText());
+                        if(cp <= 0 && cp > 999999)
+                        {
+                            JOptionPane.showMessageDialog(panneauInsertion, "Le code postal doit être un nombre positif entier non nul entre 1 et 999999!");
+                            nbErreurs++;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le code postal doit être un nombre entier !");
+                        nbErreurs++;
+                    }
 
-                applicationController.ajouterFournisseur(applicationController, fournisseur);
+                    if(nbErreurs == 0)
+                    {
+                        //AJOUT FOURNISSEUR
+                        Fournisseur fournisseur = new Fournisseur();
+
+                        fournisseur.setNumeroTVA(Integer.valueOf(numeroTva.getText()));
+                        fournisseur.setNom(nom.getText());
+                        fournisseur.setLocalite(localite.getText());
+                        fournisseur.setCodePostal(Integer.valueOf(codePostal.getText()));
+                        fournisseur.setRue(rue.getText());
+
+                        applicationController.ajouterFournisseur(applicationController, fournisseur);
+
+                        JOptionPane.showMessageDialog(panneauInsertion, "Le fournisseur a bien été ajouté !");
+                    }
+                }
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'un nouveau fournisseur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauInsertion, e.getMessage(), "Erreur lors de l'ajout d'un nouveau fournisseur", JOptionPane.ERROR_MESSAGE);
             }
+
         }
     }
 

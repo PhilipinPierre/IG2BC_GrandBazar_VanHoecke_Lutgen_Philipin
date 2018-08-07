@@ -212,7 +212,7 @@ public class RecetteInsertion extends JPanel {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(panneauBoutons, e.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(panneauInsertion, e.getMessage(), "Erreur lors de l'ajout d'une nouvelle recette", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

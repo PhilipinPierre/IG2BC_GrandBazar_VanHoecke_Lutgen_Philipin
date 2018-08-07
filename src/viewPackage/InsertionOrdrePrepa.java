@@ -341,7 +341,7 @@ public class InsertionOrdrePrepa extends JPanel {
                 }
                 catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier compris entre 1 et et 2.147.483.647!");
+                    JOptionPane.showMessageDialog(panneauInsertion, "Le numéro séquentiel doit être un nombre entier compris entre 1 et 2.147.483.647 !");
                     nbErreurs++;
                 }
 
