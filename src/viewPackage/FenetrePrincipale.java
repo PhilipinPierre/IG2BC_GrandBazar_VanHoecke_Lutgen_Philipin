@@ -26,7 +26,7 @@ public class FenetrePrincipale extends JFrame {
 
     public FenetrePrincipale()
     {
-        super("Welcome !");
+        super("Le Grand Bazar");
         applicationController = new ApplicationController();
         ordrePreparation = new OrdrePreparation();
         setBounds(500, 100, 600, 600);

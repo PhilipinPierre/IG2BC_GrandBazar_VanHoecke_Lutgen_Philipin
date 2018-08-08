@@ -271,6 +271,14 @@ public class TypeArticleInsertion extends JPanel {
                         typeArticle.setID(listeId.get(id.getSelectedIndex()));
 
                         applicationController.ajouterTypeArticle(applicationController, typeArticle);
+
+                        libelle.setText(null);
+                        prix.setText(null);
+                        quantiteMinimal.setText(null);
+                        quantiteStock.setText(null);
+                        estPerissable.clearSelection();
+                        id.setSelectedIndex(0);
+
                         JOptionPane.showMessageDialog(panneauInsertion, "L'article a bien été ajouté !");
                     }
                 }

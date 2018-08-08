@@ -158,6 +158,12 @@ public class FournisseurInsertion extends JPanel {
 
                         applicationController.ajouterFournisseur(applicationController, fournisseur);
 
+                        numeroTva.setText(null);
+                        nom.setText(null);
+                        localite.setText(null);
+                        codePostal.setText(null);
+                        rue.setText(null);
+
                         JOptionPane.showMessageDialog(panneauInsertion, "Le fournisseur a bien été ajouté !");
                     }
                 }

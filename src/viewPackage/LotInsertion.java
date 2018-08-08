@@ -306,6 +306,12 @@ public class LotInsertion extends JPanel {
 
                         applicationController.ajouterLot(applicationController, lot);
 
+                        quantite.setText(null);
+                        codeLot.setText(null);
+                        typeArticle.setSelectedIndex(0);
+                        membreDuPersonnel.setSelectedIndex(0);
+                        fournisseur.setSelectedIndex(0);
+
                         JOptionPane.showMessageDialog(panneauInsertion, "Le lot a bien été ajouté !");
                     }
                 }
