@@ -6,6 +6,7 @@ import modelPackage.Fournisseur;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FournisseurBDA implements FournisseurDA {
@@ -46,7 +47,7 @@ public class FournisseurBDA implements FournisseurDA {
         }
     }
 
-    protected static void completerFournisseur(ResultSet donnees, Fournisseur fournisseur)throws Exception{
+    protected static void completerFournisseur(ResultSet donnees, Fournisseur fournisseur)throws SQLException{
         Integer numeroTva = new Integer(donnees.getInt("numerotva"));
         fournisseur.setNumeroTVA(numeroTva);
         fournisseur.setNom(donnees.getString("nom"));

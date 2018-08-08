@@ -7,6 +7,7 @@ import modelPackage.TypeArticle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -74,23 +75,20 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }
     }
 
-    private void completerArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws ExceptionsBD{
-        try {
-            articlePerime.setId(donnees.getString("id"));
-            Integer quantiteJete = donnees.getInt("quantitejete");
-            articlePerime.setQuantiteJetee(quantiteJete);
-            GregorianCalendar date = new GregorianCalendar();
-            date.setTime(donnees.getDate("date"));
-            articlePerime.setDate(date);
-            MembreDuPersonnelBDA membreDuPersonnelBDA = new MembreDuPersonnelBDA();
-            MembreDuPersonnel matricule = new MembreDuPersonnel();
-            matricule.setMatricule(donnees.getInt("matricule"));
-            articlePerime.setMatricule(matricule);
-            TypeArticle typeArticle = new TypeArticle();
-            typeArticle.setCodeBarre(donnees.getInt("codebarre"));
-            articlePerime.setCodeBarre(typeArticle);
-        } catch (Exception e){
-            throw new ExceptionsBD("recherche article périmé");
-        }
+    private void completerArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException
+    {
+        articlePerime.setId(donnees.getString("id"));
+        Integer quantiteJete = donnees.getInt("quantitejete");
+        articlePerime.setQuantiteJetee(quantiteJete);
+        GregorianCalendar date = new GregorianCalendar();
+        date.setTime(donnees.getDate("date"));
+        articlePerime.setDate(date);
+        MembreDuPersonnelBDA membreDuPersonnelBDA = new MembreDuPersonnelBDA();
+        MembreDuPersonnel matricule = new MembreDuPersonnel();
+        matricule.setMatricule(donnees.getInt("matricule"));
+        articlePerime.setMatricule(matricule);
+        TypeArticle typeArticle = new TypeArticle();
+        typeArticle.setCodeBarre(donnees.getInt("codebarre"));
+        articlePerime.setCodeBarre(typeArticle);
     }
 }

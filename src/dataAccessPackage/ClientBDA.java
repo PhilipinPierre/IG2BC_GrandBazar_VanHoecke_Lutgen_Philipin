@@ -27,7 +27,8 @@ public class ClientBDA implements ClientDA {
         }
     }
 
-    private void completerClient(ResultSet donnees, Client client) throws SQLException{
+    private void completerClient(ResultSet donnees, Client client) throws SQLException
+    {
         client.setNumClient(donnees.getInt("numClient"));
         client.setNom(donnees.getString("nom"));
         client.setPrenom(donnees.getString("prenom"));
