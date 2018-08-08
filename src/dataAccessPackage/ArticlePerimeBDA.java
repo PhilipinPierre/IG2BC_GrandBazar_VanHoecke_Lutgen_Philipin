@@ -45,8 +45,10 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
             String requeteSQL = "select * from articleperiem " +
                     " join membredupersonnel m ON articleperiem.Matricule = m.Matricule" +
                     " join typearticle t ON articleperiem.CodeBarre = t.CodeBarre " +
+                    " join categoriearticle c ON t.ID = c.ID " +
                     " where articleperiem.Matricule = m.Matricule" +
                     " and articleperiem.CodeBarre = t.CodeBarre " +
+                    " and t.ID = c.ID " +
                     " and articleperiem.Date  BETWEEN ? AND ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
             preparedStatement.setDate(1, new java.sql.Date(date1.getTimeInMillis()));
