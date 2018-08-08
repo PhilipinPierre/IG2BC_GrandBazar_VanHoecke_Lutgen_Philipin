@@ -7,32 +7,10 @@ import modelPackage.TypeArticle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class ArticlePerimeBDA implements ArticlePerimeDA {
-    public ArrayList<ArticlePerime> getAllArticlePerime() throws ExceptionsBD {
-        try
-        {
-            ArrayList<ArticlePerime> liste = new ArrayList<>();
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from articleperime";
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            while(donnees.next()){
-                ArticlePerime articlePerime = new ArticlePerime();
-                completerArticlePerime(donnees, articlePerime);
-                liste.add(articlePerime);
-            }
-            return liste;
-        }
-        catch (Exception e)
-        {
-            throw new ExceptionsBD("la recherche de tout les articles périmé dans la base de donnée");
-        }
-    }
-
     public ArrayList<ArticlePerime> rechercheArticlePerimeEntre2Date(GregorianCalendar date1, GregorianCalendar date2) throws ExceptionsBD{
         try{
             if(date1.getTimeInMillis() > date2.getTimeInMillis()){
@@ -75,22 +53,5 @@ public class ArticlePerimeBDA implements ArticlePerimeDA {
         }catch (Exception e){
             throw new ExceptionsBD("la recherche des articles périmé entre "+ date1.getWeeksInWeekYear() + " et "+ date2.getWeeksInWeekYear());
         }
-    }
-
-    private void completerArticlePerime(ResultSet donnees, ArticlePerime articlePerime) throws SQLException
-    {
-        articlePerime.setId(donnees.getString("id"));
-        Integer quantiteJete = donnees.getInt("quantitejete");
-        articlePerime.setQuantiteJetee(quantiteJete);
-        GregorianCalendar date = new GregorianCalendar();
-        date.setTime(donnees.getDate("date"));
-        articlePerime.setDate(date);
-        MembreDuPersonnelBDA membreDuPersonnelBDA = new MembreDuPersonnelBDA();
-        MembreDuPersonnel matricule = new MembreDuPersonnel();
-        matricule.setMatricule(donnees.getInt("matricule"));
-        articlePerime.setMatricule(matricule);
-        TypeArticle typeArticle = new TypeArticle();
-        typeArticle.setCodeBarre(donnees.getInt("codebarre"));
-        articlePerime.setCodeBarre(typeArticle);
     }
 }

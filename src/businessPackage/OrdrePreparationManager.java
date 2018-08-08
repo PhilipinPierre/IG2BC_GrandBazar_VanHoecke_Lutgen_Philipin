@@ -16,10 +16,6 @@ public class OrdrePreparationManager {
         return ordrePreparationBDA.getAllOrdrePreparation();
     }
 
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD{
-        return ordrePreparationBDA.getNumSeqOrdrePreparation();
-    }
-
     public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD{
         ordrePreparationBDA.supprimerOrdrePreparation(numeroSequentiel);
     }

@@ -7,10 +7,8 @@ import java.util.*;
 
 public class ApplicationController {
 
-    private ClientManager client;
     private ConnectionManager connection;
     private FournisseurManager fournisseur;
-    private LigneTicketManager ligneTicket;
     private LotManager lot;
     private MembreDuPersonnelManager membreDuPersonnel;
     private ResponsableDesVentesManager responsableDesVentes;
@@ -25,10 +23,8 @@ public class ApplicationController {
 
     public ApplicationController()
     {
-        client = new ClientManager();
         connection = new ConnectionManager();
         fournisseur = new FournisseurManager();
-        ligneTicket = new LigneTicketManager();
         lot = new LotManager();
         membreDuPersonnel = new MembreDuPersonnelManager();
         responsableDesVentes = new ResponsableDesVentesManager();
@@ -42,24 +38,9 @@ public class ApplicationController {
         reservation = new ReservationManager();
     }
 
-    public ArrayList<Client> getAllClient() throws ExceptionsBD
-    {
-        return client.getAllClient();
-    }
-
     public ArrayList<Fournisseur> getAllFournisseur() throws ExceptionsBD
     {
         return fournisseur.getAllFournisseur();
-    }
-
-    public ArrayList<Ingredient> getAllIngredient() throws ExceptionsBD
-    {
-        return ingredient.getAllIngredient();
-    }
-
-    public ArrayList<LigneTicket> getAllLigneTicket() throws ExceptionsBD
-    {
-        return ligneTicket.getAllLigneTicket();
     }
 
     public ArrayList<Lot> getAllLot() throws ExceptionsBD
@@ -113,11 +94,6 @@ public class ApplicationController {
         return reservation.getAllReservation();
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD
-    {
-        return recette.getRecette(nom);
-    }
-
     public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
     {
         recette.ajouterRecette(applicationController, r);
@@ -141,11 +117,6 @@ public class ApplicationController {
     public void ajouterFournisseur(ApplicationController applicationController, Fournisseur f) throws ExceptionsBD
     {
         fournisseur.ajouterFournisseur(applicationController, f);
-    }
-
-    public ArrayList<Integer> getNumSeqOrdrePreparation() throws  ExceptionsBD
-    {
-        return ordrePreparation.getNumSeqOrdrePreparation();
     }
 
     public void supprimerOrdrePreparation(Integer numeroSequentiel) throws ExceptionsBD

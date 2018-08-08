@@ -1,7 +1,6 @@
 package dataAccessPackage;
 
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.Recette;
 import modelPackage.ResponsableDesVentes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

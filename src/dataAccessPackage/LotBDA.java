@@ -3,7 +3,6 @@ package dataAccessPackage;
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

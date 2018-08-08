@@ -2,12 +2,9 @@ package dataAccessPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionsPackage.ExceptionsBD;
-import modelPackage.CategorieArticle;
 import modelPackage.TypeArticle;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class TypeArticleBDA implements TypeArticleDA{
     public ArrayList<TypeArticle> getAllTypeArticle() throws ExceptionsBD{
@@ -29,35 +26,6 @@ public class TypeArticleBDA implements TypeArticleDA{
             throw new ExceptionsBD("Erreur lors de la echerche de tout les types d'articles");
         }
     }
-
-    public TypeArticle getTypeArticle(int codeBarre) throws ExceptionsBD{
-        TypeArticle typeArticle = new TypeArticle();
-        try {
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle where codebarre = " + codeBarre;
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            completerTypeArticle(donnees);
-        } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche de type d'article vie leur code barra");
-        }
-        return typeArticle;
-    }
-
-    public Integer rechercheTypeArticleViaLibelle(String libelle) throws ExceptionsBD{
-        Integer codeBarre;
-        try {
-            Connection connection = SingletonConnexion.getInstance();
-            String requeteSQL = "select * from typearticle where libelle = " + libelle;
-            PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL);
-            ResultSet donnees = preparedStatement.executeQuery();
-            codeBarre =  donnees.getInt("codebarre");
-        } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche d'une type d'article via son libellé");
-        }
-        return codeBarre;
-    }
-
 
     public void ajouterTypeArticle(ApplicationController applicationController, TypeArticle typeArticle) throws ExceptionsBD{
         try{

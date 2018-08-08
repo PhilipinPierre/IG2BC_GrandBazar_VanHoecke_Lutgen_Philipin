@@ -4,7 +4,6 @@ import dataAccessPackage.CategorieArcticleBDA;
 import dataAccessPackage.CategorieArticleDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.CategorieArticle;
-
 import java.util.ArrayList;
 
 public class CategorieArticleManager {

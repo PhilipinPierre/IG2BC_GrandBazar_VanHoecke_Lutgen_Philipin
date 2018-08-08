@@ -17,10 +17,6 @@ public class RecetteManager {
         return recetteDA.getAllRecette();
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD{
-        return recetteDA.getRecette(nom);
-    }
-
     public void ajouterRecette(ApplicationController applicationController, Recette r) throws ExceptionsBD
     {
         recetteDA.ajouterRecette(applicationController, r);

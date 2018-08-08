@@ -4,7 +4,6 @@ import dataAccessPackage.CuisinierBDA;
 import dataAccessPackage.CuisinierDA;
 import exceptionsPackage.ExceptionsBD;
 import modelPackage.Cuisinier;
-
 import java.util.ArrayList;
 
 public class CuisinierManager {

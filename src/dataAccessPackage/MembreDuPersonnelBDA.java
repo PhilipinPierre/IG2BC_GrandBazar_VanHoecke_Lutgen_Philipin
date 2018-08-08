@@ -28,10 +28,10 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         return liste;
     }
 
-    protected void completerMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
+    /*protected void completerMDPAutre(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         if(this.getClass().getSimpleName().equals("CuisinierBDA") || this.getClass().getSimpleName().equals("ResponableDesVentesBDA"))
             completerMDP(donnees, membreDuPersonnel);
-    }
+    }*/
 
     protected static void completerMDP(ResultSet donnees, MembreDuPersonnel membreDuPersonnel) throws SQLException{
         membreDuPersonnel.setMatricule(donnees.getInt("matricule"));
@@ -53,7 +53,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         }
     }
 
-    protected static MembreDuPersonnel getMembreDuPersonnel(int matricule)throws SQLException{
+   /*protected static MembreDuPersonnel getMembreDuPersonnel(int matricule)throws SQLException{
         MembreDuPersonnel membreDuPersonnel = new MembreDuPersonnel();
         try {
             Connection connection = SingletonConnexion.getInstance();
@@ -92,7 +92,7 @@ public class MembreDuPersonnelBDA implements MembreDuPersonnelDA{
         {
             throw new ExceptionsBD("Erreur lors de laa recherche des responsables des ventes");
         }
-    }
+    }*/
 
     private ArrayList<MembreDuPersonnel> getAllEmployesParType(String typeEmploye) throws Exception
     {

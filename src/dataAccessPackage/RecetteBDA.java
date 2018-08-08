@@ -47,18 +47,6 @@ public class RecetteBDA implements RecetteDA {
         }
     }
 
-    public Recette getRecette(String nom) throws ExceptionsBD{
-        try {
-            for (Recette recette : getAllRecette()) {
-                if (recette.getNom().equals(nom))
-                    return recette;
-            }
-        } catch (Exception e){
-            throw new ExceptionsBD("Erreur lors de la recherche d'une recette introuvable.");
-        }
-        return null;
-    }
-
     protected static Recette completerRecette(ResultSet donnees) throws SQLException {
         Recette recette = new Recette();
         recette.setNom(donnees.getString("nom"));

@@ -71,14 +71,4 @@ public class ReservationBDA implements ReservationDA {
         }
     }
 
-    private void completerReservation(ResultSet donnees, Reservation reservation) throws SQLException{
-
-        OrdrePreparation ordrePreparation = new OrdrePreparation();
-        reservation.setOrdrePreparation(ordrePreparation);
-
-        reservation.setQuantiteReservee(donnees.getInt("quantiteReserve"));
-
-        TypeArticle t = new TypeArticle();
-        reservation.setCodeBarre(t);
-    }
 }
